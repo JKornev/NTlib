@@ -34,11 +34,19 @@ extern "C" {
     type NTDEF Nt##name params { return 0; }
   #define RTL_API(type, name, params) \
     type NTDEF name params { return 0; }
+  #define RTL_API_VOID(name, params) \
+    VOID NTDEF name params { return; }
+  #define LDR_API(type, name, params) \
+    type NTDEF name params { return 0; }
 #else
   #define NATIVE_API(type, name, params) \
     type NTDEF Zw##name params; \
     type NTDEF Nt##name params;
   #define RTL_API(type, name, params) \
+    type NTDEF name params;
+  #define RTL_API_VOID(name, params) \
+    VOID NTDEF name params;
+  #define LDR_API(type, name, params) \
     type NTDEF name params;
 #endif
 
@@ -2699,6 +2707,36 @@ typedef struct _IO_STATUS_BLOCK {
 } IO_STATUS_BLOCK, *PIO_STATUS_BLOCK;
 
 // ----------------------------------------
+//   Loader Definitions
+
+typedef struct _LDR_DLL_UNLOADED_NOTIFICATION_DATA {
+	ULONG           Flags;
+	PUNICODE_STRING FullDllName;
+	PUNICODE_STRING BaseDllName;
+	PVOID           DllBase;
+	ULONG           SizeOfImage;
+} LDR_DLL_UNLOADED_NOTIFICATION_DATA, *PLDR_DLL_UNLOADED_NOTIFICATION_DATA;
+
+typedef struct _LDR_DLL_LOADED_NOTIFICATION_DATA {
+	ULONG           Flags;
+	PUNICODE_STRING FullDllName;
+	PUNICODE_STRING BaseDllName;
+	PVOID           DllBase;
+	ULONG           SizeOfImage;
+} LDR_DLL_LOADED_NOTIFICATION_DATA, *PLDR_DLL_LOADED_NOTIFICATION_DATA;
+
+typedef union _LDR_DLL_NOTIFICATION_DATA {
+	LDR_DLL_LOADED_NOTIFICATION_DATA   Loaded;
+	LDR_DLL_UNLOADED_NOTIFICATION_DATA Unloaded;
+} LDR_DLL_NOTIFICATION_DATA, *PLDR_DLL_NOTIFICATION_DATA;
+
+typedef VOID (CALLBACK*PLDR_DLL_NOTIFICATION_FUNCTION)(
+	_In_     ULONG                      NotificationReason,
+	_In_     PLDR_DLL_NOTIFICATION_DATA NotificationData,
+	_In_opt_ PVOID                      Context
+);
+
+// ----------------------------------------
 //   Object API
 
 NATIVE_API(NTSTATUS, /*Nt*/Close, (
@@ -2761,19 +2799,6 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryInformationThread, (
 
 NATIVE_API(NTSTATUS, /*Nt*/YieldExecution, (void))
 
-RTL_API(NTSTATUS, RtlCreateUserThread, (
-    _In_     HANDLE               ProcessHandle,
-    _In_opt_ PSECURITY_DESCRIPTOR SecurityDescriptor,
-    _In_     BOOLEAN              CreateSuspended,
-    _In_     ULONG                StackZeroBits,
-    _Inout_  PULONG               StackReserved,
-    _Inout_  PULONG               StackCommit,
-    _In_     PVOID                StartAddress,
-    _In_opt_ PVOID                StartParameter,
-    _Out_    PHANDLE              ThreadHandle,
-    _Out_    PCLIENT_ID           ClientID)
-)
-
 // ----------------------------------------
 //   File API
 
@@ -2814,17 +2839,17 @@ NATIVE_API(NTSTATUS, /*Nt*/FsControlFile, (
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/SetInformationFile, (
-    _In_  HANDLE              FileHandle,
-    _Out_ PIO_STATUS_BLOCK    IoStatusBlock,
-    _In_  PVOID               FileInformation,
-    _In_  ULONG               Length,
+    _In_  HANDLE                 FileHandle,
+    _Out_ PIO_STATUS_BLOCK       IoStatusBlock,
+    _In_  PVOID                  FileInformation,
+    _In_  ULONG                  Length,
     _In_  FILE_INFORMATION_CLASS FileInformationClass)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/MapViewOfSection, (
     _In_        HANDLE          SectionHandle,
     _In_        HANDLE          ProcessHandle,
-    _Inout_     PVOID           *BaseAddress,
+    _Inout_     PVOID *         BaseAddress,
     _In_        ULONG_PTR       ZeroBits,
     _In_        SIZE_T          CommitSize,
     _Inout_opt_ PLARGE_INTEGER  SectionOffset,
@@ -2835,7 +2860,82 @@ NATIVE_API(NTSTATUS, /*Nt*/MapViewOfSection, (
 )
 
 // ----------------------------------------
+//   Runtime API
+
+RTL_API_VOID(RtlInitUnicodeString, (
+    _Out_    PUNICODE_STRING DestinationString,
+    _In_opt_ PWSTR           SourceString)
+)
+
+RTL_API(BOOLEAN, RtlDosPathNameToNtPathName_U, (
+    _In_	  PCWSTR          DosFileName,
+    _Out_	  PUNICODE_STRING NtFileName,
+    _Out_opt_ PWSTR *         FilePart,
+    _Out_opt_ PVOID           RelativeName)
+)
+
+RTL_API(PVOID, RtlAllocateHeap, (
+    _In_ PVOID  HeapHandle,
+    _In_ ULONG  Flags,
+    _In_ SIZE_T Size)
+)
+
+RTL_API(BOOLEAN, RtlFreeHeap, (
+    _In_ PVOID HeapHandle,
+    _In_ ULONG Flags,
+    _In_ PVOID HeapBase)
+)
+
+RTL_API(NTSTATUS, RtlCreateUserThread, (
+    _In_     HANDLE               ProcessHandle,
+    _In_opt_ PSECURITY_DESCRIPTOR SecurityDescriptor,
+    _In_     BOOLEAN              CreateSuspended,
+    _In_     ULONG                StackZeroBits,
+    _Inout_  PULONG               StackReserved,
+    _Inout_  PULONG               StackCommit,
+    _In_     PVOID                StartAddress,
+    _In_opt_ PVOID                StartParameter,
+    _Out_    PHANDLE              ThreadHandle,
+    _Out_    PCLIENT_ID           ClientID)
+)
+
+RTL_API(PIMAGE_NT_HEADERS, RtlImageNtHeader, (
+    _In_ PVOID ModuleAddress)
+)
+
+// ----------------------------------------
+//   Loader API
+
+LDR_API(NTSTATUS, LdrRegisterDllNotification, (
+    _In_     ULONG                          Flags,
+    _In_     PLDR_DLL_NOTIFICATION_FUNCTION NotificationFunction,
+    _In_opt_ PVOID                          Context,
+    _Out_    PVOID *                        Cookie)
+)
+
+LDR_API(NTSTATUS, LdrLoadDll, (
+    _In_opt_ PWCHAR          PathToFile,
+    _In_opt_ ULONG           Flags, //TODO: is it ULONG or PULONG?
+    _In_     PUNICODE_STRING ModuleFileName,
+    _Out_    PHANDLE         ModuleHandle)
+)
+
+LDR_API(NTSTATUS, LdrUnloadDll, (
+    _In_ PVOID BaseAddress)
+)
+
+// ----------------------------------------
 //   API Epilog
+
+#undef NTCALL
+#undef NTDEF
+
+#undef NATIVE_API
+
+#undef RTL_API
+#undef RTL_API_VOID
+
+#undef LDR_API
 
 #pragma pack(pop)
 
