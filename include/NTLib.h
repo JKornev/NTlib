@@ -3,6 +3,7 @@
 #include <Windows.h>
 
 // ----------------------------------------
+//   API Prolog
 
 #ifdef __cplusplus
 extern "C" {
@@ -10,17 +11,13 @@ extern "C" {
 
 #ifdef _M_IX86
   #pragma pack(push, 4)
-  #ifdef NTLIB_COMPILATION
-    #define NTCALL __cdecl
-  #else
-    #define NTCALL __stdcall
-  #endif
 #elif _M_AMD64
   #pragma pack(push, 8)
-  #define NTCALL __stdcall
 #else
   #error NTLIB: Error, unknown architecture
 #endif
+
+#define NTCALL __stdcall
 
 #ifdef NTLIB_COMPILATION
   #define NTDEF __declspec(dllexport) NTCALL
