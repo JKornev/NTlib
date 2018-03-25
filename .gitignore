@@ -1,0 +1,7 @@
+/source/intermidiate
+/source/*.opensdf
+/source/*.sdf
+/source/*.suo
+/source/NTLib/*.user
+/build/*
+
