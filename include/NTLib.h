@@ -29,12 +29,10 @@ extern "C" {
   #define NATIVE_API(type, name, params) \
     type NTDEF Zw##name params { return 0; } \
     type NTDEF Nt##name params { return 0; }
-  #define RTL_API(type, name, params) \
+  #define NTDLL_API(type, name, params) \
     type NTDEF name params { return 0; }
-  #define RTL_API_VOID(name, params) \
+  #define NTDLL_API_VOID(name, params) \
     VOID NTDEF name params { return; }
-  #define LDR_API(type, name, params) \
-    type NTDEF name params { return 0; }
 #else
   #define NATIVE_API(type, name, params) \
     type NTDEF Zw##name params; \
@@ -43,8 +41,6 @@ extern "C" {
     type NTDEF name params;
   #define RTL_API_VOID(name, params) \
     VOID NTDEF name params;
-  #define LDR_API(type, name, params) \
-    type NTDEF name params;
 #endif
 
 // ----------------------------------------
@@ -2704,6 +2700,62 @@ typedef struct _IO_STATUS_BLOCK {
 } IO_STATUS_BLOCK, *PIO_STATUS_BLOCK;
 
 // ----------------------------------------
+//   Heap Definitions
+
+typedef NTSTATUS (CALLBACK * PRTL_HEAP_COMMIT_ROUTINE) (
+    _In_    PVOID   Base,
+    _Inout_ PVOID * CommitAddress,
+    _Inout_ PSIZE_T CommitSize
+);
+
+typedef struct _RTL_HEAP_PARAMETERS {
+    ULONG  Length;
+    SIZE_T SegmentReserve;
+    SIZE_T SegmentCommit;
+    SIZE_T DeCommitFreeBlockThreshold;
+    SIZE_T DeCommitTotalFreeThreshold;
+    SIZE_T MaximumAllocationSize;
+    SIZE_T VirtualMemoryThreshold;
+    SIZE_T InitialCommit;
+    SIZE_T InitialReserve;
+    PRTL_HEAP_COMMIT_ROUTINE CommitRoutine;
+    SIZE_T Reserved[2];
+} RTL_HEAP_PARAMETERS, *PRTL_HEAP_PARAMETERS;
+
+typedef struct _RTL_HEAP_TAG_INFO {
+    ULONG  NumberOfAllocations;
+    ULONG  NumberOfFrees;
+    SIZE_T BytesAllocated;
+} RTL_HEAP_TAG_INFO, *PRTL_HEAP_TAG_INFO;
+
+typedef NTSTATUS (CALLBACK * PHEAP_ENUMERATION_ROUTINE) (
+    _In_ PVOID HeapHandle,
+    _In_ PVOID UserParam
+);
+
+typedef struct _RTL_HEAP_WALK_ENTRY {
+    PVOID  DataAddress;
+    SIZE_T DataSize;
+    UCHAR  OverheadBytes;
+    UCHAR  SegmentIndex;
+    USHORT Flags;
+    union {
+        struct {
+            SIZE_T Settable;
+            USHORT TagIndex;
+            USHORT AllocatorBackTraceIndex;
+            ULONG  Reserved[2];
+        } Block;
+        struct {
+            ULONG CommittedSize;
+            ULONG UnCommittedSize;
+            PVOID FirstEntry;
+            PVOID LastEntry;
+        } Segment;
+    };
+} RTL_HEAP_WALK_ENTRY, *PRTL_HEAP_WALK_ENTRY;
+
+// ----------------------------------------
 //   Loader Definitions
 
 typedef struct _LDR_DLL_UNLOADED_NOTIFICATION_DATA {
@@ -2727,7 +2779,7 @@ typedef union _LDR_DLL_NOTIFICATION_DATA {
 	LDR_DLL_UNLOADED_NOTIFICATION_DATA Unloaded;
 } LDR_DLL_NOTIFICATION_DATA, *PLDR_DLL_NOTIFICATION_DATA;
 
-typedef VOID (CALLBACK*PLDR_DLL_NOTIFICATION_FUNCTION)(
+typedef VOID (CALLBACK * PLDR_DLL_NOTIFICATION_FUNCTION) (
 	_In_     ULONG                      NotificationReason,
 	_In_     PLDR_DLL_NOTIFICATION_DATA NotificationData,
 	_In_opt_ PVOID                      Context
@@ -2859,31 +2911,19 @@ NATIVE_API(NTSTATUS, /*Nt*/MapViewOfSection, (
 // ----------------------------------------
 //   Runtime API
 
-RTL_API_VOID(RtlInitUnicodeString, (
+NTDLL_API_VOID(RtlInitUnicodeString, (
     _Out_    PUNICODE_STRING DestinationString,
     _In_opt_ PWSTR           SourceString)
 )
 
-RTL_API(BOOLEAN, RtlDosPathNameToNtPathName_U, (
+NTDLL_API(BOOLEAN, RtlDosPathNameToNtPathName_U, (
     _In_	  PCWSTR          DosFileName,
     _Out_	  PUNICODE_STRING NtFileName,
     _Out_opt_ PWSTR *         FilePart,
     _Out_opt_ PVOID           RelativeName)
 )
 
-RTL_API(PVOID, RtlAllocateHeap, (
-    _In_ PVOID  HeapHandle,
-    _In_ ULONG  Flags,
-    _In_ SIZE_T Size)
-)
-
-RTL_API(BOOLEAN, RtlFreeHeap, (
-    _In_ PVOID HeapHandle,
-    _In_ ULONG Flags,
-    _In_ PVOID HeapBase)
-)
-
-RTL_API(NTSTATUS, RtlCreateUserThread, (
+NTDLL_API(NTSTATUS, RtlCreateUserThread, (
     _In_     HANDLE               ProcessHandle,
     _In_opt_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _In_     BOOLEAN              CreateSuspended,
@@ -2896,28 +2936,193 @@ RTL_API(NTSTATUS, RtlCreateUserThread, (
     _Out_    PCLIENT_ID           ClientID)
 )
 
-RTL_API(PIMAGE_NT_HEADERS, RtlImageNtHeader, (
+NTDLL_API(PIMAGE_NT_HEADERS, RtlImageNtHeader, (
     _In_ PVOID ModuleAddress)
 )
 
 // ----------------------------------------
+//   Heap API
+
+NTDLL_API(PVOID, RtlCreateHeap, (
+    _In_     ULONG                Flags,
+    _In_opt_ PVOID                HeapBase,
+    _In_opt_ SIZE_T               ReserveSize,
+    _In_opt_ SIZE_T               CommitSize,
+    _In_opt_ PVOID                Lock,
+    _In_opt_ PRTL_HEAP_PARAMETERS Parameters)
+)
+
+NTDLL_API(PVOID, RtlDestroyHeap, (
+    _In_ PVOID HeapHandle)
+)
+
+NTDLL_API(LONG, RtlCreateTagHeap, (
+    _In_ PVOID   HeapHandle,
+    _In_ ULONG   Flags,
+    _In_ LPCWSTR HeapTag,
+    _In_ LPCWSTR HeapTagGroup)
+)
+
+NTDLL_API(PWSTR, RtlQueryTagHeap, (
+    _In_  PVOID              HeapHandle,
+    _In_  ULONG              Flags,
+    _In_  USHORT             TagIndex,
+    _In_  BOOLEAN            ResetCounters,
+    _Out_ PRTL_HEAP_TAG_INFO HeapTagInfo)
+)
+
+NTDLL_API(PVOID, RtlAllocateHeap, (
+    _In_ PVOID  HeapHandle,
+    _In_ ULONG  Flags,
+    _In_ SIZE_T Size)
+)
+
+NTDLL_API(PVOID, RtlReAllocateHeap, (
+    _In_ PVOID HeapHandle,
+    _In_ ULONG Flags,
+    _In_ PVOID MemoryPointer,
+    _In_ ULONG Size)
+)
+
+NTDLL_API(BOOLEAN, RtlFreeHeap, (
+    _In_ PVOID HeapHandle,
+    _In_ ULONG Flags,
+    _In_ PVOID HeapBase)
+)
+
+NTDLL_API(ULONG, RtlMultipleAllocateHeap, (
+    _In_  PVOID   HeapHandle,
+    _In_  ULONG   Flags,
+    _In_  SIZE_T  Size,
+    _In_  ULONG   Count,
+    _Out_ PVOID * Array)
+)
+
+NTDLL_API(ULONG, RtlMultipleFreeHeap, (
+    _In_ PVOID   HeapHandle,
+    _In_ ULONG   Flags,
+    _In_ ULONG   Count,
+    _In_ PVOID * Array)
+)
+
+NTDLL_API(BOOLEAN, RtlLockHeap, (
+    _In_ PVOID HeapHandle)
+)
+
+NTDLL_API(BOOLEAN, RtlUnlockHeap, (
+    _In_ PVOID HeapHandle)
+)
+
+NTDLL_API(LONG, RtlCompactHeap, (
+    _In_ PVOID HeapHandle,
+    _In_ ULONG Flags)
+)
+
+NTDLL_API(PVOID, RtlProtectHeap, (
+    _In_ PVOID   HeapHandle,
+    _In_ BOOLEAN Protect)
+)
+
+NTDLL_API(NTSTATUS, RtlZeroHeap, (
+    _In_ PVOID HeapHandle,
+    _In_ ULONG Flags)
+)
+
+NTDLL_API(BOOLEAN, RtlGetUserInfoHeap, (
+    _In_  PVOID   HeapHandle,
+    _In_  ULONG   Flags,
+    _In_  PVOID   BaseAddress,
+    _Out_ PVOID * UserValue,
+    _Out_ PULONG  UserFlags)
+)
+
+NTDLL_API(NTSTATUS, RtlQueryHeapInformation, (
+    _In_      PVOID  	             HeapHandle,
+    _In_      HEAP_INFORMATION_CLASS HeapInformationClass,
+    _Out_opt_ PVOID  	             HeapInformation,
+    _In_opt_  SIZE_T  	             HeapInformationLength,
+    _Out_opt_ PSIZE_T  	             ReturnLength)
+)
+
+NTDLL_API(NTSTATUS, RtlSetHeapInformation, (
+    _In_     PVOID                  HeapHandle,
+    _In_     HEAP_INFORMATION_CLASS HeapInformationClass,
+    _In_opt_ PVOID                  HeapInformation,
+    _In_opt_ SIZE_T                 HeapInformationLength)
+)
+
+NTDLL_API(SIZE_T, RtlSizeHeap, (
+    _In_ PVOID HeapHandle,
+    _In_ ULONG Flags,
+    _In_ PVOID BaseAddress)
+)
+
+NTDLL_API(NTSTATUS, RtlQueryProcessHeapInformation, (
+    _Out_ PVOID Buffer)//TODO: find out a struct
+)
+
+NTDLL_API(BOOLEAN, RtlSetUserFlagsHeap, (
+    _In_ PVOID HeapHandle,
+    _In_ ULONG Flags,
+    _In_ PVOID BaseAddress,
+    _In_ ULONG UserFlagsReset,
+    _In_ ULONG UserFlagsSet)
+)
+
+NTDLL_API(BOOLEAN, RtlSetUserValueHeap, (
+    _In_ PVOID HeapHandle,
+    _In_ ULONG Flags,
+    _In_ PVOID BaseAddress,
+    _In_ PVOID UserValue)
+)
+
+NTDLL_API(BOOLEAN, RtlValidateHeap, (
+    _In_ PVOID HeapHandle,
+    _In_ ULONG Flags,
+    _In_ PVOID BaseAddress)
+)
+
+NTDLL_API(NTSTATUS, RtlWalkHeap, (
+    _In_    PVOID                HeapHandle,
+    _Inout_ PRTL_HEAP_WALK_ENTRY Entry)
+)
+
+NTDLL_API_VOID(RtlDetectHeapLeaks, (void)) //6.1
+
+NTDLL_API(ULONG, RtlGetProcessHeaps, (
+    _In_  ULONG    Count,
+    _Out_ HANDLE * Heaps)
+)
+
+NTDLL_API(NTSTATUS, RtlEnumProcessHeaps, (
+    _In_     PHEAP_ENUMERATION_ROUTINE HeapEnumerationRoutine,
+    _In_opt_ PVOID                     Param)
+)
+
+NTDLL_API(BOOLEAN, RtlValidateProcessHeaps, (void))
+
+//TODO:
+// - RtlDetectHeapLeaks
+// - RtlHeapTrkInitialize
+
+// ----------------------------------------
 //   Loader API
 
-LDR_API(NTSTATUS, LdrRegisterDllNotification, (
+NTDLL_API(NTSTATUS, LdrRegisterDllNotification, (
     _In_     ULONG                          Flags,
     _In_     PLDR_DLL_NOTIFICATION_FUNCTION NotificationFunction,
     _In_opt_ PVOID                          Context,
     _Out_    PVOID *                        Cookie)
 )
 
-LDR_API(NTSTATUS, LdrLoadDll, (
+NTDLL_API(NTSTATUS, LdrLoadDll, (
     _In_opt_ PWCHAR          PathToFile,
     _In_opt_ ULONG           Flags, //TODO: is it ULONG or PULONG?
     _In_     PUNICODE_STRING ModuleFileName,
     _Out_    PHANDLE         ModuleHandle)
 )
 
-LDR_API(NTSTATUS, LdrUnloadDll, (
+NTDLL_API(NTSTATUS, LdrUnloadDll, (
     _In_ PVOID BaseAddress)
 )
 
@@ -2929,8 +3134,8 @@ LDR_API(NTSTATUS, LdrUnloadDll, (
 
 #undef NATIVE_API
 
-#undef RTL_API
-#undef RTL_API_VOID
+#undef NTDLL_API
+#undef NTDLL_API_VOID
 
 #undef LDR_API
 
