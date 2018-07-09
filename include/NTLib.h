@@ -2596,6 +2596,44 @@ typedef enum _THREAD_INFO_CLASS {
 // ----------------------------------------
 //   File Definitions
 
+// Disposition flags
+
+#define FILE_SUPERSEDE                          0x00000000
+#define FILE_OPEN                               0x00000001
+#define FILE_CREATE                             0x00000002
+#define FILE_OPEN_IF                            0x00000003
+#define FILE_OVERWRITE                          0x00000004
+#define FILE_OVERWRITE_IF                       0x00000005
+#define FILE_MAXIMUM_DISPOSITION                0x00000005
+
+// Create flags
+
+#define FILE_DIRECTORY_FILE                     0x00000001
+#define FILE_WRITE_THROUGH                      0x00000002
+#define FILE_SEQUENTIAL_ONLY                    0x00000004
+#define FILE_NO_INTERMEDIATE_BUFFERING          0x00000008
+
+#define FILE_SYNCHRONOUS_IO_ALERT               0x00000010
+#define FILE_SYNCHRONOUS_IO_NONALERT            0x00000020
+#define FILE_NON_DIRECTORY_FILE                 0x00000040
+#define FILE_CREATE_TREE_CONNECTION             0x00000080
+
+#define FILE_COMPLETE_IF_OPLOCKED               0x00000100
+#define FILE_NO_EA_KNOWLEDGE                    0x00000200
+#define FILE_OPEN_REMOTE_INSTANCE               0x00000400
+#define FILE_RANDOM_ACCESS                      0x00000800
+
+#define FILE_DELETE_ON_CLOSE                    0x00001000
+#define FILE_OPEN_BY_FILE_ID                    0x00002000
+#define FILE_OPEN_FOR_BACKUP_INTENT             0x00004000
+#define FILE_NO_COMPRESSION                     0x00008000
+
+#define FILE_RESERVE_OPFILTER                   0x00100000
+#define FILE_OPEN_REPARSE_POINT                 0x00200000
+#define FILE_OPEN_NO_RECALL                     0x00400000
+#define FILE_OPEN_FOR_FREE_SPACE_QUERY          0x00800000
+
+
 typedef enum _FILE_INFORMATION_CLASS {
     FileDirectoryInformation = 1,
     FileFullDirectoryInformation,
@@ -2784,6 +2822,254 @@ typedef VOID (CALLBACK * PLDR_DLL_NOTIFICATION_FUNCTION) (
 	_In_     PLDR_DLL_NOTIFICATION_DATA NotificationData,
 	_In_opt_ PVOID                      Context
 );
+
+// ----------------------------------------
+//   ALPC Definitions
+
+// LPC section
+
+#define PORT_CONNECT 0x0001
+#define PORT_ALL_ACCESS (STANDARD_RIGHTS_REQUIRED | SYNCHRONIZE | 0x1)
+
+typedef struct _PORT_MESSAGE {
+    union {
+        struct {
+            USHORT DataLength;
+            USHORT TotalLength;
+        } s1;
+        ULONG Length;
+    } u1;
+
+    union {
+        struct {
+            USHORT Type;
+            USHORT DataInfoOffset;
+        } s2;
+        ULONG ZeroInit;
+    } u2;
+
+    union {
+        CLIENT_ID ClientId;
+        double DoNotUseThisField;
+    } u3;
+
+    ULONG MessageId;
+
+    union {
+        SIZE_T ClientViewSize; // only valid for LPC_CONNECTION_REQUEST messages
+        ULONG CallbackId;      // only valid for LPC_REQUEST messages
+    } u4;
+} PORT_MESSAGE, *PPORT_MESSAGE;
+
+// ALPC section
+
+typedef HANDLE ALPC_HANDLE, *PALPC_HANDLE;
+
+#define ALPC_PORFLG_ALLOW_LPC_REQUESTS    0x20000
+#define ALPC_PORFLG_WAITABLE_PORT         0x40000
+#define ALPC_PORFLG_SYSTEM_PROCESS        0x100000
+
+typedef struct _ALPC_PORT_ATTRIBUTES {
+    ULONG Flags;
+    SECURITY_QUALITY_OF_SERVICE SecurityQos;
+    SIZE_T MaxMessageLength;
+    SIZE_T MemoryBandwidth;
+    SIZE_T MaxPoolUsage;
+    SIZE_T MaxSectionSize;
+    SIZE_T MaxViewSize;
+    SIZE_T MaxTotalSectionSize;
+    ULONG DupObjectTypes;
+#ifdef _WIN64
+    ULONG Reserved;
+#endif
+} ALPC_PORT_ATTRIBUTES, *PALPC_PORT_ATTRIBUTES;
+
+#define ALPC_MESSAGE_SECURITY_ATTRIBUTE 0x80000000
+#define ALPC_MESSAGE_VIEW_ATTRIBUTE     0x40000000
+#define ALPC_MESSAGE_CONTEXT_ATTRIBUTE  0x20000000
+#define ALPC_MESSAGE_HANDLE_ATTRIBUTE   0x10000000
+
+typedef struct _ALPC_MESSAGE_ATTRIBUTES {
+    ULONG AllocatedAttributes;
+    ULONG ValidAttributes;
+} ALPC_MESSAGE_ATTRIBUTES, *PALPC_MESSAGE_ATTRIBUTES;
+
+typedef struct _ALPC_COMPLETION_LIST_STATE {
+    union {
+        struct {
+            ULONG64 Head : 24;
+            ULONG64 Tail : 24;
+            ULONG64 ActiveThreadCount : 16;
+        } s1;
+        ULONG64 Value;
+    } u1;
+} ALPC_COMPLETION_LIST_STATE, *PALPC_COMPLETION_LIST_STATE;
+
+#define ALPC_COMPLETION_LIST_BUFFER_GRANULARITY_MASK 0x3f
+
+typedef struct DECLSPEC_ALIGN(128) _ALPC_COMPLETION_LIST_HEADER {
+    ULONG64 StartMagic;
+
+    ULONG TotalSize;
+    ULONG ListOffset;
+    ULONG ListSize;
+    ULONG BitmapOffset;
+    ULONG BitmapSize;
+    ULONG DataOffset;
+    ULONG DataSize;
+    ULONG AttributeFlags;
+    ULONG AttributeSize;
+
+    DECLSPEC_ALIGN(128) ALPC_COMPLETION_LIST_STATE State;
+    ULONG LastMessageId;
+    ULONG LastCallbackId;
+    DECLSPEC_ALIGN(128) ULONG PostCount;
+    DECLSPEC_ALIGN(128) ULONG ReturnCount;
+    DECLSPEC_ALIGN(128) ULONG LogSequenceNumber;
+    DECLSPEC_ALIGN(128) RTL_SRWLOCK UserLock;
+
+    ULONG64 EndMagic;
+} ALPC_COMPLETION_LIST_HEADER, *PALPC_COMPLETION_LIST_HEADER;
+
+typedef struct _ALPC_CONTEXT_ATTR {
+    PVOID PortContext;
+    PVOID MessageContext;
+    ULONG Sequence;
+    ULONG MessageId;
+    ULONG CallbackId;
+} ALPC_CONTEXT_ATTR, *PALPC_CONTEXT_ATTR;
+
+#define ALPC_HANDLEFLG_DUPLICATE_SAME_ACCESS 0x10000
+#define ALPC_HANDLEFLG_DUPLICATE_SAME_ATTRIBUTES 0x20000
+#define ALPC_HANDLEFLG_DUPLICATE_INHERIT 0x80000
+
+typedef struct _ALPC_HANDLE_ATTR32 {
+    ULONG Flags;
+    ULONG Reserved0;
+    ULONG SameAccess;
+    ULONG SameAttributes;
+    ULONG Indirect;
+    ULONG Inherit;
+    ULONG Reserved1;
+    ULONG Handle;
+    ULONG ObjectType; // ObjectTypeCode, not ObjectTypeIndex
+    ULONG DesiredAccess;
+    ULONG GrantedAccess;
+} ALPC_HANDLE_ATTR32, *PALPC_HANDLE_ATTR32;
+
+typedef struct _ALPC_HANDLE_ATTR {
+    ULONG Flags;
+    ULONG Reserved0;
+    ULONG SameAccess;
+    ULONG SameAttributes;
+    ULONG Indirect;
+    ULONG Inherit;
+    ULONG Reserved1;
+    HANDLE Handle;
+    PALPC_HANDLE_ATTR32 HandleAttrArray;
+    ULONG ObjectType; // ObjectTypeCode, not ObjectTypeIndex
+    ULONG HandleCount;
+    ACCESS_MASK DesiredAccess;
+    ACCESS_MASK GrantedAccess;
+} ALPC_HANDLE_ATTR, *PALPC_HANDLE_ATTR;
+
+#define ALPC_SECFLG_CREATE_HANDLE 0x20000
+
+typedef struct _ALPC_SECURITY_ATTR {
+    ULONG Flags;
+    PSECURITY_QUALITY_OF_SERVICE QoS;
+    ALPC_HANDLE ContextHandle;
+} ALPC_SECURITY_ATTR, *PALPC_SECURITY_ATTR;
+
+#define ALPC_VIEWFLG_NOT_SECURE 0x40000
+
+typedef struct _ALPC_DATA_VIEW_ATTR {
+    ULONG Flags;
+    ALPC_HANDLE SectionHandle;
+    PVOID ViewBase; // must be zero on input
+    SIZE_T ViewSize;
+} ALPC_DATA_VIEW_ATTR, *PALPC_DATA_VIEW_ATTR;
+
+typedef enum _ALPC_PORT_INFORMATION_CLASS {
+    AlpcBasicInformation, // q: out ALPC_BASIC_INFORMATION
+    AlpcPortInformation, // s: in ALPC_PORT_ATTRIBUTES
+    AlpcAssociateCompletionPortInformation, // s: in ALPC_PORT_ASSOCIATE_COMPLETION_PORT
+    AlpcConnectedSIDInformation, // q: in SID
+    AlpcServerInformation, // q: inout ALPC_SERVER_INFORMATION
+    AlpcMessageZoneInformation, // s: in ALPC_PORT_MESSAGE_ZONE_INFORMATION
+    AlpcRegisterCompletionListInformation, // s: in ALPC_PORT_COMPLETION_LIST_INFORMATION
+    AlpcUnregisterCompletionListInformation, // s: VOID
+    AlpcAdjustCompletionListConcurrencyCountInformation, // s: in ULONG
+    AlpcRegisterCallbackInformation, // kernel-mode only
+    AlpcCompletionListRundownInformation, // s: VOID
+    AlpcWaitForPortReferences
+} ALPC_PORT_INFORMATION_CLASS;
+
+typedef struct _ALPC_BASIC_INFORMATION {
+    ULONG Flags;
+    ULONG SequenceNo;
+    PVOID PortContext;
+} ALPC_BASIC_INFORMATION, *PALPC_BASIC_INFORMATION;
+
+typedef struct _ALPC_PORT_ASSOCIATE_COMPLETION_PORT {
+    PVOID CompletionKey;
+    HANDLE CompletionPort;
+} ALPC_PORT_ASSOCIATE_COMPLETION_PORT, *PALPC_PORT_ASSOCIATE_COMPLETION_PORT;
+
+typedef struct _ALPC_SERVER_INFORMATION {
+    union {
+        struct {
+            HANDLE ThreadHandle;
+        } In;
+        struct {
+            BOOLEAN ThreadBlocked;
+            HANDLE ConnectedProcessId;
+            UNICODE_STRING ConnectionPortName;
+        } Out;
+    };
+} ALPC_SERVER_INFORMATION, *PALPC_SERVER_INFORMATION;
+
+typedef struct _ALPC_PORT_MESSAGE_ZONE_INFORMATION {
+    PVOID Buffer;
+    ULONG Size;
+} ALPC_PORT_MESSAGE_ZONE_INFORMATION, *PALPC_PORT_MESSAGE_ZONE_INFORMATION;
+
+typedef struct _ALPC_PORT_COMPLETION_LIST_INFORMATION {
+    PVOID Buffer; // PALPC_COMPLETION_LIST_HEADER
+    ULONG Size;
+    ULONG ConcurrencyCount;
+    ULONG AttributeFlags;
+} ALPC_PORT_COMPLETION_LIST_INFORMATION, *PALPC_PORT_COMPLETION_LIST_INFORMATION;
+
+typedef enum _ALPC_MESSAGE_INFORMATION_CLASS {
+    AlpcMessageSidInformation, // q: out SID
+    AlpcMessageTokenModifiedIdInformation,  // q: out LUID
+    AlpcMessageDirectStatusInformation,
+    AlpcMessageHandleInformation, // ALPC_MESSAGE_HANDLE_INFORMATION
+    MaxAlpcMessageInfoClass
+} ALPC_MESSAGE_INFORMATION_CLASS, *PALPC_MESSAGE_INFORMATION_CLASS;
+
+typedef struct _ALPC_MESSAGE_HANDLE_INFORMATION {
+    ULONG Index;
+    ULONG Flags;
+    ULONG Handle;
+    ULONG ObjectType;
+    ACCESS_MASK GrantedAccess;
+} ALPC_MESSAGE_HANDLE_INFORMATION, *PALPC_MESSAGE_HANDLE_INFORMATION;
+
+// NtAlpcConnectPort flags
+#define ALPC_MSGFLG_REPLY_MESSAGE       0x00000001
+#define ALPC_MSGFLG_LPC_MODE            0x00000002
+#define ALPC_MSGFLG_RELEASE_MESSAGE     0x00010000
+#define ALPC_MSGFLG_SYNC_REQUEST        0x00020000
+#define ALPC_MSGFLG_WAIT_USER_MODE      0x00100000
+#define ALPC_MSGFLG_WAIT_ALERTABLE      0x00200000
+#define ALPC_MSGFLG_WOW64_CALL          0x80000000
+
+// NtAlpcCancelMessage flags
+#define ALPC_CANCELFLG_TRY_CANCEL       0x00000001
+#define ALPC_CANCELFLG_NO_CONTEXT_CHECK 0x00000008
+#define ALPC_CANCELFLGP_FLUSH           0x00010000
 
 // ----------------------------------------
 //   Object API
@@ -3124,6 +3410,102 @@ NTDLL_API(NTSTATUS, LdrLoadDll, (
 
 NTDLL_API(NTSTATUS, LdrUnloadDll, (
     _In_ PVOID BaseAddress)
+)
+
+// ----------------------------------------
+//   ALPC API
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcCreatePort, (
+    _Out_ PHANDLE PortHandle,
+    _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
+    _In_opt_ PALPC_PORT_ATTRIBUTES PortAttributes)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcDisconnectPort, (
+    _In_ HANDLE PortHandle,
+    _In_ ULONG Flags)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcCreatePortSection, (
+    _In_ HANDLE PortHandle,
+    _In_ ULONG Flags,
+    _In_opt_ HANDLE SectionHandle,
+    _In_ SIZE_T SectionSize,
+    _Out_ PALPC_HANDLE AlpcSectionHandle,
+    _Out_ PSIZE_T ActualSectionSize)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcDeletePortSection, (
+    _In_ HANDLE PortHandle,
+    _Reserved_ ULONG Flags,
+    _In_ ALPC_HANDLE SectionHandle)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcCreateSectionView, (
+    _In_ HANDLE PortHandle,
+    _Reserved_ ULONG Flags,
+    _Inout_ PALPC_DATA_VIEW_ATTR ViewAttributes)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcDeleteSectionView, (
+    _In_ HANDLE PortHandle,
+    _Reserved_ ULONG Flags,
+    _In_ PVOID ViewBase)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcConnectPort, (
+    _Out_ PHANDLE PortHandle,
+    _In_ PUNICODE_STRING PortName,
+    _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
+    _In_opt_ PALPC_PORT_ATTRIBUTES PortAttributes,
+    _In_ ULONG Flags,
+    _In_opt_ PSID RequiredServerSid,
+    _Inout_updates_bytes_to_opt_(*BufferLength, *BufferLength) PPORT_MESSAGE ConnectionMessage,
+    _Inout_opt_ PULONG BufferLength,
+    _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES OutMessageAttributes,
+    _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES InMessageAttributes,
+    _In_opt_ PLARGE_INTEGER Timeout)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcAcceptConnectPort, (
+    _Out_ PHANDLE PortHandle,
+    _In_ HANDLE ConnectionPortHandle,
+    _In_ ULONG Flags,
+    _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
+    _In_opt_ PALPC_PORT_ATTRIBUTES PortAttributes,
+    _In_opt_ PVOID PortContext,
+    _In_reads_bytes_(ConnectionRequest->u1.s1.TotalLength) PPORT_MESSAGE ConnectionRequest,
+    _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES ConnectionMessageAttributes,
+    _In_ BOOLEAN AcceptConnection)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcSendWaitReceivePort, (
+    _In_ HANDLE PortHandle,
+    _In_ ULONG Flags,
+    _In_reads_bytes_opt_(SendMessage->u1.s1.TotalLength) PPORT_MESSAGE SendMessage,
+    _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES SendMessageAttributes,
+    _Out_writes_bytes_to_opt_(*BufferLength, *BufferLength) PPORT_MESSAGE ReceiveMessage,
+    _Inout_opt_ PSIZE_T BufferLength,
+    _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES ReceiveMessageAttributes,
+    _In_opt_ PLARGE_INTEGER Timeout)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/AlpcCancelMessage, (
+    _In_ HANDLE PortHandle,
+    _In_ ULONG Flags,
+    _In_ PALPC_CONTEXT_ATTR MessageContext)
+)
+
+NTDLL_API(NTSTATUS, AlpcInitializeMessageAttribute, (
+    _In_ ULONG AttributeFlags,
+    _Out_opt_ PALPC_MESSAGE_ATTRIBUTES Buffer,
+    _In_ ULONG BufferSize,
+    _Out_ PULONG RequiredBufferSize)
+)
+
+NTDLL_API(PVOID, AlpcGetMessageAttribute, (
+    _In_ PALPC_MESSAGE_ATTRIBUTES Buffer,
+    _In_ ULONG AttributeFlag)
 )
 
 // ----------------------------------------
