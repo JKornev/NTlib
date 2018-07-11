@@ -37,9 +37,9 @@ extern "C" {
   #define NATIVE_API(type, name, params) \
     type NTDEF Zw##name params; \
     type NTDEF Nt##name params;
-  #define RTL_API(type, name, params) \
+  #define NTDLL_API(type, name, params) \
     type NTDEF name params;
-  #define RTL_API_VOID(name, params) \
+  #define NTDLL_API_VOID(name, params) \
     VOID NTDEF name params;
 #endif
 
