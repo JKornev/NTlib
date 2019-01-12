@@ -17,12 +17,12 @@ extern "C" {
   #error NTLIB: Error, unknown architecture
 #endif
 
-#define NTCALL __stdcall
-
 #ifdef NTLIB_COMPILATION
-  #define NTDEF __declspec(dllexport) NTCALL
+  #define NTCALL 
+  #define NTDEF  __declspec(dllexport) NTCALL
 #else
-  #define NTDEF __declspec(dllimport) NTCALL
+  #define NTCALL __stdcall
+  #define NTDEF  __declspec(dllimport) NTCALL
 #endif
 
 #ifdef NTLIB_COMPILATION
@@ -2497,6 +2497,12 @@ extern "C" {
 // ----------------------------------------
 //   Base definitions
 
+typedef struct _ANSI_STRING {
+    USHORT Length;
+    USHORT MaximumLength;
+    PCHAR  Buffer;
+} ANSI_STRING, *PANSI_STRING;
+
 typedef struct _LSA_UNICODE_STRING {
     USHORT Length;
     USHORT MaximumLength;
@@ -2526,13 +2532,298 @@ typedef struct _OBJECT_HANDLE_ATTRIBUTE_INFORMATION {
     (p)->SecurityQualityOfService = NULL; \
 }
 
+typedef struct _CURRENT_DIRECTORY {
+    UNICODE_STRING DosPath;
+    PVOID          Handle;
+} CURRENT_DIRECTORY, *PCURRENT_DIRECTORY;
+
+typedef struct _RTL_DRIVE_LETTER_CURDIR {
+    WORD        Flags;
+    WORD        Length;
+    ULONG       TimeStamp;
+    ANSI_STRING DosPath;
+} RTL_DRIVE_LETTER_CURDIR, *PRTL_DRIVE_LETTER_CURDIR;
+
 // ----------------------------------------
 //   Process Definitions
+
+#define GDI_HANDLE_BUFFER_SIZE32 34
+#define GDI_HANDLE_BUFFER_SIZE64 60
+
+#ifndef _M_AMD64
+#define GDI_HANDLE_BUFFER_SIZE GDI_HANDLE_BUFFER_SIZE32
+#else
+#define GDI_HANDLE_BUFFER_SIZE GDI_HANDLE_BUFFER_SIZE64
+#endif
+
+typedef ULONG GDI_HANDLE_BUFFER[GDI_HANDLE_BUFFER_SIZE];
+
+typedef ULONG GDI_HANDLE_BUFFER32[GDI_HANDLE_BUFFER_SIZE32];
+typedef ULONG GDI_HANDLE_BUFFER64[GDI_HANDLE_BUFFER_SIZE64];
 
 typedef struct _CLIENT_ID {
     PVOID UniqueProcess;
     PVOID UniqueThread;
 } CLIENT_ID, *PCLIENT_ID;
+
+typedef struct _RTL_USER_PROCESS_PARAMETERS
+{
+    ULONG             MaximumLength;
+    ULONG             Length;
+    ULONG             Flags;
+    ULONG             DebugFlags;
+    PVOID             ConsoleHandle;
+    ULONG             ConsoleFlags;
+    PVOID             StandardInput;
+    PVOID             StandardOutput;
+    PVOID             StandardError;
+    CURRENT_DIRECTORY CurrentDirectory;
+    UNICODE_STRING    DllPath;
+    UNICODE_STRING    ImagePathName;
+    UNICODE_STRING    CommandLine;
+    PVOID             Environment;
+    ULONG             StartingX;
+    ULONG             StartingY;
+    ULONG             CountX;
+    ULONG             CountY;
+    ULONG             CountCharsX;
+    ULONG             CountCharsY;
+    ULONG             FillAttribute;
+    ULONG             WindowFlags;
+    ULONG             ShowWindowFlags;
+    UNICODE_STRING    WindowTitle;
+    UNICODE_STRING    DesktopInfo;
+    UNICODE_STRING    ShellInfo;
+    UNICODE_STRING    RuntimeData;
+    RTL_DRIVE_LETTER_CURDIR CurrentDirectores[32];
+    ULONG             EnvironmentSize;
+} RTL_USER_PROCESS_PARAMETERS, *PRTL_USER_PROCESS_PARAMETERS;
+
+// symbols
+typedef struct _PEB {
+    BOOLEAN InheritedAddressSpace;
+    BOOLEAN ReadImageFileExecOptions;
+    BOOLEAN BeingDebugged;
+    union {
+        BOOLEAN BitField;
+        struct {
+            BOOLEAN ImageUsesLargePages : 1;
+            BOOLEAN IsProtectedProcess : 1;
+            BOOLEAN IsImageDynamicallyRelocated : 1;
+            BOOLEAN SkipPatchingUser32Forwarders : 1;
+            BOOLEAN IsPackagedProcess : 1;
+            BOOLEAN IsAppContainer : 1;
+            BOOLEAN IsProtectedProcessLight : 1;
+            BOOLEAN SpareBits : 1;
+        };
+    };
+    HANDLE  Mutant;
+    PVOID ImageBaseAddress;
+    PVOID Ldr;
+    PVOID ProcessParameters;
+    PVOID SubSystemData;
+    PVOID ProcessHeap;
+    PRTL_CRITICAL_SECTION FastPebLock;
+    PVOID AtlThunkSListPtr;
+    PVOID IFEOKey;
+    union {
+        ULONG CrossProcessFlags;
+        struct {
+            ULONG ProcessInJob : 1;
+            ULONG ProcessInitializing : 1;
+            ULONG ProcessUsingVEH : 1;
+            ULONG ProcessUsingVCH : 1;
+            ULONG ProcessUsingFTH : 1;
+            ULONG ReservedBits0 : 27;
+        };
+        ULONG EnvironmentUpdateCount;
+    };
+    union {
+        PVOID KernelCallbackTable;
+        PVOID UserSharedInfoPtr;
+    };
+    ULONG SystemReserved[1];
+    ULONG AtlThunkSListPtr32;
+    PVOID ApiSetMap;
+    ULONG TlsExpansionCounter;
+    PVOID TlsBitmap;
+    ULONG TlsBitmapBits[2];
+    PVOID ReadOnlySharedMemoryBase;
+    PVOID HotpatchInformation;
+    PVOID *ReadOnlyStaticServerData;
+    PVOID AnsiCodePageData;
+    PVOID OemCodePageData;
+    PVOID UnicodeCaseTableData;
+    ULONG NumberOfProcessors;
+    ULONG NtGlobalFlag;
+    LARGE_INTEGER CriticalSectionTimeout;
+    SIZE_T HeapSegmentReserve;
+    SIZE_T HeapSegmentCommit;
+    SIZE_T HeapDeCommitTotalFreeThreshold;
+    SIZE_T HeapDeCommitFreeBlockThreshold;
+    ULONG NumberOfHeaps;
+    ULONG MaximumNumberOfHeaps;
+    PVOID *ProcessHeaps;
+    PVOID GdiSharedHandleTable;
+    PVOID ProcessStarterHelper;
+    ULONG GdiDCAttributeList;
+    PRTL_CRITICAL_SECTION LoaderLock;
+    ULONG OSMajorVersion;
+    ULONG OSMinorVersion;
+    USHORT OSBuildNumber;
+    USHORT OSCSDVersion;
+    ULONG OSPlatformId;
+    ULONG ImageSubsystem;
+    ULONG ImageSubsystemMajorVersion;
+    ULONG ImageSubsystemMinorVersion;
+    ULONG_PTR ImageProcessAffinityMask;
+    GDI_HANDLE_BUFFER GdiHandleBuffer;
+    PVOID PostProcessInitRoutine;
+    PVOID TlsExpansionBitmap;
+    ULONG TlsExpansionBitmapBits[32];
+    ULONG SessionId;
+    ULARGE_INTEGER AppCompatFlags;
+    ULARGE_INTEGER AppCompatFlagsUser;
+    PVOID pShimData;
+    PVOID AppCompatInfo;
+    UNICODE_STRING CSDVersion;
+    PVOID ActivationContextData;
+    PVOID ProcessAssemblyStorageMap;
+    PVOID SystemDefaultActivationContextData;
+    PVOID SystemAssemblyStorageMap;
+    SIZE_T MinimumStackCommit;
+    PVOID *FlsCallback;
+    LIST_ENTRY FlsListHead;
+    PVOID FlsBitmap;
+    ULONG FlsBitmapBits[FLS_MAXIMUM_AVAILABLE / (sizeof(ULONG)* 8)];
+    ULONG FlsHighIndex;
+    PVOID WerRegistrationData;
+    PVOID WerShipAssertPtr;
+    PVOID pContextData;
+    PVOID pImageHeaderHash;
+    union {
+        ULONG TracingFlags;
+        struct {
+            ULONG HeapTracingEnabled : 1;
+            ULONG CritSecTracingEnabled : 1;
+            ULONG LibLoaderTracingEnabled : 1;
+            ULONG SpareTracingBits : 29;
+        };
+    };
+    ULONGLONG CsrServerReadOnlySharedMemoryBase;
+} PEB, *PPEB;
+
+typedef enum _PROCESS_INFO_CLASS
+{
+    ProcessBasicInformation,            // q: PROCESS_BASIC_INFORMATION, PROCESS_EXTENDED_BASIC_INFORMATION
+    ProcessQuotaLimits,                 // qs: QUOTA_LIMITS, QUOTA_LIMITS_EX
+    ProcessIoCounters,                  // q: IO_COUNTERS
+    ProcessVmCounters,                  // q: VM_COUNTERS, VM_COUNTERS_EX, VM_COUNTERS_EX2
+    ProcessTimes,                       // q: KERNEL_USER_TIMES
+    ProcessBasePriority,                // s: KPRIORITY
+    ProcessRaisePriority,               // s: ULONG
+    ProcessDebugPort,                   // q: HANDLE
+    ProcessExceptionPort,               // s: PROCESS_EXCEPTION_PORT
+    ProcessAccessToken,                 // s: PROCESS_ACCESS_TOKEN
+    ProcessLdtInformation,              // qs: PROCESS_LDT_INFORMATION // 10
+    ProcessLdtSize,                     // s: PROCESS_LDT_SIZE
+    ProcessDefaultHardErrorMode,        // qs: ULONG
+    ProcessIoPortHandlers,              // (kernel-mode only)
+    ProcessPooledUsageAndLimits,        // q: POOLED_USAGE_AND_LIMITS
+    ProcessWorkingSetWatch,             // q: PROCESS_WS_WATCH_INFORMATION[]; s: void
+    ProcessUserModeIOPL,
+    ProcessEnableAlignmentFaultFixup,   // s: BOOLEAN
+    ProcessPriorityClass,               // qs: PROCESS_PRIORITY_CLASS
+    ProcessWx86Information,
+    ProcessHandleCount,                 // q: ULONG, PROCESS_HANDLE_INFORMATION // 20
+    ProcessAffinityMask,                // s: KAFFINITY
+    ProcessPriorityBoost,               // qs: ULONG
+    ProcessDeviceMap,                   // qs: PROCESS_DEVICEMAP_INFORMATION, PROCESS_DEVICEMAP_INFORMATION_EX
+    ProcessSessionInformation,          // q: PROCESS_SESSION_INFORMATION
+    ProcessForegroundInformation,       // s: PROCESS_FOREGROUND_BACKGROUND
+    ProcessWow64Information,            // q: ULONG_PTR
+    ProcessImageFileName,               // q: UNICODE_STRING
+    ProcessLUIDDeviceMapsEnabled,       // q: ULONG
+    ProcessBreakOnTermination,          // qs: ULONG
+    ProcessDebugObjectHandle,           // q: HANDLE // 30
+    ProcessDebugFlags,                  // qs: ULONG
+    ProcessHandleTracing,               // q: PROCESS_HANDLE_TRACING_QUERY; s: size 0 disables, otherwise enables
+    ProcessIoPriority,                  // qs: IO_PRIORITY_HINT
+    ProcessExecuteFlags,                // qs: ULONG
+    ProcessResourceManagement,          // ProcessTlsInformation // PROCESS_TLS_INFORMATION
+    ProcessCookie,                      // q: ULONG
+    ProcessImageInformation,            // q: SECTION_IMAGE_INFORMATION
+    ProcessCycleTime,                   // q: PROCESS_CYCLE_TIME_INFORMATION // since VISTA
+    ProcessPagePriority,                // q: PAGE_PRIORITY_INFORMATION
+    ProcessInstrumentationCallback,     // qs: PROCESS_INSTRUMENTATION_CALLBACK_INFORMATION // 40
+    ProcessThreadStackAllocation,       // s: PROCESS_STACK_ALLOCATION_INFORMATION, PROCESS_STACK_ALLOCATION_INFORMATION_EX
+    ProcessWorkingSetWatchEx,           // q: PROCESS_WS_WATCH_INFORMATION_EX[]
+    ProcessImageFileNameWin32,          // q: UNICODE_STRING
+    ProcessImageFileMapping,            // q: HANDLE (input)
+    ProcessAffinityUpdateMode,          // qs: PROCESS_AFFINITY_UPDATE_MODE
+    ProcessMemoryAllocationMode,        // qs: PROCESS_MEMORY_ALLOCATION_MODE
+    ProcessGroupInformation,            // q: USHORT[]
+    ProcessTokenVirtualizationEnabled,  // s: ULONG
+    ProcessConsoleHostProcess,          // q: ULONG_PTR // ProcessOwnerInformation
+    ProcessWindowInformation,           // q: PROCESS_WINDOW_INFORMATION // 50
+    ProcessHandleInformation,           // q: PROCESS_HANDLE_SNAPSHOT_INFORMATION // since WIN8
+    ProcessMitigationPolicy,            // s: PROCESS_MITIGATION_POLICY_INFORMATION
+    ProcessDynamicFunctionTableInformation,
+    ProcessHandleCheckingMode,
+    ProcessKeepAliveCount,              // q: PROCESS_KEEPALIVE_COUNT_INFORMATION
+    ProcessRevokeFileHandles,           // s: PROCESS_REVOKE_FILE_HANDLES_INFORMATION
+    ProcessWorkingSetControl,           // s: PROCESS_WORKING_SET_CONTROL
+    ProcessHandleTable,                 // since WINBLUE
+    ProcessCheckStackExtentsMode,
+    ProcessCommandLineInformation,      // q: UNICODE_STRING // 60
+    ProcessProtectionInformation,       // q: PS_PROTECTION
+    ProcessMemoryExhaustion,            // PROCESS_MEMORY_EXHAUSTION_INFO // since THRESHOLD
+    ProcessFaultInformation,            // PROCESS_FAULT_INFORMATION
+    ProcessTelemetryIdInformation,      // PROCESS_TELEMETRY_ID_INFORMATION
+    ProcessCommitReleaseInformation,    // PROCESS_COMMIT_RELEASE_INFORMATION
+    ProcessDefaultCpuSetsInformation,
+    ProcessAllowedCpuSetsInformation,
+    ProcessSubsystemProcess,
+    ProcessJobMemoryInformation,        // PROCESS_JOB_MEMORY_INFO
+    ProcessInPrivate,                   // since THRESHOLD2 // 70
+    ProcessRaiseUMExceptionOnInvalidHandleClose,
+    ProcessIumChallengeResponse,
+    ProcessChildProcessInformation,     // PROCESS_CHILD_PROCESS_INFORMATION
+    ProcessHighGraphicsPriorityInformation,
+    ProcessSubsystemInformation,        // q: SUBSYSTEM_INFORMATION_TYPE // since REDSTONE2
+    ProcessEnergyValues,                // PROCESS_ENERGY_VALUES, PROCESS_EXTENDED_ENERGY_VALUES
+    ProcessActivityThrottleState,       // PROCESS_ACTIVITY_THROTTLE_STATE
+    ProcessActivityThrottlePolicy,      // PROCESS_ACTIVITY_THROTTLE_POLICY
+    ProcessWin32kSyscallFilterInformation,
+    ProcessDisableSystemAllowedCpuSets, // 80
+    ProcessWakeInformation,             // PROCESS_WAKE_INFORMATION
+    ProcessEnergyTrackingState,         // PROCESS_ENERGY_TRACKING_STATE
+    ProcessManageWritesToExecutableMemory, // MANAGE_WRITES_TO_EXECUTABLE_MEMORY // since REDSTONE3
+    ProcessCaptureTrustletLiveDump,
+    ProcessTelemetryCoverage,
+    ProcessEnclaveInformation,
+    ProcessEnableReadWriteVmLogging,    // PROCESS_READWRITEVM_LOGGING_INFORMATION
+    ProcessUptimeInformation,           // PROCESS_UPTIME_INFORMATION
+    ProcessImageSection,
+    ProcessDebugAuthInformation,        // since REDSTONE4 // 90
+    ProcessSystemResourceManagement,    // PROCESS_SYSTEM_RESOURCE_MANAGEMENT
+    ProcessSequenceNumber,              // q: ULONGLONG
+    ProcessLoaderDetour,                // since REDSTONE5
+    ProcessSecurityDomainInformation,   // PROCESS_SECURITY_DOMAIN_INFORMATION
+    ProcessCombineSecurityDomainsInformation, // PROCESS_COMBINE_SECURITY_DOMAINS_INFORMATION
+    ProcessEnableLogging,               // PROCESS_LOGGING_INFORMATION
+    ProcessLeapSecondInformation,       // PROCESS_LEAP_SECOND_INFORMATION
+    MaxProcessInfoClass
+} PROCESS_INFO_CLASS;
+
+typedef struct _PROCESS_BASIC_INFORMATION
+{
+    PVOID Reserved1;
+    PPEB PebBaseAddress;
+    PVOID Reserved2[2];
+    ULONG_PTR UniqueProcessId;
+    PVOID Reserved3;
+} PROCESS_BASIC_INFORMATION, *PPROCESS_BASIC_INFORMATION;
 
 // ----------------------------------------
 //   Thread Definitions
@@ -3080,6 +3371,65 @@ NATIVE_API(NTSTATUS, /*Nt*/Close, (
 
 // ----------------------------------------
 //   Process API
+
+NATIVE_API(NTSTATUS, /*Nt*/CreateProcess, (
+    _Out_    PHANDLE            ProcessHandle,
+    _In_     ACCESS_MASK        DesiredAccess,
+    _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
+    _In_     HANDLE             ParentProcess,
+    _In_     BOOLEAN            InheritObjectTable,
+    _In_opt_ HANDLE             SectionHandle,
+    _In_opt_ HANDLE             DebugPort,
+    _In_opt_ HANDLE             ExceptionPort)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/CreateProcessEx, (
+    _Out_    PHANDLE            ProcessHandle,
+    _In_     ACCESS_MASK        DesiredAccess,
+    _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
+    _In_     HANDLE             ParentProcess,
+    _In_     ULONG              Flags,
+    _In_opt_ HANDLE             SectionHandle,
+    _In_opt_ HANDLE             DebugPort,
+    _In_opt_ HANDLE             ExceptionPort,
+    _In_     BOOLEAN            InJob)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/OpenProcess, (
+    _Out_ PHANDLE            ProcessHandle,
+    _In_  ACCESS_MASK        AccessMask,
+    _In_  POBJECT_ATTRIBUTES ObjectAttributes,
+    _In_  PCLIENT_ID         ClientId)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/SuspendProcess, (
+    _In_ HANDLE ProcessHandle)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/ResumeProcess, (
+    _In_ HANDLE ProcessHandle)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/QueryInformationProcess, (
+    _In_  HANDLE             ProcessHandle,
+    _In_  PROCESS_INFO_CLASS ProcessInformationClass,
+    _Out_ PVOID              ProcessInformation,
+    _In_  ULONG              ProcessInformationLength,
+    _Out_ PULONG             ReturnLength)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/SetInformationProcess, (
+    _In_ HANDLE             ProcessHandle,
+    _In_ PROCESS_INFO_CLASS ProcessInformationClass,
+    _In_ PVOID              ProcessInformation,
+    _In_ ULONG              ProcessInformationLength)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/FlushInstructionCache, (
+    _In_ HANDLE ProcessHandle,
+    _In_ PVOID  BaseAddress,
+    _In_ ULONG  NumberOfBytesToFlush)
+)
 
 // ----------------------------------------
 //   Thread API
