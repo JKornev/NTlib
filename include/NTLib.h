@@ -17,12 +17,12 @@ extern "C" {
   #error NTLIB: Error, unknown architecture
 #endif
 
+#define NTCALL __stdcall
+
 #ifdef NTLIB_COMPILATION
-  #define NTCALL 
-  #define NTDEF  __declspec(dllexport) NTCALL
+  #define NTDEF __declspec(dllexport) NTCALL
 #else
-  #define NTCALL __stdcall
-  #define NTDEF  __declspec(dllimport) NTCALL
+  #define NTDEF __declspec(dllimport) NTCALL
 #endif
 
 #ifdef NTLIB_COMPILATION

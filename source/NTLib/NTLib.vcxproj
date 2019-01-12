@@ -83,6 +83,9 @@
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)..\build\x86\release\ntlib.lib" /B "$(SolutionDir)..\library\x86\ntlib.lib"</Command>
     </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>$(ProjectDir)compiledef.py $(ProjectDir)../../include/ntlib.h &gt; $(ProjectDir)NTLib.def</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -105,9 +108,6 @@
     <ClCompile>
       <PreprocessorDefinitions>NTLIB_COMPILATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <Link>
-      <ModuleDefinitionFile>NTLib.def</ModuleDefinitionFile>
-    </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)..\build\x64\release\ntlib.lib" /B "$(SolutionDir)..\library\x64\ntlib.lib"</Command>
     </PostBuildEvent>
