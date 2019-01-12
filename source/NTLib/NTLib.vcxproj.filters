@@ -5,6 +5,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NTLib.def" />
+    <None Include="NTLib64.def" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\NTLib.h" />

@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="NTLib.def" />
+    <None Include="NTLib64.def" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\NTLib.h" />
@@ -111,6 +112,9 @@
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)..\build\x64\release\ntlib.lib" /B "$(SolutionDir)..\library\x64\ntlib.lib"</Command>
     </PostBuildEvent>
+    <Link>
+      <ModuleDefinitionFile>NTLib64.def</ModuleDefinitionFile>
+    </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
