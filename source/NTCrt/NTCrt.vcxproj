@@ -19,14 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NTExp\NTExp.vcxproj">
-      <Project>{cf2e0b9f-2903-45eb-8ff1-82489f742f78}</Project>
+    <ProjectReference Include="..\NTLib\NTLib.vcxproj">
+      <Project>{890c66cc-dd64-4577-8fb5-310533c7dfe4}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{890C66CC-DD64-4577-8FB5-310533C7DFE4}</ProjectGuid>
+    <ProjectGuid>{7E354608-D05E-4AA3-83DE-7DD8FD694E6D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>NTLib</RootNamespace>
+    <RootNamespace>NTCrt</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
