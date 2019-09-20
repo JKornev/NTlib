@@ -23,6 +23,9 @@
       <Project>{890c66cc-dd64-4577-8fb5-310533c7dfe4}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7E354608-D05E-4AA3-83DE-7DD8FD694E6D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -73,7 +76,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)..\build\x86\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)\intermidiate\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)\intermidiate\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <IncludePath>$(SolutionDir)..\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,6 +126,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /Y "$(OutDir)$(ProjectName).lib" /B "$(SolutionDir)..\library\x86\$(Configuration)\$(ProjectName).lib"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
