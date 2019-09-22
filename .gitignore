@@ -2,6 +2,8 @@
 /source/*.opensdf
 /source/*.sdf
 /source/*.suo
-/source/NTLib/*.user
+/source/*/*.user
+/source/.vs/*
+/source/*.VC.db
 /build/*
 
