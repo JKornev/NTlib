@@ -196,6 +196,7 @@
     </PostBuildEvent>
     <Link>
       <ModuleDefinitionFile>NTExp64.def</ModuleDefinitionFile>
+      <AdditionalOptions>/ignore:4197 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreLinkEvent>
       <Command>python $(ProjectDir)compiledef.py $(ProjectDir)../../include/NTExp.h &gt; $(ProjectDir)NTExp64.def</Command>
@@ -210,6 +211,7 @@
     </PostBuildEvent>
     <Link>
       <ModuleDefinitionFile>NTExp64.def</ModuleDefinitionFile>
+      <AdditionalOptions>/ignore:4197 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreLinkEvent>
       <Command>python $(ProjectDir)compiledef.py $(ProjectDir)../../include/NTExp.h &gt; $(ProjectDir)NTExp64.def</Command>
