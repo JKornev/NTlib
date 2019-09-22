@@ -3410,6 +3410,11 @@ NATIVE_API(NTSTATUS, /*Nt*/ResumeProcess, (
     _In_ HANDLE ProcessHandle)
 )
 
+NATIVE_API(NTSTATUS, /*Nt*/TerminateProcess, (
+    _In_ HANDLE   ProcessHandle,
+    _In_ NTSTATUS ExitStatus)
+)
+
 NATIVE_API(NTSTATUS, /*Nt*/QueryInformationProcess, (
     _In_  HANDLE             ProcessHandle,
     _In_  PROCESS_INFO_CLASS ProcessInformationClass,
