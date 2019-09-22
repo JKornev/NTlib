@@ -3536,6 +3536,22 @@ NATIVE_API(NTSTATUS, /*Nt*/SetInformationFile, (
     _In_  FILE_INFORMATION_CLASS FileInformationClass)
 )
 
+NATIVE_API(NTSTATUS, /*Nt*/CreateSection, (
+    _Out_    PHANDLE            SectionHandle,
+    _In_     ACCESS_MASK        DesiredAccess,
+    _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
+    _In_opt_ PLARGE_INTEGER     MaximumSize,
+    _In_     ULONG              SectionPageProtection,
+    _In_     ULONG              AllocationAttributes,
+    _In_opt_ HANDLE             FileHandle)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/OpenSection, (
+    _Out_ PHANDLE            SectionHandle,
+    _In_  ACCESS_MASK        DesiredAccess,
+    _In_  POBJECT_ATTRIBUTES ObjectAttributes)
+)
+
 NATIVE_API(NTSTATUS, /*Nt*/MapViewOfSection, (
     _In_        HANDLE          SectionHandle,
     _In_        HANDLE          ProcessHandle,
@@ -3547,6 +3563,11 @@ NATIVE_API(NTSTATUS, /*Nt*/MapViewOfSection, (
     _In_        SECTION_INHERIT InheritDisposition,
     _In_        ULONG           AllocationType,
     _In_        ULONG           Win32Protect)
+)
+
+NATIVE_API(NTSTATUS, /*Nt*/UnmapViewOfSection, (
+    _In_     HANDLE ProcessHandle,
+    _In_opt_ PVOID  BaseAddress)
 )
 
 // ----------------------------------------

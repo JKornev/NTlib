@@ -12,6 +12,8 @@ EXPORTS
  ZwSuspendProcess
  NtResumeProcess
  ZwResumeProcess
+ NtTerminateProcess
+ ZwTerminateProcess
  NtQueryInformationProcess
  ZwQueryInformationProcess
  NtSetInformationProcess
@@ -42,8 +44,14 @@ EXPORTS
  ZwFsControlFile
  NtSetInformationFile
  ZwSetInformationFile
+ NtCreateSection
+ ZwCreateSection
+ NtOpenSection
+ ZwOpenSection
  NtMapViewOfSection
  ZwMapViewOfSection
+ NtUnmapViewOfSection
+ ZwUnmapViewOfSection
    RtlInitUnicodeString
   RtlDosPathNameToNtPathName_U
   RtlCreateUserThread

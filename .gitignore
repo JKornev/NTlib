@@ -3,6 +3,9 @@
 /source/*.sdf
 /source/*.suo
 /source/*/*.user
+/source/*/*/*.user
+/source/*/*.cache
+/source/*/*/*.cache
 /source/.vs/*
 /source/*.VC.db
 /build/*
