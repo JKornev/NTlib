@@ -43,6 +43,18 @@ extern "C" {
     VOID NTDEF name params;
 #endif
 
+#define NTLIB_WIN_XP     0x0500
+#define NTLIB_WIN_VISTA  0x0600
+#define NTLIB_WIN_7      0x0601
+#define NTLIB_WIN_8      0x0602
+#define NTLIB_WIN_8_1    0x0603
+#define NTLIB_WIN_10_TH1 0x0A00
+#define NTLIB_WIN_MAX    0xFFFF
+
+#ifndef NTLIB_WIN_VERSION
+  #define NTLIB_WIN_VERSION NTLIB_WIN_MAX
+#endif
+
 // ----------------------------------------
 //   NT Status
 
@@ -60,6 +72,7 @@ extern "C" {
 #pragma warning(disable : 4005) // disable macro redefinition warning
 
 #define STATUS_SUCCESS                   ((NTSTATUS)0x00000000L)
+#define STATUS_WAIT_0                    ((NTSTATUS)0x00000000L)
 #define STATUS_WAIT_1                    ((NTSTATUS)0x00000001L)
 #define STATUS_WAIT_2                    ((NTSTATUS)0x00000002L)
 #define STATUS_WAIT_3                    ((NTSTATUS)0x00000003L)
@@ -3886,6 +3899,15 @@ NTDLL_API(PVOID, AlpcGetMessageAttribute, (
 
 // ----------------------------------------
 //   API Epilog
+
+#undef NTLIB_WIN_XP
+#undef NTLIB_WIN_VISTA
+#undef NTLIB_WIN_7
+#undef NTLIB_WIN_8
+#undef NTLIB_WIN_8_1
+#undef NTLIB_WIN_10_TH1
+#undef NTLIB_WIN_MAX
+#undef NTLIB_WIN_VERSION 
 
 #undef NTCALL
 #undef NTDEF
