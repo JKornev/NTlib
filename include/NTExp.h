@@ -2557,6 +2557,26 @@ typedef struct _RTL_DRIVE_LETTER_CURDIR {
     ANSI_STRING DosPath;
 } RTL_DRIVE_LETTER_CURDIR, *PRTL_DRIVE_LETTER_CURDIR;
 
+#define RTL_BALANCED_NODE_RESERVED_PARENT_MASK 3
+
+typedef struct _RTL_BALANCED_NODE {
+    union {
+        struct _RTL_BALANCED_NODE *Children[2];
+        struct {
+            struct _RTL_BALANCED_NODE *Left;
+            struct _RTL_BALANCED_NODE *Right;
+        };
+    };
+    union {
+        UCHAR Red : 1;
+        UCHAR Balance : 2;
+        ULONG_PTR ParentValue;
+    };
+} RTL_BALANCED_NODE, *PRTL_BALANCED_NODE;
+
+#define RTL_BALANCED_NODE_GET_PARENT_POINTER(Node) \
+    ((PRTL_BALANCED_NODE)((Node)->ParentValue & ~RTL_BALANCED_NODE_RESERVED_PARENT_MASK))
+
 // ----------------------------------------
 //   Process Definitions
 
@@ -2937,7 +2957,6 @@ typedef enum _THREAD_INFO_CLASS {
 #define FILE_OPEN_NO_RECALL                     0x00400000
 #define FILE_OPEN_FOR_FREE_SPACE_QUERY          0x00800000
 
-
 typedef enum _FILE_INFORMATION_CLASS {
     FileDirectoryInformation = 1,
     FileFullDirectoryInformation,
@@ -3100,6 +3119,177 @@ typedef struct _RTL_HEAP_WALK_ENTRY {
 // ----------------------------------------
 //   Loader Definitions
 
+typedef BOOLEAN (NTAPI*PLDR_INIT_ROUTINE)(
+    _In_     PVOID DllHandle,
+    _In_     ULONG Reason,
+    _In_opt_ PVOID Context
+);
+
+typedef struct _LDR_SERVICE_TAG_RECORD {
+    struct _LDR_SERVICE_TAG_RECORD *Next;
+    ULONG ServiceTag;
+} LDR_SERVICE_TAG_RECORD, *PLDR_SERVICE_TAG_RECORD;
+
+typedef struct _LDRP_CSLIST {
+    PSINGLE_LIST_ENTRY Tail;
+} LDRP_CSLIST, *PLDRP_CSLIST;
+
+typedef enum _LDR_DDAG_STATE {
+    LdrModulesMerged    = -5,
+    LdrModulesInitError = -4,
+    LdrModulesSnapError = -3,
+    LdrModulesUnloaded  = -2,
+    LdrModulesUnloading = -1,
+    LdrModulesPlaceHolder = 0,
+    LdrModulesMapping   = 1,
+    LdrModulesMapped    = 2,
+    LdrModulesWaitingForDependencies = 3,
+    LdrModulesSnapping  = 4,
+    LdrModulesSnapped   = 5,
+    LdrModulesCondensed = 6,
+    LdrModulesReadyToInit = 7,
+    LdrModulesInitializing = 8,
+    LdrModulesReadyToRun = 9
+} LDR_DDAG_STATE;
+
+typedef struct _LDR_DDAG_NODE {
+    LIST_ENTRY Modules;
+    PLDR_SERVICE_TAG_RECORD ServiceTagList;
+    ULONG LoadCount;
+    ULONG LoadWhileUnloadingCount;
+    ULONG LowestLink;
+    union {
+        LDRP_CSLIST Dependencies;
+        SINGLE_LIST_ENTRY RemovalLink;
+    };
+    LDRP_CSLIST IncomingDependencies;
+    LDR_DDAG_STATE State;
+    SINGLE_LIST_ENTRY CondenseLink;
+    ULONG PreorderNumber;
+} LDR_DDAG_NODE, *PLDR_DDAG_NODE;
+
+typedef struct _LDR_DEPENDENCY_RECORD {
+    SINGLE_LIST_ENTRY DependencyLink;
+    PLDR_DDAG_NODE DependencyNode;
+    SINGLE_LIST_ENTRY IncomingDependencyLink;
+    PLDR_DDAG_NODE IncomingDependencyNode;
+} LDR_DEPENDENCY_RECORD, *PLDR_DEPENDENCY_RECORD;
+
+typedef enum _LDR_DLL_LOAD_REASON {
+    LoadReasonStaticDependency,
+    LoadReasonStaticForwarderDependency,
+    LoadReasonDynamicForwarderDependency,
+    LoadReasonDelayloadDependency,
+    LoadReasonDynamicLoad,
+    LoadReasonAsImageLoad,
+    LoadReasonAsDataLoad,
+    LoadReasonEnclavePrimary, // REDSTONE3
+    LoadReasonEnclaveDependency,
+    LoadReasonUnknown = -1
+} LDR_DLL_LOAD_REASON, *PLDR_DLL_LOAD_REASON;
+
+#define LDRP_PACKAGED_BINARY            0x00000001
+#define LDRP_STATIC_LINK                0x00000002
+#define LDRP_IMAGE_DLL                  0x00000004
+#define LDRP_LOAD_IN_PROGRESS           0x00001000
+#define LDRP_UNLOAD_IN_PROGRESS         0x00002000
+#define LDRP_ENTRY_PROCESSED            0x00004000
+#define LDRP_ENTRY_INSERTED             0x00008000
+#define LDRP_CURRENT_LOAD               0x00010000
+#define LDRP_FAILED_BUILTIN_LOAD        0x00020000
+#define LDRP_DONT_CALL_FOR_THREADS      0x00040000
+#define LDRP_PROCESS_ATTACH_CALLED      0x00080000
+#define LDRP_DEBUG_SYMBOLS_LOADED       0x00100000
+#define LDRP_IMAGE_NOT_AT_BASE          0x00200000 // Vista and below
+#define LDRP_COR_IMAGE                  0x00400000
+#define LDRP_DONT_RELOCATE              0x00800000 // LDR_COR_OWNS_UNMAP
+#define LDRP_SYSTEM_MAPPED              0x01000000
+#define LDRP_IMAGE_VERIFYING            0x02000000
+#define LDRP_DRIVER_DEPENDENT_DLL       0x04000000
+#define LDRP_ENTRY_NATIVE               0x08000000
+#define LDRP_REDIRECTED                 0x10000000
+#define LDRP_NON_PAGED_DEBUG_INFO       0x20000000
+#define LDRP_MM_LOADED                  0x40000000
+#define LDRP_COMPAT_DATABASE_PROCESSED  0x80000000
+
+#define LDR_DATA_TABLE_ENTRY_SIZE_WINXP FIELD_OFFSET(LDR_DATA_TABLE_ENTRY, DdagNode)
+#define LDR_DATA_TABLE_ENTRY_SIZE_WIN7  FIELD_OFFSET(LDR_DATA_TABLE_ENTRY, BaseNameHashValue)
+#define LDR_DATA_TABLE_ENTRY_SIZE_WIN8  FIELD_OFFSET(LDR_DATA_TABLE_ENTRY, ImplicitPathOptions)
+#define LDR_DATA_TABLE_ENTRY_SIZE_WIN10 sizeof(LDR_DATA_TABLE_ENTRY)
+
+typedef struct _LDR_DATA_TABLE_ENTRY {
+    LIST_ENTRY InLoadOrderLinks;
+    LIST_ENTRY InMemoryOrderLinks;
+    union {
+        LIST_ENTRY InInitializationOrderLinks;
+        LIST_ENTRY InProgressLinks;
+    };
+    PVOID DllBase;
+    PLDR_INIT_ROUTINE EntryPoint;
+    ULONG SizeOfImage;
+    UNICODE_STRING FullDllName;
+    UNICODE_STRING BaseDllName;
+    union {
+        UCHAR FlagGroup[4];
+        ULONG Flags;
+        struct {
+            ULONG PackagedBinary : 1;
+            ULONG MarkedForRemoval : 1;
+            ULONG ImageDll : 1;
+            ULONG LoadNotificationsSent : 1;
+            ULONG TelemetryEntryProcessed : 1;
+            ULONG ProcessStaticImport : 1;
+            ULONG InLegacyLists : 1;
+            ULONG InIndexes : 1;
+            ULONG ShimDll : 1;
+            ULONG InExceptionTable : 1;
+            ULONG ReservedFlags1 : 2;
+            ULONG LoadInProgress : 1;
+            ULONG LoadConfigProcessed : 1;
+            ULONG EntryProcessed : 1;
+            ULONG ProtectDelayLoad : 1;
+            ULONG ReservedFlags3 : 2;
+            ULONG DontCallForThreads : 1;
+            ULONG ProcessAttachCalled : 1;
+            ULONG ProcessAttachFailed : 1;
+            ULONG CorDeferredValidate : 1;
+            ULONG CorImage : 1;
+            ULONG DontRelocate : 1;
+            ULONG CorILOnly : 1;
+            ULONG ChpeImage : 1;
+            ULONG ReservedFlags5 : 2;
+            ULONG Redirected : 1;
+            ULONG ReservedFlags6 : 2;
+            ULONG CompatDatabaseProcessed : 1;
+        };
+    };
+    USHORT ObsoleteLoadCount;
+    USHORT TlsIndex;
+    LIST_ENTRY HashLinks;
+    ULONG TimeDateStamp;
+    struct _ACTIVATION_CONTEXT *EntryPointActivationContext;
+    PVOID Lock; // RtlAcquireSRWLockExclusive
+    PLDR_DDAG_NODE DdagNode;
+    LIST_ENTRY NodeModuleLink;
+    struct _LDRP_LOAD_CONTEXT *LoadContext;
+    PVOID ParentDllBase;
+    PVOID SwitchBackContext;
+    RTL_BALANCED_NODE BaseAddressIndexNode;
+    RTL_BALANCED_NODE MappingInfoIndexNode;
+    ULONG_PTR OriginalBase;
+    LARGE_INTEGER LoadTime;
+    ULONG BaseNameHashValue;
+    LDR_DLL_LOAD_REASON LoadReason;
+    ULONG ImplicitPathOptions;
+    ULONG ReferenceCount;
+    ULONG DependentLoadFlags;
+    UCHAR SigningLevel; // since REDSTONE2
+} LDR_DATA_TABLE_ENTRY, *PLDR_DATA_TABLE_ENTRY;
+
+#define LDR_IS_DATAFILE(DllHandle)      (((ULONG_PTR)(DllHandle)) & (ULONG_PTR)1)
+#define LDR_IS_IMAGEMAPPING(DllHandle)  (((ULONG_PTR)(DllHandle)) & (ULONG_PTR)2)
+#define LDR_IS_RESOURCE(DllHandle)      (LDR_IS_IMAGEMAPPING(DllHandle) || LDR_IS_DATAFILE(DllHandle))
+
 typedef struct _LDR_DLL_UNLOADED_NOTIFICATION_DATA {
 	ULONG           Flags;
 	PUNICODE_STRING FullDllName;
@@ -3121,7 +3311,7 @@ typedef union _LDR_DLL_NOTIFICATION_DATA {
 	LDR_DLL_UNLOADED_NOTIFICATION_DATA Unloaded;
 } LDR_DLL_NOTIFICATION_DATA, *PLDR_DLL_NOTIFICATION_DATA;
 
-typedef VOID (CALLBACK * PLDR_DLL_NOTIFICATION_FUNCTION) (
+typedef VOID (CALLBACK*PLDR_DLL_NOTIFICATION_FUNCTION) (
 	_In_     ULONG                      NotificationReason,
 	_In_     PLDR_DLL_NOTIFICATION_DATA NotificationData,
 	_In_opt_ PVOID                      Context
