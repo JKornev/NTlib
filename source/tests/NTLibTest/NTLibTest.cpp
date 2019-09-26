@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <NTLib.h>
 
-#pragma comment(lib, "NTExp.lib")
+#pragma comment(lib, "NTExp.lib") //TODO: this lib have to be part of NTLib.lib
 #pragma comment(lib, "NTLib.lib")
 
 void TestNtlPsRoutines()
