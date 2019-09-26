@@ -43,16 +43,23 @@ extern "C" {
     VOID NTDEF name params;
 #endif
 
-#define NTLIB_WIN_XP     0x0500
-#define NTLIB_WIN_VISTA  0x0600
-#define NTLIB_WIN_7      0x0601
-#define NTLIB_WIN_8      0x0602
-#define NTLIB_WIN_8_1    0x0603
-#define NTLIB_WIN_10_TH1 0x0A00
-#define NTLIB_WIN_MAX    0xFFFF
+#define NTLIB_WIN_XP      0x0500
+#define NTLIB_WIN_VISTA   0x0600
+#define NTLIB_WIN_7       0x0601
+#define NTLIB_WIN_8       0x0602
+#define NTLIB_WIN_8_1     0x0603
+#define NTLIB_WIN_10_TH1  0x0A00
+#define NTLIB_WIN_10_TH2  0x0A01
+#define NTLIB_WIN_10_RS1  0x0A02
+#define NTLIB_WIN_10_RS2  0x0A03
+#define NTLIB_WIN_10_RS3  0x0A04
+#define NTLIB_WIN_10_RS4  0x0A05
+#define NTLIB_WIN_10_RS5  0x0A06
+#define NTLIB_WIN_10_19H1 0x0A07
+#define NTLIB_WIN_MAX     0xFFFF
 
 #ifndef NTLIB_WIN_VERSION
-  #define NTLIB_WIN_VERSION NTLIB_WIN_MAX
+  #define NTLIB_WIN_VERSION  NTLIB_WIN_MAX
 #endif
 
 // ----------------------------------------
@@ -3311,10 +3318,174 @@ typedef union _LDR_DLL_NOTIFICATION_DATA {
 	LDR_DLL_UNLOADED_NOTIFICATION_DATA Unloaded;
 } LDR_DLL_NOTIFICATION_DATA, *PLDR_DLL_NOTIFICATION_DATA;
 
+#define LDR_DLL_NOTIFICATION_REASON_LOADED 1
+#define LDR_DLL_NOTIFICATION_REASON_UNLOADED 2
+
 typedef VOID (CALLBACK*PLDR_DLL_NOTIFICATION_FUNCTION) (
 	_In_     ULONG                      NotificationReason,
 	_In_     PLDR_DLL_NOTIFICATION_DATA NotificationData,
 	_In_opt_ PVOID                      Context
+);
+
+#define LDR_GET_DLL_HANDLE_EX_UNCHANGED_REFCOUNT 0x00000001
+#define LDR_GET_DLL_HANDLE_EX_PIN                0x00000002
+
+#define LDR_ADDREF_DLL_PIN 0x00000001
+
+#define LDR_GET_PROCEDURE_ADDRESS_DONT_RECORD_FORWARDER 0x00000001
+
+#define LDR_LOCK_LOADER_LOCK_FLAG_RAISE_ON_ERRORS 0x00000001
+#define LDR_LOCK_LOADER_LOCK_FLAG_TRY_ONLY        0x00000002
+
+#define LDR_LOCK_LOADER_LOCK_DISPOSITION_INVALID           0
+#define LDR_LOCK_LOADER_LOCK_DISPOSITION_LOCK_ACQUIRED     1
+#define LDR_LOCK_LOADER_LOCK_DISPOSITION_LOCK_NOT_ACQUIRED 2
+
+#define LDR_UNLOCK_LOADER_LOCK_FLAG_RAISE_ON_ERRORS 0x00000001
+
+typedef VOID(NTAPI *PLDR_IMPORT_MODULE_CALLBACK)(
+    _In_ PVOID Parameter,
+    _In_ PSTR ModuleName
+);
+
+typedef struct _LDR_IMPORT_CALLBACK_INFO {
+    PLDR_IMPORT_MODULE_CALLBACK ImportCallbackRoutine;
+    PVOID ImportCallbackParameter;
+} LDR_IMPORT_CALLBACK_INFO, *PLDR_IMPORT_CALLBACK_INFO;
+
+typedef struct _LDR_SECTION_INFO {
+    HANDLE SectionHandle;
+    ACCESS_MASK DesiredAccess;
+    POBJECT_ATTRIBUTES ObjA;
+    ULONG SectionPageProtection;
+    ULONG AllocationAttributes;
+} LDR_SECTION_INFO, *PLDR_SECTION_INFO;
+
+typedef struct _LDR_VERIFY_IMAGE_INFO {
+    ULONG Size;
+    ULONG Flags;
+    LDR_IMPORT_CALLBACK_INFO CallbackInfo;
+    LDR_SECTION_INFO SectionInfo;
+    USHORT ImageCharacteristics;
+} LDR_VERIFY_IMAGE_INFO, *PLDR_VERIFY_IMAGE_INFO;
+
+typedef struct _PS_MITIGATION_OPTIONS_MAP {
+    ULONG_PTR Map[2];
+} PS_MITIGATION_OPTIONS_MAP, *PPS_MITIGATION_OPTIONS_MAP;
+
+typedef struct _PS_MITIGATION_AUDIT_OPTIONS_MAP {
+    ULONG_PTR Map[2];
+} PS_MITIGATION_AUDIT_OPTIONS_MAP, *PPS_MITIGATION_AUDIT_OPTIONS_MAP;
+
+typedef struct _PS_SYSTEM_DLL_INIT_BLOCK {
+    ULONG Size;
+    ULONG_PTR SystemDllWowRelocation;
+    ULONG_PTR SystemDllNativeRelocation;
+    ULONG_PTR Wow64SharedInformation[16];
+    ULONG RngData;
+    union {
+        ULONG Flags;
+        struct {
+            ULONG CfgOverride : 1;
+            ULONG Reserved : 31;
+        };
+    };
+    PS_MITIGATION_OPTIONS_MAP MitigationOptionsMap;
+    ULONG_PTR CfgBitMap;
+    ULONG_PTR CfgBitMapSize;
+    ULONG_PTR Wow64CfgBitMap;
+    ULONG_PTR Wow64CfgBitMapSize;
+    PS_MITIGATION_AUDIT_OPTIONS_MAP MitigationAuditOptionsMap; // REDSTONE3
+} PS_SYSTEM_DLL_INIT_BLOCK, *PPS_SYSTEM_DLL_INIT_BLOCK;
+
+typedef struct _LDR_RESOURCE_INFO {
+    ULONG_PTR Type;
+    ULONG_PTR Name;
+    ULONG_PTR Language;
+} LDR_RESOURCE_INFO, *PLDR_RESOURCE_INFO;
+
+#define RESOURCE_TYPE_LEVEL     0
+#define RESOURCE_NAME_LEVEL     1
+#define RESOURCE_LANGUAGE_LEVEL 2
+#define RESOURCE_DATA_LEVEL     3
+
+typedef struct _LDR_ENUM_RESOURCE_ENTRY {
+    union {
+        ULONG_PTR NameOrId;
+        PIMAGE_RESOURCE_DIRECTORY_STRING Name;
+        struct {
+            USHORT Id;
+            USHORT NameIsPresent;
+        };
+    } Path[3];
+    PVOID Data;
+    ULONG Size;
+    ULONG Reserved;
+} LDR_ENUM_RESOURCE_ENTRY, *PLDR_ENUM_RESOURCE_ENTRY;
+
+#define NAME_FROM_RESOURCE_ENTRY(RootDirectory, Entry) \
+    ((Entry)->NameIsString ? (ULONG_PTR)PTR_ADD_OFFSET((RootDirectory), (Entry)->NameOffset) : (Entry)->Id)
+
+typedef struct _RTL_PROCESS_MODULE_INFORMATION {
+    HANDLE Section;
+    PVOID MappedBase;
+    PVOID ImageBase;
+    ULONG ImageSize;
+    ULONG Flags;
+    USHORT LoadOrderIndex;
+    USHORT InitOrderIndex;
+    USHORT LoadCount;
+    USHORT OffsetToFileName;
+    UCHAR FullPathName[256];
+} RTL_PROCESS_MODULE_INFORMATION, *PRTL_PROCESS_MODULE_INFORMATION;
+
+typedef struct _RTL_PROCESS_MODULES {
+    ULONG NumberOfModules;
+    RTL_PROCESS_MODULE_INFORMATION Modules[1];
+} RTL_PROCESS_MODULES, *PRTL_PROCESS_MODULES;
+
+// private
+typedef struct _RTL_PROCESS_MODULE_INFORMATION_EX {
+    USHORT NextOffset;
+    RTL_PROCESS_MODULE_INFORMATION BaseInfo;
+    ULONG ImageChecksum;
+    ULONG TimeDateStamp;
+    PVOID DefaultBase;
+} RTL_PROCESS_MODULE_INFORMATION_EX, *PRTL_PROCESS_MODULE_INFORMATION_EX;
+
+typedef VOID(NTAPI *PLDR_ENUM_CALLBACK)(
+    _In_ PLDR_DATA_TABLE_ENTRY ModuleInformation,
+    _In_ PVOID Parameter,
+    _Out_ BOOLEAN *Stop
+);
+
+typedef struct _DELAYLOAD_PROC_DESCRIPTOR {
+    ULONG ImportDescribedByName;
+    union {
+        PCSTR Name;
+        ULONG Ordinal;
+    } Description;
+} DELAYLOAD_PROC_DESCRIPTOR, *PDELAYLOAD_PROC_DESCRIPTOR;
+
+typedef struct _DELAYLOAD_INFO {
+    ULONG Size;
+    PCIMAGE_DELAYLOAD_DESCRIPTOR DelayloadDescriptor;
+    PIMAGE_THUNK_DATA ThunkAddress;
+    PCSTR TargetDllName;
+    DELAYLOAD_PROC_DESCRIPTOR TargetApiDescriptor;
+    PVOID TargetModuleBase;
+    PVOID Unused;
+    ULONG LastError;
+} DELAYLOAD_INFO, *PDELAYLOAD_INFO;
+
+typedef PVOID(NTAPI *PDELAYLOAD_FAILURE_DLL_CALLBACK)(
+    _In_ ULONG NotificationReason,
+    _In_ PDELAYLOAD_INFO DelayloadInfo
+);
+
+typedef PVOID(NTAPI *PDELAYLOAD_FAILURE_SYSTEM_ROUTINE)(
+    _In_ PCSTR DllName,
+    _In_ PCSTR ProcName
 );
 
 // ----------------------------------------
@@ -3973,6 +4144,8 @@ NTDLL_API(BOOLEAN, RtlValidateProcessHeaps, (void))
 // ----------------------------------------
 //   Loader API
 
+#if (NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+
 NTDLL_API(NTSTATUS, LdrRegisterDllNotification, (
     _In_     ULONG                          Flags,
     _In_     PLDR_DLL_NOTIFICATION_FUNCTION NotificationFunction,
@@ -3980,111 +4153,409 @@ NTDLL_API(NTSTATUS, LdrRegisterDllNotification, (
     _Out_    PVOID *                        Cookie)
 )
 
+NTDLL_API(NTSTATUS, LdrUnregisterDllNotification, (
+   _In_ PVOID Cookie)
+)
+
+#endif
+
 NTDLL_API(NTSTATUS, LdrLoadDll, (
-    _In_opt_ PWCHAR          PathToFile,
-    _In_opt_ ULONG           Flags, //TODO: is it ULONG or PULONG?
-    _In_     PUNICODE_STRING ModuleFileName,
-    _Out_    PHANDLE         ModuleHandle)
+    _In_opt_ PWCHAR          DllPath,
+    _In_opt_ PULONG          DllCharacteristics,
+    _In_     PUNICODE_STRING DllName,
+    _Out_    PVOID*          DllHandle)
 )
 
 NTDLL_API(NTSTATUS, LdrUnloadDll, (
     _In_ PVOID BaseAddress)
 )
 
+NTDLL_API(NTSTATUS, LdrGetDllHandle, (
+    _In_opt_ PWSTR           DllPath,
+    _In_opt_ PULONG          DllCharacteristics,
+    _In_     PUNICODE_STRING DllName,
+    _Out_    PVOID*          DllHandle)
+)
+
+NTDLL_API(NTSTATUS, LdrGetDllHandleEx, (
+    _In_      ULONG     Flags,
+    _In_opt_  PWSTR     DllPath,
+    _In_opt_  PULONG    DllCharacteristics,
+    _In_      PUNICODE_STRING DllName,
+    _Out_opt_ PVOID*    DllHandle)
+)
+
+#if (NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+
+NTDLL_API(NTSTATUS, LdrGetDllHandleByMapping, (
+    _In_  PVOID  BaseAddress,
+    _Out_ PVOID* DllHandle)
+)
+
+NTDLL_API(NTSTATUS, LdrGetDllHandleByName, (
+    _In_opt_ PUNICODE_STRING BaseDllName,
+    _In_opt_ PUNICODE_STRING FullDllName,
+    _Out_    PVOID*          DllHandle)
+)
+
+#endif
+
+#if (NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+
+NTDLL_API(NTSTATUS, LdrGetDllFullName, (
+    _In_  PVOID           DllHandle,
+    _Out_ PUNICODE_STRING FullDllName)
+)
+
+NTDLL_API(NTSTATUS, LdrGetDllDirectory, (
+    _Out_ PUNICODE_STRING DllDirectory)
+)
+
+NTDLL_API(NTSTATUS, LdrSetDllDirectory, (
+    _In_ PUNICODE_STRING DllDirectory)
+)
+
+#endif
+
+NTDLL_API(NTSTATUS, LdrAddRefDll, (
+    _In_ ULONG Flags,
+    _In_ PVOID DllHandle)
+)
+
+NTDLL_API(NTSTATUS, LdrGetProcedureAddress, (
+    _In_     PVOID        DllHandle,
+    _In_opt_ PANSI_STRING ProcedureName,
+    _In_opt_ ULONG        ProcedureNumber,
+    _Out_    VOID*        ProcedureAddress)
+)
+
+#if (NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+NTDLL_API(NTSTATUS, LdrGetProcedureAddressEx, (
+    _In_     PVOID        DllHandle,
+    _In_opt_ PANSI_STRING ProcedureName,
+    _In_opt_ ULONG        ProcedureNumber,
+    _Out_    PVOID*       ProcedureAddress,
+    _In_     ULONG        Flags)
+)
+#endif
+
+NTDLL_API(NTSTATUS, LdrGetKnownDllSectionHandle, (
+    _In_  PCWSTR  DllName,
+    _In_  BOOLEAN KnownDlls32,
+    _Out_ PHANDLE Section)
+)
+
+#if (NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+NTDLL_API(NTSTATUS, LdrGetProcedureAddressForCaller, (
+    _In_         PVOID        DllHandle,
+    _In_opt_     PANSI_STRING ProcedureName,
+    _In_opt_     ULONG        ProcedureNumber,
+    _Out_        PVOID*       ProcedureAddress,
+    _In_         ULONG        Flags,
+    _In_         PVOID*       Callback)
+)
+#endif
+
+NTDLL_API(NTSTATUS, LdrLockLoaderLock, (
+    _In_      ULONG  Flags,
+    _Out_opt_ ULONG* Disposition,
+    _Out_     PVOID* Cookie)
+)
+
+NTDLL_API(NTSTATUS, LdrUnlockLoaderLock, (
+    _In_    ULONG Flags,
+    _Inout_ PVOID Cookie)
+)
+
+NTDLL_API(NTSTATUS, LdrRelocateImage, (
+    _In_ PVOID    NewBase,
+    _In_ PSTR     LoaderName,
+    _In_ NTSTATUS Success,
+    _In_ NTSTATUS Conflict,
+    _In_ NTSTATUS Invalid)
+)
+
+NTDLL_API(NTSTATUS, LdrRelocateImageWithBias, (
+    _In_ PVOID    NewBase,
+    _In_ LONGLONG Bias,
+    _In_ PSTR     LoaderName,
+    _In_ NTSTATUS Success,
+    _In_ NTSTATUS Conflict,
+    _In_ NTSTATUS Invalid)
+)
+
+NTDLL_API(PIMAGE_BASE_RELOCATION, LdrProcessRelocationBlock, (
+    _In_ ULONG_PTR VA,
+    _In_ ULONG     SizeOfBlock,
+    _In_ PUSHORT   NextOffset,
+    _In_ LONG_PTR  Diff)
+)
+
+NTDLL_API(BOOLEAN, LdrVerifyMappedImageMatchesChecksum, (
+    _In_ PVOID  BaseAddress,
+    _In_ SIZE_T NumberOfBytes,
+    _In_ ULONG  FileLength)
+)
+
+NTDLL_API(NTSTATUS, LdrVerifyImageMatchesChecksum, (
+    _In_      HANDLE  ImageFileHandle,
+    _In_opt_  PLDR_IMPORT_MODULE_CALLBACK ImportCallbackRoutine,
+    _In_      PVOID   ImportCallbackParameter,
+    _Out_opt_ PUSHORT ImageCharacteristics)
+)
+
+#if (NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+NTDLL_API(NTSTATUS, LdrQueryModuleServiceTags, (
+    _In_    PVOID  DllHandle,
+    _Out_writes_(*BufferSize) PULONG ServiceTagBuffer,
+    _Inout_ PULONG BufferSize)
+)
+#endif
+
+NTDLL_API(PUNICODE_STRING, LdrStandardizeSystemPath, (
+    _In_ PUNICODE_STRING SystemPath)
+)
+
+#if (NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+NTDLL_API(PPS_SYSTEM_DLL_INIT_BLOCK, LdrSystemDllInitBlock, (VOID))
+#endif
+
+#if (NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+
+NTDLL_API(NTSTATUS, LdrAddLoadAsDataTable, (
+    _In_ PVOID  Module,
+    _In_ PWSTR  FilePath,
+    _In_ SIZE_T Size,
+    _In_ HANDLE Handle)
+)
+
+NTDLL_API(NTSTATUS, LdrRemoveLoadAsDataTable, (
+    _In_      PVOID   InitModule,
+    _Out_opt_ PVOID*  BaseModule,
+    _Out_opt_ PSIZE_T Size,
+    _In_      ULONG   Flags)
+)
+
+NTDLL_API(NTSTATUS, LdrGetFileNameFromLoadAsDataTable, (
+    _In_  PVOID  Module,
+    _Out_ PVOID* pFileNamePrt)
+)
+
+#endif
+
+NTDLL_API(NTSTATUS, LdrDisableThreadCalloutsForDll, (
+    _In_ PVOID DllImageBase)
+)
+
+NTDLL_API(NTSTATUS, LdrAccessResource, (
+    _In_      PVOID  DllHandle,
+    _In_      PIMAGE_RESOURCE_DATA_ENTRY ResourceDataEntry,
+    _Out_opt_ PVOID* ResourceBuffer,
+    _Out_opt_ ULONG* ResourceLength)
+)
+
+NTDLL_API(NTSTATUS, LdrFindResource_U, (
+    _In_  PVOID              DllHandle,
+    _In_  PLDR_RESOURCE_INFO ResourceInfo,
+    _In_  ULONG              Level,
+    _Out_ PIMAGE_RESOURCE_DATA_ENTRY *ResourceDataEntry)
+)
+
+NTDLL_API(NTSTATUS, LdrFindResourceDirectory_U, (
+    _In_ PVOID              DllHandle,
+    _In_ PLDR_RESOURCE_INFO ResourceInfo,
+    _In_ ULONG              Level,
+    _Out_ PIMAGE_RESOURCE_DIRECTORY *ResourceDirectory)
+)
+
+NTDLL_API(NTSTATUS, LdrEnumResources, (
+    _In_    PVOID              DllHandle,
+    _In_    PLDR_RESOURCE_INFO ResourceInfo,
+    _In_    ULONG              Level,
+    _Inout_ ULONG*             ResourceCount,
+    _Out_writes_to_opt_(*ResourceCount, *ResourceCount) PLDR_ENUM_RESOURCE_ENTRY Resources)
+)
+
+NTDLL_API(NTSTATUS, LdrFindEntryForAddress, (
+    _In_  PVOID                  DllHandle,
+    _Out_ PLDR_DATA_TABLE_ENTRY* Entry)
+)
+
+NTDLL_API(NTSTATUS, LdrQueryProcessModuleInformation, (
+    _In_opt_ PRTL_PROCESS_MODULES ModuleInformation,
+    _In_opt_ ULONG Size,
+    _Out_ PULONG ReturnedSize)
+)
+
+NTDLL_API(NTSTATUS, LdrEnumerateLoadedModules, (
+    _In_ BOOLEAN ReservedFlag,
+    _In_ PLDR_ENUM_CALLBACK EnumProc,
+    _In_ PVOID Context)
+)
+
+NTDLL_API(NTSTATUS, LdrOpenImageFileOptionsKey, (
+    _In_ PUNICODE_STRING SubKey,
+    _In_ BOOLEAN Wow64,
+    _Out_ PHANDLE NewKeyHandle)
+)
+
+NTDLL_API(NTSTATUS, LdrQueryImageFileKeyOption, (
+    _In_ HANDLE KeyHandle,
+    _In_ PCWSTR ValueName,
+    _In_ ULONG Type,
+    _Out_ PVOID Buffer,
+    _In_ ULONG BufferSize,
+    _Out_opt_ PULONG ReturnedLength)
+)
+
+NTDLL_API(NTSTATUS, LdrQueryImageFileExecutionOptions, (
+    _In_ PUNICODE_STRING SubKey,
+    _In_ PCWSTR ValueName,
+    _In_ ULONG ValueSize,
+    _Out_ PVOID Buffer,
+    _In_ ULONG BufferSize,
+    _Out_opt_ PULONG ReturnedLength)
+)
+
+NTDLL_API(NTSTATUS, LdrQueryImageFileExecutionOptionsEx, (
+    _In_ PUNICODE_STRING SubKey,
+    _In_ PCWSTR ValueName,
+    _In_ ULONG Type,
+    _Out_ PVOID Buffer,
+    _In_ ULONG BufferSize,
+    _Out_opt_ PULONG ReturnedLength,
+    _In_ BOOLEAN Wow64)
+)
+
+NTDLL_API(PVOID, LdrResolveDelayLoadedAPI, (
+    _In_ PVOID ParentModuleBase,
+    _In_ PCIMAGE_DELAYLOAD_DESCRIPTOR DelayloadDescriptor,
+    _In_opt_ PDELAYLOAD_FAILURE_DLL_CALLBACK FailureDllHook,
+    _In_opt_ PDELAYLOAD_FAILURE_SYSTEM_ROUTINE FailureSystemHook,
+    _Out_ PIMAGE_THUNK_DATA ThunkAddress,
+    _Reserved_ ULONG Flags)
+)
+
+NTDLL_API(NTSTATUS, LdrResolveDelayLoadsFromDll, (
+    _In_ PVOID ParentBase,
+    _In_ PCSTR TargetDllName,
+    _Reserved_ ULONG Flags)
+)
+
+NTDLL_API(NTSTATUS, LdrSetDefaultDllDirectories, (
+    _In_ ULONG DirectoryFlags)
+)
+
+NTDLL_API(NTSTATUS, LdrShutdownProcess, (VOID))
+
+NTDLL_API(NTSTATUS, LdrShutdownThread, (VOID))
+
+NTDLL_API(NTSTATUS, LdrSetImplicitPathOptions, (
+    _In_ ULONG ImplicitPathOptions)
+)
+
+NTDLL_API(BOOLEAN, LdrControlFlowGuardEnforced, (VOID))
+
+#if (NTLIB_WIN_VERSION >= NTLIB_WIN_10_19H1)
+NTDLL_API(NTSTATUS, LdrIsModuleSxsRedirected, (
+    _In_ PVOID DllHandle)
+)
+#endif
+
 // ----------------------------------------
 //   ALPC API
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcCreatePort, (
-    _Out_ PHANDLE PortHandle,
-    _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
+    _Out_    PHANDLE               PortHandle,
+    _In_opt_ POBJECT_ATTRIBUTES    ObjectAttributes,
     _In_opt_ PALPC_PORT_ATTRIBUTES PortAttributes)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcDisconnectPort, (
     _In_ HANDLE PortHandle,
-    _In_ ULONG Flags)
+    _In_ ULONG  Flags)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcCreatePortSection, (
-    _In_ HANDLE PortHandle,
-    _In_ ULONG Flags,
-    _In_opt_ HANDLE SectionHandle,
-    _In_ SIZE_T SectionSize,
-    _Out_ PALPC_HANDLE AlpcSectionHandle,
-    _Out_ PSIZE_T ActualSectionSize)
+    _In_     HANDLE       PortHandle,
+    _In_     ULONG        Flags,
+    _In_opt_ HANDLE       SectionHandle,
+    _In_     SIZE_T       SectionSize,
+    _Out_    PALPC_HANDLE AlpcSectionHandle,
+    _Out_    PSIZE_T      ActualSectionSize)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcDeletePortSection, (
-    _In_ HANDLE PortHandle,
-    _Reserved_ ULONG Flags,
-    _In_ ALPC_HANDLE SectionHandle)
+    _In_       HANDLE      PortHandle,
+    _Reserved_ ULONG       Flags,
+    _In_       ALPC_HANDLE SectionHandle)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcCreateSectionView, (
-    _In_ HANDLE PortHandle,
-    _Reserved_ ULONG Flags,
-    _Inout_ PALPC_DATA_VIEW_ATTR ViewAttributes)
+    _In_       HANDLE               PortHandle,
+    _Reserved_ ULONG                Flags,
+    _Inout_    PALPC_DATA_VIEW_ATTR ViewAttributes)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcDeleteSectionView, (
-    _In_ HANDLE PortHandle,
-    _Reserved_ ULONG Flags,
-    _In_ PVOID ViewBase)
+    _In_       HANDLE PortHandle,
+    _Reserved_ ULONG  Flags,
+    _In_       PVOID  ViewBase)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcConnectPort, (
-    _Out_ PHANDLE PortHandle,
-    _In_ PUNICODE_STRING PortName,
-    _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
-    _In_opt_ PALPC_PORT_ATTRIBUTES PortAttributes,
-    _In_ ULONG Flags,
-    _In_opt_ PSID RequiredServerSid,
+    _Out_       PHANDLE             PortHandle,
+    _In_        PUNICODE_STRING     PortName,
+    _In_opt_    POBJECT_ATTRIBUTES  ObjectAttributes,
+    _In_opt_    PALPC_PORT_ATTRIBUTES PortAttributes,
+    _In_        ULONG               Flags,
+    _In_opt_    PSID                RequiredServerSid,
     _Inout_updates_bytes_to_opt_(*BufferLength, *BufferLength) PPORT_MESSAGE ConnectionMessage,
-    _Inout_opt_ PULONG BufferLength,
+    _Inout_opt_ PULONG              BufferLength,
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES OutMessageAttributes,
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES InMessageAttributes,
-    _In_opt_ PLARGE_INTEGER Timeout)
+    _In_opt_    PLARGE_INTEGER      Timeout)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcAcceptConnectPort, (
-    _Out_ PHANDLE PortHandle,
-    _In_ HANDLE ConnectionPortHandle,
-    _In_ ULONG Flags,
-    _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
-    _In_opt_ PALPC_PORT_ATTRIBUTES PortAttributes,
-    _In_opt_ PVOID PortContext,
+    _Out_       PHANDLE             PortHandle,
+    _In_        HANDLE              ConnectionPortHandle,
+    _In_        ULONG               Flags,
+    _In_opt_    POBJECT_ATTRIBUTES  ObjectAttributes,
+    _In_opt_    PALPC_PORT_ATTRIBUTES PortAttributes,
+    _In_opt_    PVOID               PortContext,
     _In_reads_bytes_(ConnectionRequest->u1.s1.TotalLength) PPORT_MESSAGE ConnectionRequest,
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES ConnectionMessageAttributes,
-    _In_ BOOLEAN AcceptConnection)
+    _In_        BOOLEAN AcceptConnection)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcSendWaitReceivePort, (
-    _In_ HANDLE PortHandle,
-    _In_ ULONG Flags,
+    _In_        HANDLE          PortHandle,
+    _In_        ULONG           Flags,
     _In_reads_bytes_opt_(SendMessage->u1.s1.TotalLength) PPORT_MESSAGE SendMessage,
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES SendMessageAttributes,
     _Out_writes_bytes_to_opt_(*BufferLength, *BufferLength) PPORT_MESSAGE ReceiveMessage,
-    _Inout_opt_ PSIZE_T BufferLength,
+    _Inout_opt_ PSIZE_T         BufferLength,
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES ReceiveMessageAttributes,
-    _In_opt_ PLARGE_INTEGER Timeout)
+    _In_opt_    PLARGE_INTEGER  Timeout)
 )
 
 NATIVE_API(NTSTATUS, /*Nt*/AlpcCancelMessage, (
-    _In_ HANDLE PortHandle,
-    _In_ ULONG Flags,
+    _In_ HANDLE             PortHandle,
+    _In_ ULONG              Flags,
     _In_ PALPC_CONTEXT_ATTR MessageContext)
 )
 
 NTDLL_API(NTSTATUS, AlpcInitializeMessageAttribute, (
-    _In_ ULONG AttributeFlags,
+    _In_      ULONG                    AttributeFlags,
     _Out_opt_ PALPC_MESSAGE_ATTRIBUTES Buffer,
-    _In_ ULONG BufferSize,
-    _Out_ PULONG RequiredBufferSize)
+    _In_      ULONG                    BufferSize,
+    _Out_     PULONG                   RequiredBufferSize)
 )
 
 NTDLL_API(PVOID, AlpcGetMessageAttribute, (
     _In_ PALPC_MESSAGE_ATTRIBUTES Buffer,
-    _In_ ULONG AttributeFlag)
+    _In_ ULONG                    AttributeFlag)
 )
 
 // ----------------------------------------

@@ -84,8 +84,54 @@ EXPORTS
   RtlEnumProcessHeaps
   RtlValidateProcessHeaps
   LdrRegisterDllNotification
+  LdrUnregisterDllNotification
   LdrLoadDll
   LdrUnloadDll
+  LdrGetDllHandle
+  LdrGetDllHandleEx
+  LdrGetDllHandleByMapping
+  LdrGetDllHandleByName
+  LdrGetDllFullName
+  LdrGetDllDirectory
+  LdrSetDllDirectory
+  LdrAddRefDll
+  LdrGetProcedureAddress
+  LdrGetProcedureAddressEx
+  LdrGetKnownDllSectionHandle
+  LdrGetProcedureAddressForCaller
+  LdrLockLoaderLock
+  LdrUnlockLoaderLock
+  LdrRelocateImage
+  LdrRelocateImageWithBias
+  LdrProcessRelocationBlock
+  LdrVerifyMappedImageMatchesChecksum
+  LdrVerifyImageMatchesChecksum
+  LdrQueryModuleServiceTags
+  LdrStandardizeSystemPath
+  LdrSystemDllInitBlock
+  LdrAddLoadAsDataTable
+  LdrRemoveLoadAsDataTable
+  LdrGetFileNameFromLoadAsDataTable
+  LdrDisableThreadCalloutsForDll
+  LdrAccessResource
+  LdrFindResource_U
+  LdrFindResourceDirectory_U
+  LdrEnumResources
+  LdrFindEntryForAddress
+  LdrQueryProcessModuleInformation
+  LdrEnumerateLoadedModules
+  LdrOpenImageFileOptionsKey
+  LdrQueryImageFileKeyOption
+  LdrQueryImageFileExecutionOptions
+  LdrQueryImageFileExecutionOptionsEx
+  LdrResolveDelayLoadedAPI
+  LdrResolveDelayLoadsFromDll
+  LdrSetDefaultDllDirectories
+  LdrShutdownProcess
+  LdrShutdownThread
+  LdrSetImplicitPathOptions
+  LdrControlFlowGuardEnforced
+  LdrIsModuleSxsRedirected
  NtAlpcCreatePort
  ZwAlpcCreatePort
  NtAlpcDisconnectPort
