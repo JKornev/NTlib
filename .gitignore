@@ -1,3 +1,12 @@
+# Exclude everything
+/*
+
+# But include working dirs
+!/include/*
+!/library/*
+!/source/*
+
+# Remove junk from source dir
 /source/intermidiate
 /source/*.opensdf
 /source/*.sdf
@@ -8,5 +17,3 @@
 /source/*/*/*.cache
 /source/.vs/*
 /source/*.VC.db
-/build/*
-
