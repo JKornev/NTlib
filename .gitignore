@@ -1,12 +1,5 @@
-# Exclude everything
-/*
-
-# But include working dirs
-!/include/*
-!/library/*
-!/source/*
-
 # Remove junk from source dir
+/build/*
 /source/intermidiate
 /source/*.opensdf
 /source/*.sdf
