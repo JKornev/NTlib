@@ -1,0 +1,3 @@
+[submodule "source/external/phnt"]
+	path = source/external/phnt
+	url = https://github.com/JKornev/phnt.git
