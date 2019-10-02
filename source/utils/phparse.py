@@ -23,6 +23,7 @@ def main():
     
     rebuild_headers(headers)
     build_common_header(headers)
+    copy_includes()
 
 def rebuild_headers(headers):
     print("Rebuilding headers")
@@ -47,6 +48,14 @@ def build_common_header(headers):
     common = read_file(os.path.join(c_common_templates_dir, c_common_header_template))
     output = re.sub(r"\/\/INCLUDE\:ZONE", include, common)
     write_file(os.path.join(c_headers_output_dir, c_common_header_template), output)
+    print("Done")
+
+def copy_includes():
+    print("Coping include headers")
+    for h in c_include_files:
+        output = read_file(os.path.join(c_common_templates_dir, h))
+        write_file(os.path.join(c_headers_output_dir, h), output)
+        print("  Copied: " + h)
     print("Done")
 
 def transform_header(source):
@@ -112,8 +121,9 @@ def make_sysapi_macro(groups):
     return build_sysapi_str("NTDLL", retval, fnname, None, args, noreturn)
 
 def build_sysapi_str(prefix, retval, fnname, comment, args, noreturn):
-    macro = prefix + ("_API_VOID" if noreturn else "_API") + "(" + retval + ", " + ("/*" + comment + "*/" if comment else "") + fnname + ", (\n"
-    macro += "    " + args + "\n"
+    macro = prefix + ("_API_VOID" if noreturn else "_API") 
+    macro += "(" + ("" if noreturn else retval + ", ") + ("/*" + comment + "*/" if comment else "") + fnname + ", (\n"
+    macro += "    " + args + ")\n"
     macro += ")"
     return macro
 

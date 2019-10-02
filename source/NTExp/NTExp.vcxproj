@@ -126,7 +126,7 @@
       <Command>copy /Y "$(OutputPath)$(ProjectName).lib" /B "$(SolutionDir)..\library\x86\$(Configuration)\$(ProjectName).lib"</Command>
     </PostBuildEvent>
     <PreLinkEvent>
-      <Command>python $(ProjectDir)compiledef.py $(ProjectDir)../../include/NTExp.h &gt; $(ProjectDir)NTExp.def</Command>
+      <Command>python $(SolutionDir)utils/compiledef.py $(ProjectDir)../../include/NTExp &gt; $(ProjectDir)NTExp.def</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -150,7 +150,7 @@
       <Command>copy /Y "$(OutputPath)$(ProjectName).lib" /B "$(SolutionDir)..\library\x86\$(Configuration)\$(ProjectName).lib"</Command>
     </PostBuildEvent>
     <PreLinkEvent>
-      <Command>python $(ProjectDir)compiledef.py $(ProjectDir)../../include/NTExp.h &gt; $(ProjectDir)NTExp.def</Command>
+      <Command>python $(SolutionDir)utils/compiledef.py $(ProjectDir)../../include/NTExp &gt; $(ProjectDir)NTExp.def</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -199,7 +199,7 @@
       <AdditionalOptions>/ignore:4197 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreLinkEvent>
-      <Command>python $(ProjectDir)compiledef.py $(ProjectDir)../../include/NTExp.h &gt; $(ProjectDir)NTExp64.def</Command>
+      <Command>python $(SolutionDir)utils/compiledef.py $(ProjectDir)../../include/NTExp &gt; $(ProjectDir)NTExp64.def</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -214,7 +214,7 @@
       <AdditionalOptions>/ignore:4197 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreLinkEvent>
-      <Command>python $(ProjectDir)compiledef.py $(ProjectDir)../../include/NTExp.h &gt; $(ProjectDir)NTExp64.def</Command>
+      <Command>python $(SolutionDir)utils/compiledef.py $(ProjectDir)../../include/NTExp &gt; $(ProjectDir)NTExp64.def</Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
