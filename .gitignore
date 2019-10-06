@@ -10,3 +10,4 @@
 /source/*/*/*.cache
 /source/.vs/*
 /source/*.VC.db
+/source/*/.vscode/*
