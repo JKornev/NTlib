@@ -85,8 +85,6 @@ extern "C" {
 // ----------------------------------------
 //   Include zone
 
-#include <ntexp\ntcompatibility.h>
-
 //INCLUDE:ZONE
 
 // ----------------------------------------

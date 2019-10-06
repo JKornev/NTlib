@@ -86,38 +86,35 @@ extern "C" {
 //   Include zone
 
 #include <ntexp\ntcompatibility.h>
-
 #include <ntexp\ntstatus.h>
 #include <ntexp\ntcommon.h>
-#include <ntexp\ntcompatibility.h>
-#include <ntexp\ntdbg.h>
-#include <ntexp\ntexapi.h>
-#include <ntexp\ntgdi.h>
-#include <ntexp\ntioapi.h>
+#include <ntexp\ntnls.h>
 #include <ntexp\ntkeapi.h>
 #include <ntexp\ntldr.h>
-#include <ntexp\ntlpcapi.h>
-#include <ntexp\ntmisc.h>
+#include <ntexp\ntexapi.h>
 #include <ntexp\ntmmapi.h>
-#include <ntexp\ntnls.h>
 #include <ntexp\ntobapi.h>
-#include <ntexp\ntpebteb.h>
+#include <ntexp\ntpsapi.h>
+#include <ntexp\ntdbg.h>
+#include <ntexp\ntioapi.h>
+#include <ntexp\ntlpcapi.h>
 #include <ntexp\ntpfapi.h>
 #include <ntexp\ntpnpapi.h>
 #include <ntexp\ntpoapi.h>
-#include <ntexp\ntpsapi.h>
 #include <ntexp\ntregapi.h>
 #include <ntexp\ntrtl.h>
-#include <ntexp\ntsam.h>
 #include <ntexp\ntseapi.h>
-#include <ntexp\ntsmss.h>
 #include <ntexp\nttmapi.h>
 #include <ntexp\nttp.h>
-#include <ntexp\ntwow64.h>
 #include <ntexp\ntxcapi.h>
+#include <ntexp\ntwow64.h>
+#include <ntexp\ntsam.h>
+#include <ntexp\ntmisc.h>
+#include <ntexp\ntgdi.h>
+#include <ntexp\ntpebteb.h>
+#include <ntexp\ntsmss.h>
 #include <ntexp\subprocesstag.h>
 #include <ntexp\winsta.h>
-
 
 // ----------------------------------------
 //   API Epilog

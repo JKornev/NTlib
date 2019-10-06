@@ -1,7 +1,8 @@
-; Auto-generated definitions file (October 06, 2019  23:54:32)
+; Auto-generated definitions file (October 07, 2019  02:01:15)
 LIBRARY ntdll.dll
 EXPORTS
 ; === NTCOMMON.H ===
+; === NTCOMPATIBILITY.H ===
 ; === NTDBG.H ===
     DbgUserBreakPoint
     DbgBreakPoint
