@@ -127,34 +127,38 @@ typedef enum _KPROFILE_SOURCE
 
 #endif
 
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/CallbackReturn, (
     _In_reads_bytes_opt_(OutputLength) PVOID OutputBuffer,
     _In_ ULONG OutputLength,
-    _In_ NTSTATUS Status)
-)
+    _In_ NTSTATUS Status
+))
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API_VOID(/*Nt*/FlushProcessWriteBuffers, (
-    VOID)
-)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+//Note: conflicts with FlushProcessWriteBuffers
+//NTSYSCALLAPI
+//VOID
+//NTAPI
+//NtFlushProcessWriteBuffers(
+//    VOID
+//    );
 #endif
 
 NATIVE_API(NTSTATUS, /*Nt*/QueryDebugFilterState, (
     _In_ ULONG ComponentId,
-    _In_ ULONG Level)
-)
+    _In_ ULONG Level
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/SetDebugFilterState, (
     _In_ ULONG ComponentId,
     _In_ ULONG Level,
-    _In_ BOOLEAN State)
-)
+    _In_ BOOLEAN State
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/YieldExecution, (
-    VOID)
-)
+    VOID
+))
 
 #endif
 

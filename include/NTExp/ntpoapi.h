@@ -135,38 +135,38 @@ NATIVE_API(NTSTATUS, /*Nt*/PowerInformation, (
     _In_reads_bytes_opt_(InputBufferLength) PVOID InputBuffer,
     _In_ ULONG InputBufferLength,
     _Out_writes_bytes_opt_(OutputBufferLength) PVOID OutputBuffer,
-    _In_ ULONG OutputBufferLength)
-)
+    _In_ ULONG OutputBufferLength
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/SetThreadExecutionState, (
     _In_ EXECUTION_STATE NewFlags, // ES_* flags
-    _Out_ EXECUTION_STATE *PreviousFlags)
-)
+    _Out_ EXECUTION_STATE *PreviousFlags
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/RequestWakeupLatency, (
-    _In_ LATENCY_TIME latency)
-)
+    _In_ LATENCY_TIME latency
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/InitiatePowerAction, (
     _In_ POWER_ACTION SystemAction,
     _In_ SYSTEM_POWER_STATE LightestSystemState,
     _In_ ULONG Flags, // POWER_ACTION_* flags
-    _In_ BOOLEAN Asynchronous)
-)
+    _In_ BOOLEAN Asynchronous
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/SetSystemPowerState, (
     _In_ POWER_ACTION SystemAction,
     _In_ SYSTEM_POWER_STATE LightestSystemState,
-    _In_ ULONG Flags // POWER_ACTION_* flags)
-)
+    _In_ ULONG Flags // POWER_ACTION_* flags
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/GetDevicePowerState, (
     _In_ HANDLE Device,
-    _Out_ PDEVICE_POWER_STATE State)
-)
+    _Out_ PDEVICE_POWER_STATE State
+))
 
 NATIVE_API(BOOLEAN, /*Nt*/IsSystemResumeAutomatic, (
-    VOID)
-)
+    VOID
+))
 
 #endif

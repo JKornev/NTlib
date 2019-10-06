@@ -12,7 +12,7 @@
 #ifndef _NTMMAPI_H
 #define _NTMMAPI_H
 
-#if (NTLIB_CPU_MODE == NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE == NTLIB_KERNEL_MODE)
 
 // Protection constants
 
@@ -418,7 +418,7 @@ typedef struct _SECTION_INTERNAL_IMAGE_INFORMATION
     };
 } SECTION_INTERNAL_IMAGE_INFORMATION, *PSECTION_INTERNAL_IMAGE_INFORMATION;
 
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 typedef enum _SECTION_INHERIT
 {
     ViewShare = 1,
@@ -440,7 +440,7 @@ typedef enum _SECTION_INHERIT
 
 // Virtual memory
 
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/AllocateVirtualMemory, (
     _In_ HANDLE ProcessHandle,
@@ -448,39 +448,39 @@ NATIVE_API(NTSTATUS, /*Nt*/AllocateVirtualMemory, (
     _In_ ULONG_PTR ZeroBits,
     _Inout_ PSIZE_T RegionSize,
     _In_ ULONG AllocationType,
-    _In_ ULONG Protect)
-)
+    _In_ ULONG Protect
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/FreeVirtualMemory, (
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID *BaseAddress,
     _Inout_ PSIZE_T RegionSize,
-    _In_ ULONG FreeType)
-)
+    _In_ ULONG FreeType
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/ReadVirtualMemory, (
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
     _Out_writes_bytes_(BufferSize) PVOID Buffer,
     _In_ SIZE_T BufferSize,
-    _Out_opt_ PSIZE_T NumberOfBytesRead)
-)
+    _Out_opt_ PSIZE_T NumberOfBytesRead
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/WriteVirtualMemory, (
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
     _In_reads_bytes_(BufferSize) PVOID Buffer,
     _In_ SIZE_T BufferSize,
-    _Out_opt_ PSIZE_T NumberOfBytesWritten)
-)
+    _Out_opt_ PSIZE_T NumberOfBytesWritten
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/ProtectVirtualMemory, (
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID *BaseAddress,
     _Inout_ PSIZE_T RegionSize,
     _In_ ULONG NewProtect,
-    _Out_ PULONG OldProtect)
-)
+    _Out_ PULONG OldProtect
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/QueryVirtualMemory, (
     _In_ HANDLE ProcessHandle,
@@ -488,13 +488,13 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryVirtualMemory, (
     _In_ MEMORY_INFORMATION_CLASS MemoryInformationClass,
     _Out_writes_bytes_(MemoryInformationLength) PVOID MemoryInformation,
     _In_ SIZE_T MemoryInformationLength,
-    _Out_opt_ PSIZE_T ReturnLength)
-)
+    _Out_opt_ PSIZE_T ReturnLength
+))
 
 #endif
 
 // begin_private
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 typedef enum _VIRTUAL_MEMORY_INFORMATION_CLASS
 {
     VmPrefetchInformation, // ULONG
@@ -522,9 +522,9 @@ typedef struct _CFG_CALL_TARGET_LIST_INFORMATION
 #endif
 // end_private
 
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 NATIVE_API(NTSTATUS, /*Nt*/SetInformationVirtualMemory, (
     _In_ HANDLE ProcessHandle,
@@ -532,8 +532,8 @@ NATIVE_API(NTSTATUS, /*Nt*/SetInformationVirtualMemory, (
     _In_ ULONG_PTR NumberOfEntries,
     _In_reads_ (NumberOfEntries) PMEMORY_RANGE_ENTRY VirtualAddresses,
     _In_reads_bytes_ (VmInformationLength) PVOID VmInformation,
-    _In_ ULONG VmInformationLength)
-)
+    _In_ ULONG VmInformationLength
+))
 
 #endif
 
@@ -541,21 +541,21 @@ NATIVE_API(NTSTATUS, /*Nt*/LockVirtualMemory, (
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID *BaseAddress,
     _Inout_ PSIZE_T RegionSize,
-    _In_ ULONG MapType)
-)
+    _In_ ULONG MapType
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/UnlockVirtualMemory, (
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID *BaseAddress,
     _Inout_ PSIZE_T RegionSize,
-    _In_ ULONG MapType)
-)
+    _In_ ULONG MapType
+))
 
 #endif
 
 // Sections
 
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateSection, (
     _Out_ PHANDLE SectionHandle,
@@ -564,10 +564,10 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateSection, (
     _In_opt_ PLARGE_INTEGER MaximumSize,
     _In_ ULONG SectionPageProtection,
     _In_ ULONG AllocationAttributes,
-    _In_opt_ HANDLE FileHandle)
-)
+    _In_opt_ HANDLE FileHandle
+))
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS15)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS15)
 NATIVE_API(NTSTATUS, /*Nt*/CreateSectionEx, (
     _Out_ PHANDLE SectionHandle,
     _In_ ACCESS_MASK DesiredAccess,
@@ -577,15 +577,15 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateSectionEx, (
     _In_ ULONG AllocationAttributes,
     _In_opt_ HANDLE FileHandle,
     _In_ PMEM_EXTENDED_PARAMETER ExtendedParameters,
-    _In_ ULONG ExtendedParameterCount)
-)
+    _In_ ULONG ExtendedParameterCount
+))
 #endif
 
 NATIVE_API(NTSTATUS, /*Nt*/OpenSection, (
     _Out_ PHANDLE SectionHandle,
     _In_ ACCESS_MASK DesiredAccess,
-    _In_ POBJECT_ATTRIBUTES ObjectAttributes)
-)
+    _In_ POBJECT_ATTRIBUTES ObjectAttributes
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/MapViewOfSection, (
     _In_ HANDLE SectionHandle,
@@ -597,39 +597,39 @@ NATIVE_API(NTSTATUS, /*Nt*/MapViewOfSection, (
     _Inout_ PSIZE_T ViewSize,
     _In_ SECTION_INHERIT InheritDisposition,
     _In_ ULONG AllocationType,
-    _In_ ULONG Win32Protect)
-)
+    _In_ ULONG Win32Protect
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/UnmapViewOfSection, (
     _In_ HANDLE ProcessHandle,
-    _In_opt_ PVOID BaseAddress)
-)
+    _In_opt_ PVOID BaseAddress
+))
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/UnmapViewOfSectionEx, (
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
-    _In_ ULONG Flags)
-)
+    _In_ ULONG Flags
+))
 #endif
 
 NATIVE_API(NTSTATUS, /*Nt*/ExtendSection, (
     _In_ HANDLE SectionHandle,
-    _Inout_ PLARGE_INTEGER NewSectionSize)
-)
+    _Inout_ PLARGE_INTEGER NewSectionSize
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/QuerySection, (
     _In_ HANDLE SectionHandle,
     _In_ SECTION_INFORMATION_CLASS SectionInformationClass,
     _Out_writes_bytes_(SectionInformationLength) PVOID SectionInformation,
     _In_ SIZE_T SectionInformationLength,
-    _Out_opt_ PSIZE_T ReturnLength)
-)
+    _Out_opt_ PSIZE_T ReturnLength
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/AreMappedFilesTheSame, (
     _In_ PVOID File1MappedAsAnImage,
-    _In_ PVOID File2MappedAsFile)
-)
+    _In_ PVOID File2MappedAsFile
+))
 
 #endif
 
@@ -739,28 +739,28 @@ typedef struct _MEMORY_PARTITION_MEMORY_EVENTS_INFORMATION
     HANDLE MaximumCommitCondition; // \KernelObjects\MaximumCommitCondition
 } MEMORY_PARTITION_MEMORY_EVENTS_INFORMATION, *PMEMORY_PARTITION_MEMORY_EVENTS_INFORMATION;
 
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreatePartition, (
     _Out_ PHANDLE PartitionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
-    _In_ ULONG PreferredNode)
-)
+    _In_ ULONG PreferredNode
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/OpenPartition, (
     _Out_ PHANDLE PartitionHandle,
     _In_ ACCESS_MASK DesiredAccess,
-    _In_ POBJECT_ATTRIBUTES ObjectAttributes)
-)
+    _In_ POBJECT_ATTRIBUTES ObjectAttributes
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/ManagePartition, (
     _In_ MEMORY_PARTITION_INFORMATION_CLASS PartitionInformationClass,
     _In_ PVOID PartitionInformation,
-    _In_ ULONG PartitionInformationLength)
-)
+    _In_ ULONG PartitionInformationLength
+))
 
 #endif
 
@@ -768,51 +768,51 @@ NATIVE_API(NTSTATUS, /*Nt*/ManagePartition, (
 
 // User physical pages
 
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/MapUserPhysicalPages, (
     _In_ PVOID VirtualAddress,
     _In_ ULONG_PTR NumberOfPages,
-    _In_reads_opt_(NumberOfPages) PULONG_PTR UserPfnArray)
-)
+    _In_reads_opt_(NumberOfPages) PULONG_PTR UserPfnArray
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/MapUserPhysicalPagesScatter, (
     _In_reads_(NumberOfPages) PVOID *VirtualAddresses,
     _In_ ULONG_PTR NumberOfPages,
-    _In_reads_opt_(NumberOfPages) PULONG_PTR UserPfnArray)
-)
+    _In_reads_opt_(NumberOfPages) PULONG_PTR UserPfnArray
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/AllocateUserPhysicalPages, (
     _In_ HANDLE ProcessHandle,
     _Inout_ PULONG_PTR NumberOfPages,
-    _Out_writes_(*NumberOfPages) PULONG_PTR UserPfnArray)
-)
+    _Out_writes_(*NumberOfPages) PULONG_PTR UserPfnArray
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/FreeUserPhysicalPages, (
     _In_ HANDLE ProcessHandle,
     _Inout_ PULONG_PTR NumberOfPages,
-    _In_reads_(*NumberOfPages) PULONG_PTR UserPfnArray)
-)
+    _In_reads_(*NumberOfPages) PULONG_PTR UserPfnArray
+))
 
 #endif
 
 // Sessions
 
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 NATIVE_API(NTSTATUS, /*Nt*/OpenSession, (
     _Out_ PHANDLE SessionHandle,
     _In_ ACCESS_MASK DesiredAccess,
-    _In_ POBJECT_ATTRIBUTES ObjectAttributes)
-)
+    _In_ POBJECT_ATTRIBUTES ObjectAttributes
+))
 #endif
 
 #endif
 
 // Misc.
 
-#if (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/GetWriteWatch, (
     _In_ HANDLE ProcessHandle,
@@ -821,31 +821,31 @@ NATIVE_API(NTSTATUS, /*Nt*/GetWriteWatch, (
     _In_ SIZE_T RegionSize,
     _Out_writes_(*EntriesInUserAddressArray) PVOID *UserAddressArray,
     _Inout_ PULONG_PTR EntriesInUserAddressArray,
-    _Out_ PULONG Granularity)
-)
+    _Out_ PULONG Granularity
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/ResetWriteWatch, (
     _In_ HANDLE ProcessHandle,
     _In_ PVOID BaseAddress,
-    _In_ SIZE_T RegionSize)
-)
+    _In_ SIZE_T RegionSize
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/CreatePagingFile, (
     _In_ PUNICODE_STRING PageFileName,
     _In_ PLARGE_INTEGER MinimumSize,
     _In_ PLARGE_INTEGER MaximumSize,
-    _In_ ULONG Priority)
-)
+    _In_ ULONG Priority
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/FlushInstructionCache, (
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
-    _In_ SIZE_T Length)
-)
+    _In_ SIZE_T Length
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/FlushWriteBuffer, (
-    VOID)
-)
+    VOID
+))
 
 #endif
 

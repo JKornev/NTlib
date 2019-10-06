@@ -40,8 +40,8 @@ typedef enum _VDMSERVICECLASS
 
 NATIVE_API(NTSTATUS, /*Nt*/VdmControl, (
     _In_ VDMSERVICECLASS Service,
-    _Inout_ PVOID ServiceData)
-)
+    _Inout_ PVOID ServiceData
+))
 
 // WMI/ETW
 
@@ -49,10 +49,10 @@ NATIVE_API(NTSTATUS, /*Nt*/TraceEvent, (
     _In_ HANDLE TraceHandle,
     _In_ ULONG Flags,
     _In_ ULONG FieldSize,
-    _In_ PVOID Fields)
-)
+    _In_ PVOID Fields
+))
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
 NATIVE_API(NTSTATUS, /*Nt*/TraceControl, (
     _In_ ULONG FunctionCode,
@@ -60,8 +60,8 @@ NATIVE_API(NTSTATUS, /*Nt*/TraceControl, (
     _In_ ULONG InBufferLen,
     _Out_writes_bytes_opt_(OutBufferLen) PVOID OutBuffer,
     _In_ ULONG OutBufferLen,
-    _Out_ PULONG ReturnLength)
-)
+    _Out_ PULONG ReturnLength
+))
 #endif
 
 #endif

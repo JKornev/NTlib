@@ -16,12 +16,12 @@ NTDLL_API(NTSTATUS, RtlConnectToSm, (
     _In_ PUNICODE_STRING ApiPortName,
     _In_ HANDLE ApiPortHandle,
     _In_ DWORD ProcessImageType,
-    _Out_ PHANDLE SmssConnection)
-)
+    _Out_ PHANDLE SmssConnection
+))
 
 NTDLL_API(NTSTATUS, RtlSendMsgToSm, (
     _In_ HANDLE ApiPortHandle,
-    _In_ PPORT_MESSAGE MessageData)
-)
+    _In_ PPORT_MESSAGE MessageData
+))
 
 #endif

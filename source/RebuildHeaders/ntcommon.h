@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Windows.h>
+
 // ----------------------------------------
 //   Base definitions
 
@@ -11,23 +13,34 @@ typedef CCHAR *PCCHAR;
 typedef CSHORT *PCSHORT;
 typedef CLONG *PCLONG;
 
+typedef PCSTR PCSZ;
+
 typedef UCHAR KIRQL, *PKIRQL;
 typedef LONG KPRIORITY;
 typedef USHORT RTL_ATOM, *PRTL_ATOM;
 
 typedef LARGE_INTEGER PHYSICAL_ADDRESS, *PPHYSICAL_ADDRESS;
 
+typedef ULONG LOGICAL;
+typedef ULONG *PLOGICAL;
+
 typedef struct _ANSI_STRING {
     USHORT Length;
     USHORT MaximumLength;
     PCHAR  Buffer;
-} ANSI_STRING, *PANSI_STRING, *PANSI_STRING;
+} STRING, *PSTRING, ANSI_STRING, *PANSI_STRING, *PANSI_STRING, OEM_STRING, *POEM_STRING;
 
 typedef struct _LSA_UNICODE_STRING {
     USHORT Length;
     USHORT MaximumLength;
     PWSTR  Buffer;
 } LSA_UNICODE_STRING, *PLSA_UNICODE_STRING, UNICODE_STRING, *PUNICODE_STRING;
+
+typedef const STRING *PCSTRING;
+typedef const ANSI_STRING *PCANSI_STRING;
+typedef const OEM_STRING *PCOEM_STRING;
+
+typedef const UNICODE_STRING *PCUNICODE_STRING;
 
 #define OBJ_INHERIT 0x00000002
 #define OBJ_PERMANENT 0x00000010
@@ -97,3 +110,100 @@ typedef struct _KSYSTEM_TIME
 } KSYSTEM_TIME, *PKSYSTEM_TIME;
 
 #include <poppack.h>
+
+typedef enum _EVENT_TYPE
+{
+    NotificationEvent,
+    SynchronizationEvent
+} EVENT_TYPE;
+
+typedef enum _TIMER_TYPE
+{
+    NotificationTimer,
+    SynchronizationTimer
+} TIMER_TYPE;
+
+typedef enum _WAIT_TYPE
+{
+    WaitAll,
+    WaitAny,
+    WaitNotification
+} WAIT_TYPE;
+
+typedef enum _NT_PRODUCT_TYPE
+{
+    NtProductWinNt = 1,
+    NtProductLanManNt,
+    NtProductServer
+} NT_PRODUCT_TYPE, *PNT_PRODUCT_TYPE;
+
+typedef enum _SUITE_TYPE
+{
+    SmallBusiness,
+    Enterprise,
+    BackOffice,
+    CommunicationServer,
+    TerminalServer,
+    SmallBusinessRestricted,
+    EmbeddedNT,
+    DataCenter,
+    SingleUserTS,
+    Personal,
+    Blade,
+    EmbeddedRestricted,
+    SecurityAppliance,
+    StorageServer,
+    ComputeServer,
+    WHServer,
+    PhoneNT,
+    MaxSuiteType
+} SUITE_TYPE;
+
+#define RTL_BALANCED_NODE_RESERVED_PARENT_MASK 3
+
+typedef struct _RTL_BALANCED_NODE
+{
+    union
+    {
+        struct _RTL_BALANCED_NODE *Children[2];
+        struct
+        {
+            struct _RTL_BALANCED_NODE *Left;
+            struct _RTL_BALANCED_NODE *Right;
+        };
+    };
+    union
+    {
+        UCHAR Red : 1;
+        UCHAR Balance : 2;
+        ULONG_PTR ParentValue;
+    };
+} RTL_BALANCED_NODE, *PRTL_BALANCED_NODE;
+
+#define RTL_BALANCED_NODE_GET_PARENT_POINTER(Node) \
+    ((PRTL_BALANCED_NODE)((Node)->ParentValue & ~RTL_BALANCED_NODE_RESERVED_PARENT_MASK))
+
+typedef struct _SINGLE_LIST_ENTRY32
+{
+    ULONG Next;
+} SINGLE_LIST_ENTRY32, *PSINGLE_LIST_ENTRY32;
+
+typedef struct _STRING32
+{
+    USHORT Length;
+    USHORT MaximumLength;
+    ULONG Buffer;
+} STRING32, *PSTRING32;
+
+typedef STRING32 UNICODE_STRING32, *PUNICODE_STRING32;
+typedef STRING32 ANSI_STRING32, *PANSI_STRING32;
+
+typedef struct _STRING64
+{
+    USHORT Length;
+    USHORT MaximumLength;
+    ULONGLONG Buffer;
+} STRING64, *PSTRING64;
+
+typedef STRING64 UNICODE_STRING64, *PUNICODE_STRING64;
+typedef STRING64 ANSI_STRING64, *PANSI_STRING64;

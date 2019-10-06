@@ -391,11 +391,11 @@ typedef struct _PEB32
 
 C_ASSERT(FIELD_OFFSET(PEB32, IFEOKey) == 0x024);
 C_ASSERT(FIELD_OFFSET(PEB32, UnicodeCaseTableData) == 0x060);
-C_ASSERT(FIELD_OFFSET(PEB32, SystemAssemblyStorageMap) == 0x204);
+/*C_ASSERT(FIELD_OFFSET(PEB32, SystemAssemblyStorageMap) == 0x204);
 C_ASSERT(FIELD_OFFSET(PEB32, pImageHeaderHash) == 0x23c);
 C_ASSERT(FIELD_OFFSET(PEB32, WaitOnAddressHashTable) == 0x25c);
 //C_ASSERT(sizeof(PEB32) == 0x460); // REDSTONE3
-C_ASSERT(sizeof(PEB32) == 0x470);
+C_ASSERT(sizeof(PEB32) == 0x470);*/
 
 #define GDI_BATCH_BUFFER_SIZE 310
 

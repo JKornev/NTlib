@@ -14,8 +14,8 @@
 
 NTDLL_API(BOOLEAN, RtlDispatchException, (
     _In_ PEXCEPTION_RECORD ExceptionRecord,
-    _In_ PCONTEXT ContextRecord)
-)
+    _In_ PCONTEXT ContextRecord
+))
 
 NTSYSAPI
 DECLSPEC_NORETURN
@@ -26,19 +26,19 @@ RtlRaiseStatus(
     );
 
 NTDLL_API_VOID(RtlRaiseException, (
-    _In_ PEXCEPTION_RECORD ExceptionRecord)
-)
+    _In_ PEXCEPTION_RECORD ExceptionRecord
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/Continue, (
     _In_ PCONTEXT ContextRecord,
-    _In_ BOOLEAN TestAlert)
-)
+    _In_ BOOLEAN TestAlert
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/RaiseException, (
     _In_ PEXCEPTION_RECORD ExceptionRecord,
     _In_ PCONTEXT ContextRecord,
-    _In_ BOOLEAN FirstChance)
-)
+    _In_ BOOLEAN FirstChance
+))
 
 __analysis_noreturn
 NTSYSCALLAPI

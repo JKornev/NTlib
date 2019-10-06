@@ -1040,7 +1040,7 @@ WinStationGetProcessSid(
 
 // Services isolation
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // rev
 BOOLEAN

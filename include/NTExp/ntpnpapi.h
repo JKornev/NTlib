@@ -110,43 +110,43 @@ typedef enum _PLUGPLAY_CONTROL_CLASS
     MaxPlugPlayControl
 } PLUGPLAY_CONTROL_CLASS, *PPLUGPLAY_CONTROL_CLASS;
 
-#if (NTLIB_WIN_VERSION < NTLIB_WIN_8)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION < NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/GetPlugPlayEvent, (
     _In_ HANDLE EventHandle,
     _In_opt_ PVOID Context,
     _Out_writes_bytes_(EventBufferSize) PPLUGPLAY_EVENT_BLOCK EventBlock,
-    _In_ ULONG EventBufferSize)
-)
+    _In_ ULONG EventBufferSize
+))
 #endif
 
 NATIVE_API(NTSTATUS, /*Nt*/PlugPlayControl, (
     _In_ PLUGPLAY_CONTROL_CLASS PnPControlClass,
     _Inout_updates_bytes_(PnPControlDataLength) PVOID PnPControlData,
-    _In_ ULONG PnPControlDataLength)
-)
+    _In_ ULONG PnPControlDataLength
+))
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 
 NATIVE_API(NTSTATUS, /*Nt*/SerializeBoot, (
-    VOID)
-)
+    VOID
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/EnableLastKnownGood, (
-    VOID)
-)
+    VOID
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/DisableLastKnownGood, (
-    VOID)
-)
+    VOID
+))
 
 #endif
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 NATIVE_API(NTSTATUS, /*Nt*/ReplacePartitionUnit, (
     _In_ PUNICODE_STRING TargetInstancePath,
     _In_ PUNICODE_STRING SpareInstancePath,
-    _In_ ULONG Flags)
-)
+    _In_ ULONG Flags
+))
 #endif
 
 #endif

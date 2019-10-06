@@ -1,6 +1,7 @@
-; Auto-generated definitions file (October 02, 2019  10:42:03)
+; Auto-generated definitions file (October 06, 2019  23:54:39)
 LIBRARY ntdll.dll
 EXPORTS
+; === NTCOMMON.H ===
 ; === NTDBG.H ===
     DbgUserBreakPoint
     DbgBreakPoint
@@ -278,7 +279,6 @@ EXPORTS
  ZwDisplayString
  NtDrawText
  ZwDrawText
-; === NTEXP.H ===
 ; === NTGDI.H ===
 ; === NTIOAPI.H ===
  NtCreateFile
@@ -374,8 +374,6 @@ EXPORTS
 ; === NTKEAPI.H ===
  NtCallbackReturn
  ZwCallbackReturn
-  NtFlushProcessWriteBuffers
-  ZwFlushProcessWriteBuffers
  NtQueryDebugFilterState
  ZwQueryDebugFilterState
  NtSetDebugFilterState
@@ -1571,6 +1569,7 @@ EXPORTS
 ; === NTSMSS.H ===
    RtlConnectToSm
    RtlSendMsgToSm
+; === NTSTATUS.H ===
 ; === NTTMAPI.H ===
  NtCreateTransactionManager
  ZwCreateTransactionManager

@@ -16,6 +16,8 @@ c_project_name = "ntexp"
 
 c_regex_syscall = re.compile(r"^NTSYSCALLAPI\s+(.*)\s+NTAPI\s+Nt(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
 c_regex_sysapi  = re.compile(r"^NTSYSAPI\s+(.*)\s+NTAPI\s+(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
+c_regex_include = re.compile(r"#include\s+<(.*)>")
+c_ignore_includes = ["pshpack4.h", "poppack.h"]
 
 def main():
     headers = get_files_with_ext(c_headers_source_dir, ".h")
@@ -63,6 +65,8 @@ def transform_header(source):
     output = c_regex_syscall.sub(lambda s: make_syscall_macro(s.groups()), source)
     # Native API to macro
     output = c_regex_sysapi.sub(lambda s: make_sysapi_macro(s.groups()), output)
+    # Includes normalization
+    output = c_regex_include.sub(lambda s: remake_include(s.groups()), output)
     # Macro renaming
     output = re.sub("PHNT_MODE_KERNEL", "NTLIB_KERNEL_MODE", output)
     output = re.sub("PHNT_MODE_USER",   "NTLIB_USER_MODE",   output)
@@ -79,8 +83,8 @@ def transform_header(source):
     output = re.sub("PHNT_REDSTONE2",   "NTLIB_WIN_10_RS2",  output)
     output = re.sub("PHNT_REDSTONE3",   "NTLIB_WIN_10_RS3",  output)
     output = re.sub("PHNT_REDSTONE4",   "NTLIB_WIN_10_RS4",  output)
-    output = re.sub("PHNT_REDSTONE5",   "NTLIB_WIN_10_RS5",  output)
-    output = re.sub("PHNT_19H1",        "NTLIB_WIN_10_TH1",  output)
+    output = re.sub("PHNT_REDSTONE 5",   "NTLIB_WIN_10_RS5",  output)
+    output = re.sub("PHNT_19H1",        "NTLIB_WIN_10_19H1", output)
     output = re.sub("PHNT_VERSION",     "NTLIB_WIN_VERSION", output)
     return output
     
@@ -120,11 +124,18 @@ def make_sysapi_macro(groups):
 
     return build_sysapi_str("NTDLL", retval, fnname, None, args, noreturn)
 
+def remake_include(groups):
+    header = groups[0]
+    if header in c_ignore_includes:
+        return "#include <" + header + ">"
+
+    return "#include \"" + header + "\""
+
 def build_sysapi_str(prefix, retval, fnname, comment, args, noreturn):
     macro = prefix + ("_API_VOID" if noreturn else "_API") 
     macro += "(" + ("" if noreturn else retval + ", ") + ("/*" + comment + "*/" if comment else "") + fnname + ", (\n"
-    macro += "    " + args + ")\n"
-    macro += ")"
+    macro += "    " + args + "\n"
+    macro += "))"
     return macro
 
 def get_files_with_ext(dir, ext):

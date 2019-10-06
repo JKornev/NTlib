@@ -160,10 +160,10 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateToken, (
     _In_opt_ PTOKEN_OWNER Owner,
     _In_ PTOKEN_PRIMARY_GROUP PrimaryGroup,
     _In_opt_ PTOKEN_DEFAULT_DACL DefaultDacl,
-    _In_ PTOKEN_SOURCE TokenSource)
-)
+    _In_ PTOKEN_SOURCE TokenSource
+))
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/CreateLowBoxToken, (
     _Out_ PHANDLE TokenHandle,
     _In_ HANDLE ExistingTokenHandle,
@@ -173,11 +173,11 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateLowBoxToken, (
     _In_ ULONG CapabilityCount,
     _In_reads_opt_(CapabilityCount) PSID_AND_ATTRIBUTES Capabilities,
     _In_ ULONG HandleCount,
-    _In_reads_opt_(HandleCount) HANDLE *Handles)
-)
+    _In_reads_opt_(HandleCount) HANDLE *Handles
+))
 #endif
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/CreateTokenEx, (
     _Out_ PHANDLE TokenHandle,
     _In_ ACCESS_MASK DesiredAccess,
@@ -195,37 +195,37 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateTokenEx, (
     _In_opt_ PTOKEN_OWNER Owner,
     _In_ PTOKEN_PRIMARY_GROUP PrimaryGroup,
     _In_opt_ PTOKEN_DEFAULT_DACL DefaultDacl,
-    _In_ PTOKEN_SOURCE TokenSource)
-)
+    _In_ PTOKEN_SOURCE TokenSource
+))
 #endif
 
 NATIVE_API(NTSTATUS, /*Nt*/OpenProcessToken, (
     _In_ HANDLE ProcessHandle,
     _In_ ACCESS_MASK DesiredAccess,
-    _Out_ PHANDLE TokenHandle)
-)
+    _Out_ PHANDLE TokenHandle
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/OpenProcessTokenEx, (
     _In_ HANDLE ProcessHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ ULONG HandleAttributes,
-    _Out_ PHANDLE TokenHandle)
-)
+    _Out_ PHANDLE TokenHandle
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/OpenThreadToken, (
     _In_ HANDLE ThreadHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ BOOLEAN OpenAsSelf,
-    _Out_ PHANDLE TokenHandle)
-)
+    _Out_ PHANDLE TokenHandle
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/OpenThreadTokenEx, (
     _In_ HANDLE ThreadHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ BOOLEAN OpenAsSelf,
     _In_ ULONG HandleAttributes,
-    _Out_ PHANDLE TokenHandle)
-)
+    _Out_ PHANDLE TokenHandle
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/DuplicateToken, (
     _In_ HANDLE ExistingTokenHandle,
@@ -233,23 +233,23 @@ NATIVE_API(NTSTATUS, /*Nt*/DuplicateToken, (
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ BOOLEAN EffectiveOnly,
     _In_ TOKEN_TYPE TokenType,
-    _Out_ PHANDLE NewTokenHandle)
-)
+    _Out_ PHANDLE NewTokenHandle
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/QueryInformationToken, (
     _In_ HANDLE TokenHandle,
     _In_ TOKEN_INFORMATION_CLASS TokenInformationClass,
     _Out_writes_bytes_(TokenInformationLength) PVOID TokenInformation,
     _In_ ULONG TokenInformationLength,
-    _Out_ PULONG ReturnLength)
-)
+    _Out_ PULONG ReturnLength
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/SetInformationToken, (
     _In_ HANDLE TokenHandle,
     _In_ TOKEN_INFORMATION_CLASS TokenInformationClass,
     _In_reads_bytes_(TokenInformationLength) PVOID TokenInformation,
-    _In_ ULONG TokenInformationLength)
-)
+    _In_ ULONG TokenInformationLength
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/AdjustPrivilegesToken, (
     _In_ HANDLE TokenHandle,
@@ -257,8 +257,8 @@ NATIVE_API(NTSTATUS, /*Nt*/AdjustPrivilegesToken, (
     _In_opt_ PTOKEN_PRIVILEGES NewState,
     _In_ ULONG BufferLength,
     _Out_writes_bytes_to_opt_(BufferLength, *ReturnLength) PTOKEN_PRIVILEGES PreviousState,
-    _Out_ _When_(PreviousState == NULL, _Out_opt_) PULONG ReturnLength)
-)
+    _Out_ _When_(PreviousState == NULL, _Out_opt_) PULONG ReturnLength
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/AdjustGroupsToken, (
     _In_ HANDLE TokenHandle,
@@ -266,10 +266,10 @@ NATIVE_API(NTSTATUS, /*Nt*/AdjustGroupsToken, (
     _In_opt_ PTOKEN_GROUPS NewState,
     _In_opt_ ULONG BufferLength,
     _Out_writes_bytes_to_opt_(BufferLength, *ReturnLength) PTOKEN_GROUPS PreviousState,
-    _Out_opt_ PULONG ReturnLength)
-)
+    _Out_opt_ PULONG ReturnLength
+))
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/AdjustTokenClaimsAndDeviceGroups, (
     _In_ HANDLE TokenHandle,
     _In_ BOOLEAN UserResetToDefault,
@@ -286,8 +286,8 @@ NATIVE_API(NTSTATUS, /*Nt*/AdjustTokenClaimsAndDeviceGroups, (
     _Out_writes_bytes_to_opt_(DeviceGroupsBufferLength, *DeviceGroupsReturnBufferLength) PTOKEN_GROUPS PreviousDeviceGroups,
     _Out_opt_ PULONG UserReturnLength,
     _Out_opt_ PULONG DeviceReturnLength,
-    _Out_opt_ PULONG DeviceGroupsReturnBufferLength)
-)
+    _Out_opt_ PULONG DeviceGroupsReturnBufferLength
+))
 #endif
 
 NATIVE_API(NTSTATUS, /*Nt*/FilterToken, (
@@ -296,10 +296,10 @@ NATIVE_API(NTSTATUS, /*Nt*/FilterToken, (
     _In_opt_ PTOKEN_GROUPS SidsToDisable,
     _In_opt_ PTOKEN_PRIVILEGES PrivilegesToDelete,
     _In_opt_ PTOKEN_GROUPS RestrictedSids,
-    _Out_ PHANDLE NewTokenHandle)
-)
+    _Out_ PHANDLE NewTokenHandle
+))
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/FilterTokenEx, (
     _In_ HANDLE ExistingTokenHandle,
     _In_ ULONG Flags,
@@ -314,27 +314,27 @@ NATIVE_API(NTSTATUS, /*Nt*/FilterTokenEx, (
     _In_opt_ PTOKEN_SECURITY_ATTRIBUTES_INFORMATION RestrictedUserAttributes,
     _In_opt_ PTOKEN_SECURITY_ATTRIBUTES_INFORMATION RestrictedDeviceAttributes,
     _In_opt_ PTOKEN_GROUPS RestrictedDeviceGroups,
-    _Out_ PHANDLE NewTokenHandle)
-)
+    _Out_ PHANDLE NewTokenHandle
+))
 #endif
 
 NATIVE_API(NTSTATUS, /*Nt*/CompareTokens, (
     _In_ HANDLE FirstTokenHandle,
     _In_ HANDLE SecondTokenHandle,
-    _Out_ PBOOLEAN Equal)
-)
+    _Out_ PBOOLEAN Equal
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/PrivilegeCheck, (
     _In_ HANDLE ClientToken,
     _Inout_ PPRIVILEGE_SET RequiredPrivileges,
-    _Out_ PBOOLEAN Result)
-)
+    _Out_ PBOOLEAN Result
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/ImpersonateAnonymousToken, (
-    _In_ HANDLE ThreadHandle)
-)
+    _In_ HANDLE ThreadHandle
+))
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
 NATIVE_API(NTSTATUS, /*Nt*/QuerySecurityAttributesToken, (
     _In_ HANDLE TokenHandle,
@@ -342,8 +342,8 @@ NATIVE_API(NTSTATUS, /*Nt*/QuerySecurityAttributesToken, (
     _In_ ULONG NumberOfAttributes,
     _Out_writes_bytes_(Length) PVOID Buffer, // PTOKEN_SECURITY_ATTRIBUTES_INFORMATION
     _In_ ULONG Length,
-    _Out_ PULONG ReturnLength)
-)
+    _Out_ PULONG ReturnLength
+))
 #endif
 
 // Access checking
@@ -356,8 +356,8 @@ NATIVE_API(NTSTATUS, /*Nt*/AccessCheck, (
     _Out_writes_bytes_(*PrivilegeSetLength) PPRIVILEGE_SET PrivilegeSet,
     _Inout_ PULONG PrivilegeSetLength,
     _Out_ PACCESS_MASK GrantedAccess,
-    _Out_ PNTSTATUS AccessStatus)
-)
+    _Out_ PNTSTATUS AccessStatus
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByType, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor,
@@ -370,8 +370,8 @@ NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByType, (
     _Out_writes_bytes_(*PrivilegeSetLength) PPRIVILEGE_SET PrivilegeSet,
     _Inout_ PULONG PrivilegeSetLength,
     _Out_ PACCESS_MASK GrantedAccess,
-    _Out_ PNTSTATUS AccessStatus)
-)
+    _Out_ PNTSTATUS AccessStatus
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByTypeResultList, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor,
@@ -384,20 +384,20 @@ NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByTypeResultList, (
     _Out_writes_bytes_(*PrivilegeSetLength) PPRIVILEGE_SET PrivilegeSet,
     _Inout_ PULONG PrivilegeSetLength,
     _Out_writes_(ObjectTypeListLength) PACCESS_MASK GrantedAccess,
-    _Out_writes_(ObjectTypeListLength) PNTSTATUS AccessStatus)
-)
+    _Out_writes_(ObjectTypeListLength) PNTSTATUS AccessStatus
+))
 
 // Signing
 
-#if (NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 NATIVE_API(NTSTATUS, /*Nt*/SetCachedSigningLevel, (
     _In_ ULONG Flags,
     _In_ SE_SIGNING_LEVEL InputSigningLevel,
     _In_reads_(SourceFileCount) PHANDLE SourceFiles,
     _In_ ULONG SourceFileCount,
-    _In_opt_ HANDLE TargetFile)
-)
+    _In_opt_ HANDLE TargetFile
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/GetCachedSigningLevel, (
     _In_ HANDLE File,
@@ -405,8 +405,8 @@ NATIVE_API(NTSTATUS, /*Nt*/GetCachedSigningLevel, (
     _Out_ PSE_SIGNING_LEVEL SigningLevel,
     _Out_writes_bytes_to_opt_(*ThumbprintSize, *ThumbprintSize) PUCHAR Thumbprint,
     _Inout_opt_ PULONG ThumbprintSize,
-    _Out_opt_ PULONG ThumbprintAlgorithm)
-)
+    _Out_opt_ PULONG ThumbprintAlgorithm
+))
 
 #endif
 
@@ -423,8 +423,8 @@ NATIVE_API(NTSTATUS, /*Nt*/AccessCheckAndAuditAlarm, (
     _In_ BOOLEAN ObjectCreation,
     _Out_ PACCESS_MASK GrantedAccess,
     _Out_ PNTSTATUS AccessStatus,
-    _Out_ PBOOLEAN GenerateOnClose)
-)
+    _Out_ PBOOLEAN GenerateOnClose
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByTypeAndAuditAlarm, (
     _In_ PUNICODE_STRING SubsystemName,
@@ -442,8 +442,8 @@ NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByTypeAndAuditAlarm, (
     _In_ BOOLEAN ObjectCreation,
     _Out_ PACCESS_MASK GrantedAccess,
     _Out_ PNTSTATUS AccessStatus,
-    _Out_ PBOOLEAN GenerateOnClose)
-)
+    _Out_ PBOOLEAN GenerateOnClose
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByTypeResultListAndAuditAlarm, (
     _In_ PUNICODE_STRING SubsystemName,
@@ -461,8 +461,8 @@ NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByTypeResultListAndAuditAlarm, (
     _In_ BOOLEAN ObjectCreation,
     _Out_writes_(ObjectTypeListLength) PACCESS_MASK GrantedAccess,
     _Out_writes_(ObjectTypeListLength) PNTSTATUS AccessStatus,
-    _Out_ PBOOLEAN GenerateOnClose)
-)
+    _Out_ PBOOLEAN GenerateOnClose
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByTypeResultListAndAuditAlarmByHandle, (
     _In_ PUNICODE_STRING SubsystemName,
@@ -481,8 +481,8 @@ NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByTypeResultListAndAuditAlarmByHandle, (
     _In_ BOOLEAN ObjectCreation,
     _Out_writes_(ObjectTypeListLength) PACCESS_MASK GrantedAccess,
     _Out_writes_(ObjectTypeListLength) PNTSTATUS AccessStatus,
-    _Out_ PBOOLEAN GenerateOnClose)
-)
+    _Out_ PBOOLEAN GenerateOnClose
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/OpenObjectAuditAlarm, (
     _In_ PUNICODE_STRING SubsystemName,
@@ -496,8 +496,8 @@ NATIVE_API(NTSTATUS, /*Nt*/OpenObjectAuditAlarm, (
     _In_opt_ PPRIVILEGE_SET Privileges,
     _In_ BOOLEAN ObjectCreation,
     _In_ BOOLEAN AccessGranted,
-    _Out_ PBOOLEAN GenerateOnClose)
-)
+    _Out_ PBOOLEAN GenerateOnClose
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/PrivilegeObjectAuditAlarm, (
     _In_ PUNICODE_STRING SubsystemName,
@@ -505,27 +505,27 @@ NATIVE_API(NTSTATUS, /*Nt*/PrivilegeObjectAuditAlarm, (
     _In_ HANDLE ClientToken,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ PPRIVILEGE_SET Privileges,
-    _In_ BOOLEAN AccessGranted)
-)
+    _In_ BOOLEAN AccessGranted
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/CloseObjectAuditAlarm, (
     _In_ PUNICODE_STRING SubsystemName,
     _In_opt_ PVOID HandleId,
-    _In_ BOOLEAN GenerateOnClose)
-)
+    _In_ BOOLEAN GenerateOnClose
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/DeleteObjectAuditAlarm, (
     _In_ PUNICODE_STRING SubsystemName,
     _In_opt_ PVOID HandleId,
-    _In_ BOOLEAN GenerateOnClose)
-)
+    _In_ BOOLEAN GenerateOnClose
+))
 
 NATIVE_API(NTSTATUS, /*Nt*/PrivilegedServiceAuditAlarm, (
     _In_ PUNICODE_STRING SubsystemName,
     _In_ PUNICODE_STRING ServiceName,
     _In_ HANDLE ClientToken,
     _In_ PPRIVILEGE_SET Privileges,
-    _In_ BOOLEAN AccessGranted)
-)
+    _In_ BOOLEAN AccessGranted
+))
 
 #endif

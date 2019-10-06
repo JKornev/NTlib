@@ -45,6 +45,9 @@
     <PreBuildEvent>
       <Command>python "$(SolutionDir)utils\phparse.py" "$(SolutionDir)\external\phnt" "$(IntermediateOutputPath)\" "$(ProjectDir)\"</Command>
     </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>python "$(SolutionDir)utils\deploy.py" "$(IntermediateOutputPath)\" "$(SolutionDir)..\include"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="..\utils\phparse.py" />
