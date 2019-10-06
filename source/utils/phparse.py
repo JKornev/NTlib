@@ -1,4 +1,4 @@
-import re
+﻿import re
 import sys
 import os
 
@@ -10,7 +10,7 @@ c_headers_source_dir   = sys.argv[1]
 c_headers_output_dir   = sys.argv[2]
 c_common_templates_dir = sys.argv[3]
 c_ignore_files  = ["phnt.h", "phnt_ntdef.h", "phnt_windows.h", "ntzwapi.h"]
-c_include_files = ["ntstatus.h", "ntcommon.h"]
+c_include_files = ["ntstatus.h", "ntcommon.h", "ntcompatibility.h"]
 c_common_header_template = "ntexp.h"
 c_project_name = "ntexp"
 

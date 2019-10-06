@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ntcommon.h" />
+    <ClInclude Include="ntcompatibility.h" />
     <ClInclude Include="ntexp.h" />
     <ClInclude Include="ntstatus.h" />
   </ItemGroup>
