@@ -1,4 +1,4 @@
-import re
+﻿import re
 import sys
 import os
 
@@ -10,9 +10,10 @@ c_headers_source_dir   = sys.argv[1]
 c_headers_output_dir   = sys.argv[2]
 c_common_templates_dir = sys.argv[3]
 c_ignore_files  = ["phnt.h", "phnt_ntdef.h", "phnt_windows.h", "ntzwapi.h"]
-c_include_files = ["ntstatus.h", "ntcommon.h"]
+c_include_files = ["ntcompatibility.h", "ntstatus.h", "ntcommon.h"]
 c_common_header_template = "ntexp.h"
 c_project_name = "ntexp"
+c_include_order_source = "phnt.h"
 
 c_regex_syscall = re.compile(r"^NTSYSCALLAPI\s+(.*)\s+NTAPI\s+Nt(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
 c_regex_sysapi  = re.compile(r"^NTSYSAPI\s+(.*)\s+NTAPI\s+(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
@@ -43,14 +44,37 @@ def build_common_header(headers):
     print("Rebuilding common header")
 
     include = ""
-    for h in c_include_files + headers:
-        include += "#include <" + c_project_name + r"\\" + h + ">\n"
-        print("  Included: " + h)
+
+    for header in c_include_files:
+        include += build_include(header)
+
+    # Add includes according respecting an order
+    included = []
+    order = build_order()
+    for header in order:
+        if header in headers:
+            included.append(header)
+            include += build_include(header)
+
+    # Add includes that isn't ordered
+    for header in headers:
+        # Already added
+        if header in included:
+            continue
+        include += build_include(header)
 
     common = read_file(os.path.join(c_common_templates_dir, c_common_header_template))
-    output = re.sub(r"\/\/INCLUDE\:ZONE", include, common)
+    output = re.sub(r"\/\/INCLUDE\:ZONE", include.strip(), common)
     write_file(os.path.join(c_headers_output_dir, c_common_header_template), output)
     print("Done")
+
+def build_include(header):
+    print("  Included: " + header)
+    return "#include <" + c_project_name + r"\\" + header + ">\n"
+
+def build_order():
+    source = read_file(os.path.join(c_headers_source_dir, c_include_order_source))
+    return c_regex_include.findall(source)
 
 def copy_includes():
     print("Coping include headers")
