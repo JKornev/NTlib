@@ -12,7 +12,7 @@
 #ifndef _NTMMAPI_H
 #define _NTMMAPI_H
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE == NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE == NTLIB_KERNEL_MODE)
 
 // Protection constants
 
@@ -418,7 +418,7 @@ typedef struct _SECTION_INTERNAL_IMAGE_INFORMATION
     };
 } SECTION_INTERNAL_IMAGE_INFORMATION, *PSECTION_INTERNAL_IMAGE_INFORMATION;
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 typedef enum _SECTION_INHERIT
 {
     ViewShare = 1,
@@ -440,7 +440,7 @@ typedef enum _SECTION_INHERIT
 
 // Virtual memory
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/AllocateVirtualMemory, (
     _In_ HANDLE ProcessHandle,
@@ -494,7 +494,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryVirtualMemory, (
 #endif
 
 // begin_private
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 typedef enum _VIRTUAL_MEMORY_INFORMATION_CLASS
 {
     VmPrefetchInformation, // ULONG
@@ -522,9 +522,9 @@ typedef struct _CFG_CALL_TARGET_LIST_INFORMATION
 #endif
 // end_private
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 NATIVE_API(NTSTATUS, /*Nt*/SetInformationVirtualMemory, (
     _In_ HANDLE ProcessHandle,
@@ -555,7 +555,7 @@ NATIVE_API(NTSTATUS, /*Nt*/UnlockVirtualMemory, (
 
 // Sections
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateSection, (
     _Out_ PHANDLE SectionHandle,
@@ -567,7 +567,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateSection, (
     _In_opt_ HANDLE FileHandle
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS15)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS15)
 NATIVE_API(NTSTATUS, /*Nt*/CreateSectionEx, (
     _Out_ PHANDLE SectionHandle,
     _In_ ACCESS_MASK DesiredAccess,
@@ -605,7 +605,7 @@ NATIVE_API(NTSTATUS, /*Nt*/UnmapViewOfSection, (
     _In_opt_ PVOID BaseAddress
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/UnmapViewOfSectionEx, (
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
@@ -739,9 +739,9 @@ typedef struct _MEMORY_PARTITION_MEMORY_EVENTS_INFORMATION
     HANDLE MaximumCommitCondition; // \KernelObjects\MaximumCommitCondition
 } MEMORY_PARTITION_MEMORY_EVENTS_INFORMATION, *PMEMORY_PARTITION_MEMORY_EVENTS_INFORMATION;
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreatePartition, (
     _Out_ PHANDLE PartitionHandle,
@@ -768,7 +768,7 @@ NATIVE_API(NTSTATUS, /*Nt*/ManagePartition, (
 
 // User physical pages
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/MapUserPhysicalPages, (
     _In_ PVOID VirtualAddress,
@@ -798,9 +798,9 @@ NATIVE_API(NTSTATUS, /*Nt*/FreeUserPhysicalPages, (
 
 // Sessions
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 NATIVE_API(NTSTATUS, /*Nt*/OpenSession, (
     _Out_ PHANDLE SessionHandle,
     _In_ ACCESS_MASK DesiredAccess,
@@ -812,7 +812,7 @@ NATIVE_API(NTSTATUS, /*Nt*/OpenSession, (
 
 // Misc.
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/GetWriteWatch, (
     _In_ HANDLE ProcessHandle,

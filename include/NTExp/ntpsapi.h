@@ -1084,7 +1084,7 @@ typedef enum _THREAD_WORKLOAD_CLASS
 
 // Processes
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateProcess, (
     _Out_ PHANDLE ProcessHandle,
@@ -1161,7 +1161,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryInformationProcess, (
     _Out_opt_ PULONG ReturnLength
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
 NATIVE_API(NTSTATUS, /*Nt*/GetNextProcess, (
     _In_ HANDLE ProcessHandle,
     _In_ ACCESS_MASK DesiredAccess,
@@ -1171,7 +1171,7 @@ NATIVE_API(NTSTATUS, /*Nt*/GetNextProcess, (
 ))
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
 NATIVE_API(NTSTATUS, /*Nt*/GetNextThread, (
     _In_ HANDLE ProcessHandle,
     _In_ HANDLE ThreadHandle,
@@ -1197,7 +1197,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryPortInformationProcess, (
 
 // Threads
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateThread, (
     _Out_ PHANDLE ThreadHandle,
@@ -1307,7 +1307,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueueApcThread, (
     _In_opt_ PVOID ApcArgument3
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 
 #define APC_FORCE_THREAD_SIGNAL ((HANDLE)1) // UserApcReserveHandle
 
@@ -1321,7 +1321,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueueApcThreadEx, (
 ))
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
 // rev
 NATIVE_API(NTSTATUS, /*Nt*/AlertThreadByThreadId, (
@@ -1340,7 +1340,7 @@ NATIVE_API(NTSTATUS, /*Nt*/WaitForAlertByThreadId, (
 
 // User processes and threads
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 // Attributes
 
@@ -1651,7 +1651,7 @@ typedef struct _PS_CREATE_INFO
 #define PROCESS_CREATE_FLAGS_EXTENDED_UNKNOWN 0x00000400
 // end_rev
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 NATIVE_API(NTSTATUS, /*Nt*/CreateUserProcess, (
     _Out_ PHANDLE ProcessHandle,
     _Out_ PHANDLE ThreadHandle,
@@ -1676,7 +1676,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateUserProcess, (
 #define THREAD_CREATE_FLAGS_INITIAL_THREAD 0x00000080
 // end_rev
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 NATIVE_API(NTSTATUS, /*Nt*/CreateThreadEx, (
     _Out_ PHANDLE ThreadHandle,
     _In_ ACCESS_MASK DesiredAccess,
@@ -1696,7 +1696,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateThreadEx, (
 
 // Job objects
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 // JOBOBJECTINFOCLASS
 // Note: We don't use an enum since it conflicts with the Windows SDK.
@@ -1900,7 +1900,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateJobSet, (
     _In_ ULONG Flags
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 NATIVE_API(NTSTATUS, /*Nt*/RevertContainerImpersonation, (
     VOID
 ))
@@ -1910,7 +1910,7 @@ NATIVE_API(NTSTATUS, /*Nt*/RevertContainerImpersonation, (
 
 // Reserve objects
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 // private
 typedef enum _MEMORY_RESERVE_TYPE
@@ -1920,7 +1920,7 @@ typedef enum _MEMORY_RESERVE_TYPE
     MemoryReserveTypeMax
 } MEMORY_RESERVE_TYPE;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 NATIVE_API(NTSTATUS, /*Nt*/AllocateReserveObject, (
     _Out_ PHANDLE MemoryReserveHandle,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,

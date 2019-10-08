@@ -555,7 +555,7 @@ typedef struct _ALPC_MESSAGE_HANDLE_INFORMATION
 
 // begin_private
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // System calls
 
@@ -674,7 +674,7 @@ NATIVE_API(NTSTATUS, /*Nt*/AlpcConnectPort, (
     _In_opt_ PLARGE_INTEGER Timeout
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/AlpcConnectPortEx, (
     _Out_ PHANDLE PortHandle,
     _In_ POBJECT_ATTRIBUTES ConnectionPortObjectAttributes,
@@ -729,7 +729,7 @@ NATIVE_API(NTSTATUS, /*Nt*/AlpcImpersonateClientOfPort, (
     _In_ PVOID Flags
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 NATIVE_API(NTSTATUS, /*Nt*/AlpcImpersonateClientContainerOfPort, (
     _In_ HANDLE PortHandle,
     _In_ PPORT_MESSAGE Message,
@@ -793,7 +793,7 @@ NTDLL_API(NTSTATUS, AlpcUnregisterCompletionList, (
     _In_ HANDLE PortHandle
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
 NTDLL_API(NTSTATUS, AlpcRundownCompletionList, (
     _In_ HANDLE PortHandle

@@ -127,7 +127,7 @@ typedef enum _KPROFILE_SOURCE
 
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/CallbackReturn, (
     _In_reads_bytes_opt_(OutputLength) PVOID OutputBuffer,
@@ -135,7 +135,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CallbackReturn, (
     _In_ NTSTATUS Status
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 //Note: conflicts with FlushProcessWriteBuffers
 //NTSYSCALLAPI
 //VOID

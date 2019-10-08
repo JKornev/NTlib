@@ -1147,7 +1147,7 @@ NATIVE_API(NTSTATUS, /*Nt*/FlushBuffersFile, (
 #define FLUSH_FLAGS_NO_SYNC 0x00000002
 #define FLUSH_FLAGS_FILE_DATA_SYNC_ONLY 0x00000004 // REDSTONE1
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/FlushBuffersFileEx, (
     _In_ HANDLE FileHandle,
     _In_ ULONG Flags,
@@ -1165,7 +1165,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryInformationFile, (
     _In_ FILE_INFORMATION_CLASS FileInformationClass
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS12)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS12)
 NATIVE_API(NTSTATUS, /*Nt*/QueryInformationByName, (
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
@@ -1256,7 +1256,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CancelIoFile, (
     _Out_ PIO_STATUS_BLOCK IoStatusBlock
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 NATIVE_API(NTSTATUS, /*Nt*/CancelIoFileEx, (
     _In_ HANDLE FileHandle,
     _In_opt_ PIO_STATUS_BLOCK IoRequestToCancel,
@@ -1264,7 +1264,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CancelIoFileEx, (
 ))
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 NATIVE_API(NTSTATUS, /*Nt*/CancelSynchronousIoFile, (
     _In_ HANDLE ThreadHandle,
     _In_opt_ PIO_STATUS_BLOCK IoRequestToCancel,
@@ -1396,7 +1396,7 @@ typedef enum _DIRECTORY_NOTIFY_INFORMATION_CLASS
     DirectoryNotifyExtendedInformation // FILE_NOTIFY_EXTENDED_INFORMATION
 } DIRECTORY_NOTIFY_INFORMATION_CLASS, *PDIRECTORY_NOTIFY_INFORMATION_CLASS;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS13)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS13)
 NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeDirectoryFileEx, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
@@ -1464,7 +1464,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetIoCompletion, (
     _In_ ULONG_PTR IoStatusInformation
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 NATIVE_API(NTSTATUS, /*Nt*/SetIoCompletionEx, (
     _In_ HANDLE IoCompletionHandle,
     _In_ HANDLE IoCompletionPacketHandle,
@@ -1483,7 +1483,7 @@ NATIVE_API(NTSTATUS, /*Nt*/RemoveIoCompletion, (
     _In_opt_ PLARGE_INTEGER Timeout
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 NATIVE_API(NTSTATUS, /*Nt*/RemoveIoCompletionEx, (
     _In_ HANDLE IoCompletionHandle,
     _Out_writes_to_(Count, *NumEntriesRemoved) PFILE_IO_COMPLETION_INFORMATION IoCompletionInformation,
@@ -1496,7 +1496,7 @@ NATIVE_API(NTSTATUS, /*Nt*/RemoveIoCompletionEx, (
 
 // Wait completion packet
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateWaitCompletionPacket, (
     _Out_ PHANDLE WaitCompletionPacketHandle,
@@ -1549,7 +1549,7 @@ typedef enum _IO_SESSION_STATE
     IoSessionStateMax
 } IO_SESSION_STATE;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeSession, (
     _In_ HANDLE SessionHandle,
     _In_ ULONG ChangeSequenceNumber,

@@ -14,7 +14,7 @@
 
 #include "ntkeapi.h"
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 // Thread execution
 
@@ -118,7 +118,7 @@ typedef struct _EFI_DRIVER_ENTRY_LIST
     EFI_DRIVER_ENTRY DriverEntry;
 } EFI_DRIVER_ENTRY_LIST, *PEFI_DRIVER_ENTRY_LIST;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 NATIVE_API(NTSTATUS, /*Nt*/AddBootEntry, (
     _In_ PBOOT_ENTRY BootEntry,
@@ -201,7 +201,7 @@ typedef enum _FILTER_BOOT_OPTION_OPERATION
     FilterBootOptionOperationMax
 } FILTER_BOOT_OPTION_OPERATION;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 NATIVE_API(NTSTATUS, /*Nt*/FilterBootOption, (
     _In_ FILTER_BOOT_OPTION_OPERATION FilterOperation,
     _In_ ULONG ObjectType,
@@ -431,7 +431,7 @@ typedef enum _TIMER_SET_INFORMATION_CLASS
     MaxTimerInfoClass
 } TIMER_SET_INFORMATION_CLASS;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 struct _COUNTED_REASON_CONTEXT;
 
 typedef struct _TIMER_SET_COALESCABLE_TIMER_INFO
@@ -469,7 +469,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetTimer, (
     _Out_opt_ PBOOLEAN PreviousState
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 NATIVE_API(NTSTATUS, /*Nt*/SetTimerEx, (
     _In_ HANDLE TimerHandle,
     _In_ TIMER_SET_INFORMATION_CLASS TimerSetInformationClass,
@@ -491,7 +491,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryTimer, (
     _Out_opt_ PULONG ReturnLength
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateIRTimer, (
     _Out_ PHANDLE TimerHandle,
@@ -514,7 +514,7 @@ typedef struct _T2_SET_PARAMETERS_V0
 
 typedef PVOID PT2_CANCEL_PARAMETERS;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateTimer2, (
     _Out_ PHANDLE TimerHandle,
@@ -555,7 +555,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateProfile, (
     _In_ KAFFINITY Affinity
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 NATIVE_API(NTSTATUS, /*Nt*/CreateProfileEx, (
     _Out_ PHANDLE ProfileHandle,
     _In_opt_ HANDLE Process,
@@ -624,7 +624,7 @@ NATIVE_API(NTSTATUS, /*Nt*/WaitForKeyedEvent, (
 
 // UMS
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 NATIVE_API(NTSTATUS, /*Nt*/UmsThreadYield, (
     _In_ PVOID SchedulerParam
 ))
@@ -688,7 +688,7 @@ typedef struct _WNF_DELIVERY_DESCRIPTOR
 
 // end_private
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateWnfStateName, (
     _Out_ PWNF_STATE_NAME StateName,
@@ -749,7 +749,7 @@ NATIVE_API(NTSTATUS, /*Nt*/UnsubscribeWnfStateChange, (
 
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 NATIVE_API(NTSTATUS, /*Nt*/GetCompleteWnfStateSubscription, (
     _In_opt_ PWNF_STATE_NAME OldDescriptorStateName,
@@ -842,7 +842,7 @@ typedef struct _WORKER_FACTORY_BASIC_INFORMATION
 
 // end_private
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateWorkerFactory, (
     _Out_ PHANDLE WorkerFactoryHandleReturn,
@@ -2021,7 +2021,7 @@ typedef struct _SYSTEM_SESSION_MAPPED_VIEW_INFORMATION
     SIZE_T NumberOfBytesAvailableContiguous;
 } SYSTEM_SESSION_MAPPED_VIEW_INFORMATION, *PSYSTEM_SESSION_MAPPED_VIEW_INFORMATION;
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 // private
 typedef enum _SYSTEM_FIRMWARE_TABLE_ACTION
 {
@@ -3120,7 +3120,7 @@ typedef struct _SYSTEM_SECURITY_MODEL_INFORMATION
     };
 } SYSTEM_SECURITY_MODEL_INFORMATION, *PSYSTEM_SECURITY_MODEL_INFORMATION;
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/QuerySystemInformation, (
     _In_ SYSTEM_INFORMATION_CLASS SystemInformationClass,
@@ -3129,7 +3129,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QuerySystemInformation, (
     _Out_opt_ PULONG ReturnLength
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 NATIVE_API(NTSTATUS, /*Nt*/QuerySystemInformationEx, (
     _In_ SYSTEM_INFORMATION_CLASS SystemInformationClass,
     _In_reads_bytes_(InputBufferLength) PVOID InputBuffer,
@@ -3545,7 +3545,7 @@ C_ASSERT(FIELD_OFFSET(KUSER_SHARED_DATA, XState) == 0x3d8);
 
 #define USER_SHARED_DATA ((KUSER_SHARED_DATA * const)0x7ffe0000)
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
 
 FORCEINLINE ULONGLONG NtGetTickCount64()
 {
@@ -3619,7 +3619,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryInstallUILanguage, (
     _Out_ LANGID *InstallUILanguageId
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
 NATIVE_API(NTSTATUS, /*Nt*/FlushInstallUILanguage, (
     _In_ LANGID InstallUILanguage,
@@ -3635,7 +3635,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetDefaultUILanguage, (
     _In_ LANGID DefaultUILanguageId
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
 NATIVE_API(NTSTATUS, /*Nt*/IsUILanguageComitted, (
     VOID
@@ -3646,9 +3646,9 @@ NATIVE_API(NTSTATUS, /*Nt*/IsUILanguageComitted, (
 
 // begin_private
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 NATIVE_API(NTSTATUS, /*Nt*/InitializeNlsFiles, (
     _Out_ PVOID *BaseAddress,
     _Out_ PLCID DefaultLocaleId,
@@ -3671,7 +3671,7 @@ NATIVE_API(NTSTATUS, /*Nt*/GetNlsSectionPtr, (
     _Out_ PULONG SectionSize
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION < NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION < NTLIB_WIN_7)
 
 NATIVE_API(NTSTATUS, /*Nt*/AcquireCMFViewOwnership, (
     _Out_ PULONGLONG TimeStamp,
@@ -3712,7 +3712,7 @@ NATIVE_API(NTSTATUS, /*Nt*/AddAtom, (
     _Out_opt_ PRTL_ATOM Atom
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
 #define ATOM_FLAG_GLOBAL 0x2
 
@@ -3876,7 +3876,7 @@ NATIVE_API(NTSTATUS, /*Nt*/DisplayString, (
 
 // Boot graphics
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
 NATIVE_API(NTSTATUS, /*Nt*/DrawText, (
     _In_ PUNICODE_STRING Text

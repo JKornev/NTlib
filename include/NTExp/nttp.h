@@ -31,7 +31,7 @@ typedef VOID (NTAPI *PTP_ALPC_CALLBACK_EX)(
     _In_ PVOID ApcContext
     );
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
 _Check_return_
@@ -57,7 +57,7 @@ NTDLL_API(NTSTATUS, TpSetPoolMinThreads, (
     _In_ LONG MinThreads
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
 NTDLL_API(NTSTATUS, TpQueryPoolStackInformation, (
     _In_ PTP_POOL Pool,
@@ -65,7 +65,7 @@ NTDLL_API(NTSTATUS, TpQueryPoolStackInformation, (
 ))
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
 NTDLL_API(NTSTATUS, TpSetPoolStackInformation, (
     _Inout_ PTP_POOL Pool,

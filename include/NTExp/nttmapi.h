@@ -12,7 +12,7 @@
 #ifndef _NTTMAPI_H
 #define _NTTMAPI_H
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateTransactionManager, (
     _Out_ PHANDLE TmHandle,

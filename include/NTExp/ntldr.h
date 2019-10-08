@@ -12,7 +12,7 @@
 #ifndef _NTLDR_H
 #define _NTLDR_H
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 // DLLs
 
@@ -234,7 +234,7 @@ NTDLL_API(NTSTATUS, LdrGetDllHandleEx, (
     _Out_opt_ PVOID *DllHandle
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
 NTDLL_API(NTSTATUS, LdrGetDllHandleByMapping, (
     _In_ PVOID BaseAddress,
@@ -242,7 +242,7 @@ NTDLL_API(NTSTATUS, LdrGetDllHandleByMapping, (
 ))
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
 NTDLL_API(NTSTATUS, LdrGetDllHandleByName, (
     _In_opt_ PUNICODE_STRING BaseDllName,
@@ -251,7 +251,7 @@ NTDLL_API(NTSTATUS, LdrGetDllHandleByName, (
 ))
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 // rev
 NTDLL_API(NTSTATUS, LdrGetDllFullName, (
     _In_ PVOID DllHandle,
@@ -286,7 +286,7 @@ NTDLL_API(NTSTATUS, LdrGetProcedureAddress, (
 // rev
 #define LDR_GET_PROCEDURE_ADDRESS_DONT_RECORD_FORWARDER 0x00000001
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
 NTDLL_API(NTSTATUS, LdrGetProcedureAddressEx, (
     _In_ PVOID DllHandle,
@@ -303,7 +303,7 @@ NTDLL_API(NTSTATUS, LdrGetKnownDllSectionHandle, (
     _Out_ PHANDLE Section
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 // rev
 NTDLL_API(NTSTATUS, LdrGetProcedureAddressForCaller, (
     _In_ PVOID DllHandle,
@@ -404,7 +404,7 @@ typedef struct _LDR_VERIFY_IMAGE_INFO
     USHORT ImageCharacteristics;
 } LDR_VERIFY_IMAGE_INFO, *PLDR_VERIFY_IMAGE_INFO;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
 NTDLL_API(NTSTATUS, LdrVerifyImageMatchesChecksumEx, (
     _In_ HANDLE ImageFileHandle,
@@ -412,7 +412,7 @@ NTDLL_API(NTSTATUS, LdrVerifyImageMatchesChecksumEx, (
 ))
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
 NTDLL_API(NTSTATUS, LdrQueryModuleServiceTags, (
     _In_ PVOID DllHandle,
@@ -456,7 +456,7 @@ typedef VOID (NTAPI *PLDR_DLL_NOTIFICATION_FUNCTION)(
     _In_opt_ PVOID Context
     );
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 NTDLL_API(NTSTATUS, LdrRegisterDllNotification, (
     _In_ ULONG Flags,
@@ -515,7 +515,7 @@ typedef struct _PS_SYSTEM_DLL_INIT_BLOCK
     PS_MITIGATION_AUDIT_OPTIONS_MAP MitigationAuditOptionsMap; // REDSTONE3
 } PS_SYSTEM_DLL_INIT_BLOCK, *PPS_SYSTEM_DLL_INIT_BLOCK;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 // rev
 NTDLL_API(PPS_SYSTEM_DLL_INIT_BLOCK, LdrSystemDllInitBlock, (
     VOID
@@ -524,7 +524,7 @@ NTDLL_API(PPS_SYSTEM_DLL_INIT_BLOCK, LdrSystemDllInitBlock, (
 
 // Load as data table
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
 NTDLL_API(NTSTATUS, LdrAddLoadAsDataTable, (
@@ -657,7 +657,7 @@ typedef struct _RTL_PROCESS_MODULE_INFORMATION_EX
     PVOID DefaultBase;
 } RTL_PROCESS_MODULE_INFORMATION_EX, *PRTL_PROCESS_MODULE_INFORMATION_EX;
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NTDLL_API(NTSTATUS, LdrQueryProcessModuleInformation, (
     _In_opt_ PRTL_PROCESS_MODULES ModuleInformation,
@@ -789,7 +789,7 @@ NTDLL_API(BOOLEAN, LdrControlFlowGuardEnforced, (
     VOID
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_19H1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_19H1)
 // rev
 NTDLL_API(BOOLEAN, LdrIsModuleSxsRedirected, (
     _In_ PVOID DllHandle
