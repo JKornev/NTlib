@@ -163,7 +163,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateToken, (
     _In_ PTOKEN_SOURCE TokenSource
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/CreateLowBoxToken, (
     _Out_ PHANDLE TokenHandle,
     _In_ HANDLE ExistingTokenHandle,
@@ -177,7 +177,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateLowBoxToken, (
 ))
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/CreateTokenEx, (
     _Out_ PHANDLE TokenHandle,
     _In_ ACCESS_MASK DesiredAccess,
@@ -269,7 +269,7 @@ NATIVE_API(NTSTATUS, /*Nt*/AdjustGroupsToken, (
     _Out_opt_ PULONG ReturnLength
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/AdjustTokenClaimsAndDeviceGroups, (
     _In_ HANDLE TokenHandle,
     _In_ BOOLEAN UserResetToDefault,
@@ -299,7 +299,7 @@ NATIVE_API(NTSTATUS, /*Nt*/FilterToken, (
     _Out_ PHANDLE NewTokenHandle
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/FilterTokenEx, (
     _In_ HANDLE ExistingTokenHandle,
     _In_ ULONG Flags,
@@ -334,7 +334,7 @@ NATIVE_API(NTSTATUS, /*Nt*/ImpersonateAnonymousToken, (
     _In_ HANDLE ThreadHandle
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
 NATIVE_API(NTSTATUS, /*Nt*/QuerySecurityAttributesToken, (
     _In_ HANDLE TokenHandle,
@@ -389,7 +389,7 @@ NATIVE_API(NTSTATUS, /*Nt*/AccessCheckByTypeResultList, (
 
 // Signing
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 NATIVE_API(NTSTATUS, /*Nt*/SetCachedSigningLevel, (
     _In_ ULONG Flags,

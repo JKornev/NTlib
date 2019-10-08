@@ -77,7 +77,7 @@ extern "C" {
 // PHNT compilation settings
 #ifdef NTLIB_COMPILATION
   // This macro make PHNT headers compatible with NTExp.lib compilation
-  #define PHNT_COMPILE 1
+  #define PHNT_COMPILE
   // Disable inline functions
   #define PHNT_NO_INLINE_INIT_STRING
 #endif

@@ -110,7 +110,7 @@ typedef enum _PLUGPLAY_CONTROL_CLASS
     MaxPlugPlayControl
 } PLUGPLAY_CONTROL_CLASS, *PPLUGPLAY_CONTROL_CLASS;
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION < NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION < NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/GetPlugPlayEvent, (
     _In_ HANDLE EventHandle,
     _In_opt_ PVOID Context,
@@ -125,7 +125,7 @@ NATIVE_API(NTSTATUS, /*Nt*/PlugPlayControl, (
     _In_ ULONG PnPControlDataLength
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 
 NATIVE_API(NTSTATUS, /*Nt*/SerializeBoot, (
     VOID
@@ -141,7 +141,7 @@ NATIVE_API(NTSTATUS, /*Nt*/DisableLastKnownGood, (
 
 #endif
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 NATIVE_API(NTSTATUS, /*Nt*/ReplacePartitionUnit, (
     _In_ PUNICODE_STRING TargetInstancePath,
     _In_ PUNICODE_STRING SpareInstancePath,

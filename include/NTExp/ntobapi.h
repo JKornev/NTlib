@@ -119,7 +119,7 @@ typedef struct _OBJECT_HANDLE_FLAG_INFORMATION
 
 // Objects, handles
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/QueryObject, (
     _In_opt_ HANDLE Handle,
@@ -179,7 +179,7 @@ NATIVE_API(NTSTATUS, /*Nt*/WaitForMultipleObjects, (
     _In_opt_ PLARGE_INTEGER Timeout
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
 NATIVE_API(NTSTATUS, /*Nt*/WaitForMultipleObjects32, (
     _In_ ULONG Count,
     _In_reads_(Count) LONG Handles[],
@@ -207,7 +207,7 @@ NATIVE_API(NTSTATUS, /*Nt*/Close, (
     _In_ HANDLE Handle
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 NATIVE_API(NTSTATUS, /*Nt*/CompareObjects, (
     _In_ HANDLE FirstObjectHandle,
     _In_ HANDLE SecondObjectHandle
@@ -218,7 +218,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CompareObjects, (
 
 // Directory objects
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateDirectoryObject, (
     _Out_ PHANDLE DirectoryHandle,
@@ -226,7 +226,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateDirectoryObject, (
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 NATIVE_API(NTSTATUS, /*Nt*/CreateDirectoryObjectEx, (
     _Out_ PHANDLE DirectoryHandle,
     _In_ ACCESS_MASK DesiredAccess,
@@ -262,9 +262,9 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryDirectoryObject, (
 
 // Private namespaces
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreatePrivateNamespace, (
     _Out_ PHANDLE NamespaceHandle,
@@ -290,7 +290,7 @@ NATIVE_API(NTSTATUS, /*Nt*/DeletePrivateNamespace, (
 
 // Symbolic links
 
-#if (PHNT_COMPILE == 1 || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
+#if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 NATIVE_API(NTSTATUS, /*Nt*/CreateSymbolicLinkObject, (
     _Out_ PHANDLE LinkHandle,

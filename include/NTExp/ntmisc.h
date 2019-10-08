@@ -52,7 +52,7 @@ NATIVE_API(NTSTATUS, /*Nt*/TraceEvent, (
     _In_ PVOID Fields
 ))
 
-#if (PHNT_COMPILE == 1 || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
+#if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
 NATIVE_API(NTSTATUS, /*Nt*/TraceControl, (
     _In_ ULONG FunctionCode,
