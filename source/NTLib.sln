@@ -20,6 +20,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RebuildHeaders", "RebuildHe
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{0F94594D-113E-4F17-80C2-E2EC1B7D5A5B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NTCrtTestConsole", "Tests\NTCrtTestConsole\NTCrtTestConsole.vcxproj", "{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E354608-D05E-4AA3-83DE-7DD8FD694E6D} = {7E354608-D05E-4AA3-83DE-7DD8FD694E6D}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -62,12 +67,19 @@ Global
 		{10182CFB-5ABE-400C-8D13-0BCE836672E1}.Release|Win32.ActiveCfg = Release|Win32
 		{10182CFB-5ABE-400C-8D13-0BCE836672E1}.Release|Win32.Build.0 = Release|Win32
 		{10182CFB-5ABE-400C-8D13-0BCE836672E1}.Release|x64.ActiveCfg = Release|Win32
+		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Debug|Win32.Build.0 = Debug|Win32
+		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Debug|x64.ActiveCfg = Debug|Win32
+		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Release|Win32.ActiveCfg = Release|Win32
+		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Release|Win32.Build.0 = Release|Win32
+		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E2A5DCC1-D369-43EB-815D-054BF6139831} = {8DC58959-8546-4CE9-A118-09686328B797}
+		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1} = {8DC58959-8546-4CE9-A118-09686328B797}
 		{10182CFB-5ABE-400C-8D13-0BCE836672E1} = {0F94594D-113E-4F17-80C2-E2EC1B7D5A5B}
 	EndGlobalSection
 EndGlobal

@@ -2,5 +2,24 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="NTCrt.cpp" />
+    <ClCompile Include="runtime-checks.cpp">
+      <Filter>crt</Filter>
+    </ClCompile>
+    <ClCompile Include="security-check.cpp">
+      <Filter>crt</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="crt">
+      <UniqueIdentifier>{d5f5d3d3-7a1b-4390-836e-eccaba06e502}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="runtime-checks.h">
+      <Filter>crt</Filter>
+    </ClInclude>
+    <ClInclude Include="security-check.h">
+      <Filter>crt</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
