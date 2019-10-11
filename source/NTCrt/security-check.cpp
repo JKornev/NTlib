@@ -18,7 +18,7 @@ void __declspec(naked) __fastcall __security_check_cookie(UINT_PTR cookie)
         jne failure
         rep ret /* REP to avoid AMD branch prediction penalty */
         failure :
-        int 3
+        int 3 //TODO: make a good report
     }
 }
 #endif
