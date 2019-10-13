@@ -1,4 +1,4 @@
-; Auto-generated definitions file (October 08, 2019  11:17:29)
+; Auto-generated definitions file (October 13, 2019  17:15:18)
 LIBRARY ntdll.dll
 EXPORTS
 ; === NTCOMMON.H ===
@@ -1499,6 +1499,12 @@ EXPORTS
    RtlRegisterSecureMemoryCacheCallback
    RtlDeregisterSecureMemoryCacheCallback
    RtlFlushSecureMemoryCache
+; === NTRUNTIME.H ===
+     memchr = ntcrt_memchr
+     memcmp = ntcrt_memcmp
+     memcpy = ntcrt_memcpy
+     memmove = ntcrt_memmove
+     memset = ntcrt_memset
 ; === NTSAM.H ===
 ; === NTSEAPI.H ===
  NtCreateToken

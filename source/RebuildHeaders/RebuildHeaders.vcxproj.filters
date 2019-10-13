@@ -8,5 +8,6 @@
     <ClInclude Include="ntexp.h" />
     <ClInclude Include="ntstatus.h" />
     <ClInclude Include="ntcompatibility.h" />
+    <ClInclude Include="ntruntime.h" />
   </ItemGroup>
 </Project>

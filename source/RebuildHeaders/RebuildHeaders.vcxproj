@@ -56,6 +56,7 @@
     <ClInclude Include="ntcommon.h" />
     <ClInclude Include="ntcompatibility.h" />
     <ClInclude Include="ntexp.h" />
+    <ClInclude Include="ntruntime.h" />
     <ClInclude Include="ntstatus.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

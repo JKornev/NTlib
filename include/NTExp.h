@@ -35,6 +35,8 @@ extern "C" {
     type NTDEF name params { return (type)0; }
   #define NTDLL_API_VOID(name, params) \
     VOID NTDEF name params { return; }
+  #define EXPORT_API(name) \
+    void __cdecl ntexport_##name() {}
 #else
   #define NATIVE_API(type, name, params) \
     type NTDEF Zw##name params; \
@@ -45,6 +47,7 @@ extern "C" {
     type NTDEF name params;
   #define NTDLL_API_VOID(name, params) \
     VOID NTDEF name params;
+  #define EXPORT_API(name)
 #endif
 
 #define NTLIB_WIN_2K      0x0400
@@ -88,6 +91,7 @@ extern "C" {
 #include <ntexp\ntcompatibility.h>
 #include <ntexp\ntstatus.h>
 #include <ntexp\ntcommon.h>
+#include <ntexp\ntruntime.h>
 #include <ntexp\ntnls.h>
 #include <ntexp\ntkeapi.h>
 #include <ntexp\ntldr.h>
@@ -132,11 +136,12 @@ extern "C" {
 #undef NTDEF
 
 #undef NATIVE_API
+#undef NTDLL_API_VOID
 
 #undef NTDLL_API
 #undef NTDLL_API_VOID
 
-#undef LDR_API
+#undef EXPORT_API
 
 #pragma pack(pop)
 

@@ -21,5 +21,16 @@
     <ClInclude Include="security-check.h">
       <Filter>crt</Filter>
     </ClInclude>
+    <ClInclude Include="helper-asm.h">
+      <Filter>crt</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="helper-x86.asm">
+      <Filter>crt</Filter>
+    </MASM>
+    <MASM Include="helper-x64.asm">
+      <Filter>crt</Filter>
+    </MASM>
   </ItemGroup>
 </Project>

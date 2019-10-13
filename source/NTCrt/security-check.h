@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Windows.h>
+#include <NTLib.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -17,3 +17,5 @@ NTSTATUS NtlPsOpenProcess(
     _In_     ACCESS_MASK Access,
     _In_opt_ POBJECT_ATTRIBUTES Attributes = NULL
 );
+
+BOOL NtlKusdIsProcessFeaturePresented(BYTE feature);

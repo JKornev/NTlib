@@ -16,10 +16,6 @@ BOOL WINAPI _DllMainCRTStartup(HANDLE  hDllHandle, DWORD dwReason, LPVOID lprese
     return 0;
 }
 
-#ifdef WPRFLAG
-#error "aaa"
-#endif
-
 // Console entry
 
 extern int main(int argc, char* argv[]);

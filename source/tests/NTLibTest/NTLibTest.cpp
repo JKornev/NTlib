@@ -13,8 +13,6 @@ void TestNtlPsRoutines()
     assert(NT_SUCCESS(NtlPsOpenProcess(&process, ::GetCurrentProcessId(), PROCESS_QUERY_LIMITED_INFORMATION)));
     assert(NT_ERROR(NtlPsOpenProcess(&process, 0, PROCESS_QUERY_LIMITED_INFORMATION)));
     printf("passed\n");
-    //auto status = NtlPsCreateProcess(&process, L"cmd.exe", L"/c ping 8.8.8.8", PROCESS_ALL_ACCESS, FALSE);
-    //printf("%x\n", status);
 }
 
 int wmain(int argc, wchar_t* argv[])

@@ -22,6 +22,7 @@
     <ClCompile Include="NTExp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\utils\compiledef.py" />
     <None Include="NTExp.def" />
     <None Include="NTExp64.def" />
   </ItemGroup>

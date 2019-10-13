@@ -3,6 +3,7 @@
   <ItemGroup>
     <None Include="NTExp.def" />
     <None Include="NTExp64.def" />
+    <None Include="..\utils\compiledef.py" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NTExp.cpp" />
