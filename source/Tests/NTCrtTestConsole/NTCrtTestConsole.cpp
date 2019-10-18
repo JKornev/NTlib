@@ -11,7 +11,7 @@ int wmain(int argc, wchar_t* argv[])
     EXCEPTION_RECORD a = {0};
     HANDLE process;
     NtlPsOpenProcess(&process, ::GetCurrentProcessId(), PROCESS_QUERY_LIMITED_INFORMATION);
-    NtlKusdIsProcessFeaturePresented(PF_FASTFAIL_AVAILABLE);
+    NtlUtilIsProcessFeaturePresented(PF_FASTFAIL_AVAILABLE);
     memset(&process, 0, 4);
 
     char buffer[100] = {0};

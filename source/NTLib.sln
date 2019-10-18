@@ -59,7 +59,7 @@ Global
 		{890C66CC-DD64-4577-8FB5-310533C7DFE4}.Release|x64.Build.0 = Release|x64
 		{E2A5DCC1-D369-43EB-815D-054BF6139831}.Debug|Win32.ActiveCfg = Debug|Win32
 		{E2A5DCC1-D369-43EB-815D-054BF6139831}.Debug|Win32.Build.0 = Debug|Win32
-		{E2A5DCC1-D369-43EB-815D-054BF6139831}.Debug|x64.ActiveCfg = Debug|Win32
+		{E2A5DCC1-D369-43EB-815D-054BF6139831}.Debug|x64.ActiveCfg = Debug|x64
 		{E2A5DCC1-D369-43EB-815D-054BF6139831}.Release|Win32.ActiveCfg = Release|Win32
 		{E2A5DCC1-D369-43EB-815D-054BF6139831}.Release|x64.ActiveCfg = Release|x64
 		{10182CFB-5ABE-400C-8D13-0BCE836672E1}.Debug|Win32.ActiveCfg = Release|Win32
@@ -72,7 +72,7 @@ Global
 		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Debug|x64.ActiveCfg = Debug|x64
 		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Release|Win32.ActiveCfg = Release|Win32
 		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Release|Win32.Build.0 = Release|Win32
-		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Release|x64.ActiveCfg = Release|Win32
+		{17EEFDD2-8109-489E-97D1-F1D4BBE037C1}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

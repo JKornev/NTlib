@@ -39,7 +39,7 @@ NTSTATUS NtlPsOpenProcess(
     return ::ZwOpenProcess(Handle, Access, Attributes, &id);
 }
 
-BOOL NtlKusdIsProcessFeaturePresented(BYTE feature)
+BOOL NtlUtilIsProcessFeaturePresented(BYTE feature)
 {
     if (feature != RTL_FIELD_SIZE(KUSER_SHARED_DATA, ProcessorFeatures))
         return FALSE;

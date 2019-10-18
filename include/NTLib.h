@@ -18,4 +18,4 @@ NTSTATUS NtlPsOpenProcess(
     _In_opt_ POBJECT_ATTRIBUTES Attributes = NULL
 );
 
-BOOL NtlKusdIsProcessFeaturePresented(BYTE feature);
+BOOL NtlUtilIsProcessFeaturePresented(BYTE feature);

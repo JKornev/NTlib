@@ -6,7 +6,7 @@
 - Remove this file from include compilation output
 */
 
-#if defined (_M_IX86)
+#if defined(NTLIB_COMPILATION) || defined(_M_IX86)
 EXPORT_API(_CIcos);
 EXPORT_API(_CIlog);
 EXPORT_API(_CIpow);
@@ -33,7 +33,7 @@ EXPORT_API(_aullrem);
 EXPORT_API(_aullshr);
 EXPORT_API(_chkstk);
 EXPORT_API(_fltused);
-#if defined (_M_IX86)
+#if defined(NTLIB_COMPILATION) || defined(_M_IX86)
 EXPORT_API(_ftol);
 #endif
 EXPORT_API(_i64toa);

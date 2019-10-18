@@ -21,8 +21,13 @@ BOOL WINAPI _DllMainCRTStartup(HANDLE  hDllHandle, DWORD dwReason, LPVOID lprese
 extern int main(int argc, char* argv[]);
 extern int wmain(int argc, wchar_t* argv[]);
 
+#if defined(_M_IX86)
 #pragma comment(linker, "/alternatename:_main=_unspecified_main")
 #pragma comment(linker, "/alternatename:_wmain=_unspecified_main")
+#else
+#pragma comment(linker, "/alternatename:main=unspecified_main")
+#pragma comment(linker, "/alternatename:wmain=unspecified_main")
+#endif
 
 int unspecified_main(int argc, void* argv)
 {
