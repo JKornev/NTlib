@@ -4,13 +4,13 @@ import os
 import datetime
 
 # NATIVE_API(NTSTATUS, /*Nt*/CreateThread, (
-ntapi     = re.compile(r"NATIVE_API\((\w+), /\*Nt\*/(\w+),")
+ntapi     = re.compile(r"NATIVE_API\((\w+), (?:\w+), /\*Nt\*/(\w+),")
 # NATIVE_API(NTSTATUS, /*Nt*/CreateThread, (
-ntapivoid = re.compile(r"NATIVE_API_VOID\(/\*Nt\*/(\w+),")
+ntapivoid = re.compile(r"NATIVE_API_VOID\((?:\w+), /\*Nt\*/(\w+),")
 # NTDLL_API(PVOID, RtlAllocateHeap, (
-ntdll     = re.compile(r"NTDLL_API\((\w+), (\w+),")
+ntdll     = re.compile(r"NTDLL_API\((\w+), (?:\w+), (\w+),")
 # NTDLL_API_VOID(RtlInitUnicodeString, (
-ntdllvoid = re.compile(r"NTDLL_API_VOID\((\w+),")
+ntdllvoid = re.compile(r"NTDLL_API_VOID\((?:\w+), (\w+),")
 # EXPORT_API(memchr);
 ntexport  = re.compile(r"EXPORT_API\((\w+)\)")
 

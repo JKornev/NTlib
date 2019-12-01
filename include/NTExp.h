@@ -20,33 +20,33 @@ extern "C" {
 #define NTCALL __stdcall
 
 #ifdef NTLIB_COMPILATION
-  #define NTDEF __declspec(dllexport) NTCALL
+  #define NTDEF(conv) __declspec(dllexport) conv
 #else
-  #define NTDEF __declspec(dllimport) NTCALL
+  #define NTDEF(conv) __declspec(dllimport) conv
 #endif
 
 #ifdef NTLIB_COMPILATION
-  #define NATIVE_API(type, name, params) \
-    type NTDEF Zw##name params { return (type)0; } \
-    type NTDEF Nt##name params { return (type)0; }
-  #define NATIVE_API_VOID(name, params) \
-    VOID NTDEF name params{ return; }
-  #define NTDLL_API(type, name, params) \
-    type NTDEF name params { return (type)0; }
-  #define NTDLL_API_VOID(name, params) \
-    VOID NTDEF name params { return; }
+  #define NATIVE_API(type, conv, name, params) \
+    type NTDEF(conv) Zw##name params { return (type)0; } \
+    type NTDEF(conv) Nt##name params { return (type)0; }
+  #define NATIVE_API_VOID(conv, name, params) \
+    VOID NTDEF(conv) name params{ return; }
+  #define NTDLL_API(type, conv, name, params) \
+    type NTDEF(conv) name params { return (type)0; }
+  #define NTDLL_API_VOID(conv, name, params) \
+    VOID NTDEF(conv) name params { return; }
   #define EXPORT_API(name) \
     void __cdecl ntexport_##name() {}
 #else
-  #define NATIVE_API(type, name, params) \
-    type NTDEF Zw##name params; \
-    type NTDEF Nt##name params;
-  #define NATIVE_API_VOID(name, params) \
-    VOID NTDEF name params;
-  #define NTDLL_API(type, name, params) \
-    type NTDEF name params;
-  #define NTDLL_API_VOID(name, params) \
-    VOID NTDEF name params;
+  #define NATIVE_API(type, conv, name, params) \
+    type NTDEF(conv) Zw##name params; \
+    type NTDEF(conv) Nt##name params;
+  #define NATIVE_API_VOID(conv, name, params) \
+    VOID NTDEF(conv) name params;
+  #define NTDLL_API(type, conv, name, params) \
+    type NTDEF(conv) name params;
+  #define NTDLL_API_VOID(conv, name, params) \
+    VOID NTDEF(conv) name params;
   #define EXPORT_API(name)
 #endif
 
@@ -64,6 +64,8 @@ extern "C" {
 #define NTLIB_WIN_10_RS4  0x0A05
 #define NTLIB_WIN_10_RS5  0x0A06
 #define NTLIB_WIN_10_19H1 0x0A07
+#define NTLIB_WIN_10_19H2 0x0A08
+#define NTLIB_WIN_10_20H1 0x0A09
 #define NTLIB_WIN_MAX     0xFFFF
 
 #ifndef NTLIB_WIN_VERSION
@@ -83,6 +85,8 @@ extern "C" {
   #define PHNT_COMPILE
   // Disable inline functions
   #define PHNT_NO_INLINE_INIT_STRING
+  // Enable Rtl swap bytes
+  #define PHNT_RTL_BYTESWAP
 #endif
 
 // ----------------------------------------
@@ -123,12 +127,22 @@ extern "C" {
 // ----------------------------------------
 //   API Epilog
 
+#undef NTLIB_WIN_2K
 #undef NTLIB_WIN_XP
 #undef NTLIB_WIN_VISTA
 #undef NTLIB_WIN_7
 #undef NTLIB_WIN_8
 #undef NTLIB_WIN_8_1
 #undef NTLIB_WIN_10_TH1
+#undef NTLIB_WIN_10_TH2
+#undef NTLIB_WIN_10_RS1
+#undef NTLIB_WIN_10_RS2
+#undef NTLIB_WIN_10_RS3
+#undef NTLIB_WIN_10_RS4
+#undef NTLIB_WIN_10_RS5
+#undef NTLIB_WIN_10_19H1
+#undef NTLIB_WIN_10_19H2
+#undef NTLIB_WIN_10_20H1
 #undef NTLIB_WIN_MAX
 #undef NTLIB_WIN_VERSION 
 

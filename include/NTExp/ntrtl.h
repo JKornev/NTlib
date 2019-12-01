@@ -203,7 +203,7 @@ typedef struct _RTL_AVL_TABLE
     PVOID TableContext;
 } RTL_AVL_TABLE, *PRTL_AVL_TABLE;
 
-NTDLL_API_VOID(RtlInitializeGenericTableAvl, (
+NTDLL_API_VOID(__stdcall, RtlInitializeGenericTableAvl, (
     _Out_ PRTL_AVL_TABLE Table,
     _In_ PRTL_AVL_COMPARE_ROUTINE CompareRoutine,
     _In_ PRTL_AVL_ALLOCATE_ROUTINE AllocateRoutine,
@@ -211,14 +211,14 @@ NTDLL_API_VOID(RtlInitializeGenericTableAvl, (
     _In_opt_ PVOID TableContext
 ))
 
-NTDLL_API(PVOID, RtlInsertElementGenericTableAvl, (
+NTDLL_API(PVOID, __stdcall, RtlInsertElementGenericTableAvl, (
     _In_ PRTL_AVL_TABLE Table,
     _In_reads_bytes_(BufferSize) PVOID Buffer,
     _In_ CLONG BufferSize,
     _Out_opt_ PBOOLEAN NewElement
 ))
 
-NTDLL_API(PVOID, RtlInsertElementGenericTableFullAvl, (
+NTDLL_API(PVOID, __stdcall, RtlInsertElementGenericTableFullAvl, (
     _In_ PRTL_AVL_TABLE Table,
     _In_reads_bytes_(BufferSize) PVOID Buffer,
     _In_ CLONG BufferSize,
@@ -227,18 +227,18 @@ NTDLL_API(PVOID, RtlInsertElementGenericTableFullAvl, (
     _In_ TABLE_SEARCH_RESULT SearchResult
 ))
 
-NTDLL_API(BOOLEAN, RtlDeleteElementGenericTableAvl, (
+NTDLL_API(BOOLEAN, __stdcall, RtlDeleteElementGenericTableAvl, (
     _In_ PRTL_AVL_TABLE Table,
     _In_ PVOID Buffer
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlLookupElementGenericTableAvl, (
+NTDLL_API(PVOID, __stdcall, RtlLookupElementGenericTableAvl, (
     _In_ PRTL_AVL_TABLE Table,
     _In_ PVOID Buffer
 ))
 
-NTDLL_API(PVOID, RtlLookupElementGenericTableFullAvl, (
+NTDLL_API(PVOID, __stdcall, RtlLookupElementGenericTableFullAvl, (
     _In_ PRTL_AVL_TABLE Table,
     _In_ PVOID Buffer,
     _Out_ PVOID *NodeOrParent,
@@ -246,26 +246,26 @@ NTDLL_API(PVOID, RtlLookupElementGenericTableFullAvl, (
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlEnumerateGenericTableAvl, (
+NTDLL_API(PVOID, __stdcall, RtlEnumerateGenericTableAvl, (
     _In_ PRTL_AVL_TABLE Table,
     _In_ BOOLEAN Restart
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlEnumerateGenericTableWithoutSplayingAvl, (
+NTDLL_API(PVOID, __stdcall, RtlEnumerateGenericTableWithoutSplayingAvl, (
     _In_ PRTL_AVL_TABLE Table,
     _Inout_ PVOID *RestartKey
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlLookupFirstMatchingElementGenericTableAvl, (
+NTDLL_API(PVOID, __stdcall, RtlLookupFirstMatchingElementGenericTableAvl, (
     _In_ PRTL_AVL_TABLE Table,
     _In_ PVOID Buffer,
     _Out_ PVOID *RestartKey
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlEnumerateGenericTableLikeADirectory, (
+NTDLL_API(PVOID, __stdcall, RtlEnumerateGenericTableLikeADirectory, (
     _In_ PRTL_AVL_TABLE Table,
     _In_opt_ PRTL_AVL_MATCH_FUNCTION MatchFunction,
     _In_opt_ PVOID MatchData,
@@ -276,17 +276,17 @@ NTDLL_API(PVOID, RtlEnumerateGenericTableLikeADirectory, (
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlGetElementGenericTableAvl, (
+NTDLL_API(PVOID, __stdcall, RtlGetElementGenericTableAvl, (
     _In_ PRTL_AVL_TABLE Table,
     _In_ ULONG I
 ))
 
-NTDLL_API(ULONG, RtlNumberGenericTableElementsAvl, (
+NTDLL_API(ULONG, __stdcall, RtlNumberGenericTableElementsAvl, (
     _In_ PRTL_AVL_TABLE Table
 ))
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlIsGenericTableEmptyAvl, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsGenericTableEmptyAvl, (
     _In_ PRTL_AVL_TABLE Table
 ))
 
@@ -333,36 +333,36 @@ typedef struct _RTL_SPLAY_LINKS
     _SplayChild->Parent = _SplayParent; \
 }
 
-NTDLL_API(PRTL_SPLAY_LINKS, RtlSplay, (
+NTDLL_API(PRTL_SPLAY_LINKS, __stdcall, RtlSplay, (
     _Inout_ PRTL_SPLAY_LINKS Links
 ))
 
-NTDLL_API(PRTL_SPLAY_LINKS, RtlDelete, (
+NTDLL_API(PRTL_SPLAY_LINKS, __stdcall, RtlDelete, (
     _In_ PRTL_SPLAY_LINKS Links
 ))
 
-NTDLL_API_VOID(RtlDeleteNoSplay, (
+NTDLL_API_VOID(__stdcall, RtlDeleteNoSplay, (
     _In_ PRTL_SPLAY_LINKS Links,
     _Inout_ PRTL_SPLAY_LINKS *Root
 ))
 
 _Check_return_
-NTDLL_API(PRTL_SPLAY_LINKS, RtlSubtreeSuccessor, (
+NTDLL_API(PRTL_SPLAY_LINKS, __stdcall, RtlSubtreeSuccessor, (
     _In_ PRTL_SPLAY_LINKS Links
 ))
 
 _Check_return_
-NTDLL_API(PRTL_SPLAY_LINKS, RtlSubtreePredecessor, (
+NTDLL_API(PRTL_SPLAY_LINKS, __stdcall, RtlSubtreePredecessor, (
     _In_ PRTL_SPLAY_LINKS Links
 ))
 
 _Check_return_
-NTDLL_API(PRTL_SPLAY_LINKS, RtlRealSuccessor, (
+NTDLL_API(PRTL_SPLAY_LINKS, __stdcall, RtlRealSuccessor, (
     _In_ PRTL_SPLAY_LINKS Links
 ))
 
 _Check_return_
-NTDLL_API(PRTL_SPLAY_LINKS, RtlRealPredecessor, (
+NTDLL_API(PRTL_SPLAY_LINKS, __stdcall, RtlRealPredecessor, (
     _In_ PRTL_SPLAY_LINKS Links
 ))
 
@@ -397,7 +397,7 @@ typedef struct _RTL_GENERIC_TABLE
     PVOID TableContext;
 } RTL_GENERIC_TABLE, *PRTL_GENERIC_TABLE;
 
-NTDLL_API_VOID(RtlInitializeGenericTable, (
+NTDLL_API_VOID(__stdcall, RtlInitializeGenericTable, (
     _Out_ PRTL_GENERIC_TABLE Table,
     _In_ PRTL_GENERIC_COMPARE_ROUTINE CompareRoutine,
     _In_ PRTL_GENERIC_ALLOCATE_ROUTINE AllocateRoutine,
@@ -405,14 +405,14 @@ NTDLL_API_VOID(RtlInitializeGenericTable, (
     _In_opt_ PVOID TableContext
 ))
 
-NTDLL_API(PVOID, RtlInsertElementGenericTable, (
+NTDLL_API(PVOID, __stdcall, RtlInsertElementGenericTable, (
     _In_ PRTL_GENERIC_TABLE Table,
     _In_reads_bytes_(BufferSize) PVOID Buffer,
     _In_ CLONG BufferSize,
     _Out_opt_ PBOOLEAN NewElement
 ))
 
-NTDLL_API(PVOID, RtlInsertElementGenericTableFull, (
+NTDLL_API(PVOID, __stdcall, RtlInsertElementGenericTableFull, (
     _In_ PRTL_GENERIC_TABLE Table,
     _In_reads_bytes_(BufferSize) PVOID Buffer,
     _In_ CLONG BufferSize,
@@ -421,18 +421,18 @@ NTDLL_API(PVOID, RtlInsertElementGenericTableFull, (
     _In_ TABLE_SEARCH_RESULT SearchResult
 ))
 
-NTDLL_API(BOOLEAN, RtlDeleteElementGenericTable, (
+NTDLL_API(BOOLEAN, __stdcall, RtlDeleteElementGenericTable, (
     _In_ PRTL_GENERIC_TABLE Table,
     _In_ PVOID Buffer
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlLookupElementGenericTable, (
+NTDLL_API(PVOID, __stdcall, RtlLookupElementGenericTable, (
     _In_ PRTL_GENERIC_TABLE Table,
     _In_ PVOID Buffer
 ))
 
-NTDLL_API(PVOID, RtlLookupElementGenericTableFull, (
+NTDLL_API(PVOID, __stdcall, RtlLookupElementGenericTableFull, (
     _In_ PRTL_GENERIC_TABLE Table,
     _In_ PVOID Buffer,
     _Out_ PVOID *NodeOrParent,
@@ -440,29 +440,29 @@ NTDLL_API(PVOID, RtlLookupElementGenericTableFull, (
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlEnumerateGenericTable, (
+NTDLL_API(PVOID, __stdcall, RtlEnumerateGenericTable, (
     _In_ PRTL_GENERIC_TABLE Table,
     _In_ BOOLEAN Restart
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlEnumerateGenericTableWithoutSplaying, (
+NTDLL_API(PVOID, __stdcall, RtlEnumerateGenericTableWithoutSplaying, (
     _In_ PRTL_GENERIC_TABLE Table,
     _Inout_ PVOID *RestartKey
 ))
 
 _Check_return_
-NTDLL_API(PVOID, RtlGetElementGenericTable, (
+NTDLL_API(PVOID, __stdcall, RtlGetElementGenericTable, (
     _In_ PRTL_GENERIC_TABLE Table,
     _In_ ULONG I
 ))
 
-NTDLL_API(ULONG, RtlNumberGenericTableElements, (
+NTDLL_API(ULONG, __stdcall, RtlNumberGenericTableElements, (
     _In_ PRTL_GENERIC_TABLE Table
 ))
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlIsGenericTableEmpty, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsGenericTableEmpty, (
     _In_ PRTL_GENERIC_TABLE Table
 ))
 
@@ -477,7 +477,7 @@ typedef struct _RTL_RB_TREE
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
 // rev
-NTDLL_API_VOID(RtlRbInsertNodeEx, (
+NTDLL_API_VOID(__stdcall, RtlRbInsertNodeEx, (
     _In_ PRTL_RB_TREE Tree,
     _In_opt_ PRTL_BALANCED_NODE Parent,
     _In_ BOOLEAN Right,
@@ -485,7 +485,7 @@ NTDLL_API_VOID(RtlRbInsertNodeEx, (
 ))
 
 // rev
-NTDLL_API_VOID(RtlRbRemoveNode, (
+NTDLL_API_VOID(__stdcall, RtlRbRemoveNode, (
     _In_ PRTL_RB_TREE Tree,
     _In_ PRTL_BALANCED_NODE Node
 ))
@@ -620,79 +620,79 @@ RtlActiveEnumeratorsHashTable(
 }
 
 _Must_inspect_result_
-NTDLL_API(BOOLEAN, RtlCreateHashTable, (
+NTDLL_API(BOOLEAN, __stdcall, RtlCreateHashTable, (
     _Inout_ _When_(*HashTable == NULL, __drv_allocatesMem(Mem)) PRTL_DYNAMIC_HASH_TABLE *HashTable,
     _In_ ULONG Shift,
     _In_ _Reserved_ ULONG Flags
 ))
 
-NTDLL_API_VOID(RtlDeleteHashTable, (
+NTDLL_API_VOID(__stdcall, RtlDeleteHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable
 ))
 
-NTDLL_API(BOOLEAN, RtlInsertEntryHashTable, (
+NTDLL_API(BOOLEAN, __stdcall, RtlInsertEntryHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _In_ PRTL_DYNAMIC_HASH_TABLE_ENTRY Entry,
     _In_ ULONG_PTR Signature,
     _Inout_opt_ PRTL_DYNAMIC_HASH_TABLE_CONTEXT Context
 ))
 
-NTDLL_API(BOOLEAN, RtlRemoveEntryHashTable, (
+NTDLL_API(BOOLEAN, __stdcall, RtlRemoveEntryHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _In_ PRTL_DYNAMIC_HASH_TABLE_ENTRY Entry,
     _Inout_opt_ PRTL_DYNAMIC_HASH_TABLE_CONTEXT Context
 ))
 
 _Must_inspect_result_
-NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, RtlLookupEntryHashTable, (
+NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, __stdcall, RtlLookupEntryHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _In_ ULONG_PTR Signature,
     _Out_opt_ PRTL_DYNAMIC_HASH_TABLE_CONTEXT Context
 ))
 
 _Must_inspect_result_
-NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, RtlGetNextEntryHashTable, (
+NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, __stdcall, RtlGetNextEntryHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _In_ PRTL_DYNAMIC_HASH_TABLE_CONTEXT Context
 ))
 
-NTDLL_API(BOOLEAN, RtlInitEnumerationHashTable, (
+NTDLL_API(BOOLEAN, __stdcall, RtlInitEnumerationHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _Out_ PRTL_DYNAMIC_HASH_TABLE_ENUMERATOR Enumerator
 ))
 
 _Must_inspect_result_
-NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, RtlEnumerateEntryHashTable, (
+NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, __stdcall, RtlEnumerateEntryHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _Inout_ PRTL_DYNAMIC_HASH_TABLE_ENUMERATOR Enumerator
 ))
 
-NTDLL_API_VOID(RtlEndEnumerationHashTable, (
+NTDLL_API_VOID(__stdcall, RtlEndEnumerationHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _Inout_ PRTL_DYNAMIC_HASH_TABLE_ENUMERATOR Enumerator
 ))
 
-NTDLL_API(BOOLEAN, RtlInitWeakEnumerationHashTable, (
+NTDLL_API(BOOLEAN, __stdcall, RtlInitWeakEnumerationHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _Out_ PRTL_DYNAMIC_HASH_TABLE_ENUMERATOR Enumerator
 ))
 
 _Must_inspect_result_
-NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, RtlWeaklyEnumerateEntryHashTable, (
+NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, __stdcall, RtlWeaklyEnumerateEntryHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _Inout_ PRTL_DYNAMIC_HASH_TABLE_ENUMERATOR Enumerator
 ))
 
-NTDLL_API_VOID(RtlEndWeakEnumerationHashTable, (
+NTDLL_API_VOID(__stdcall, RtlEndWeakEnumerationHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _Inout_ PRTL_DYNAMIC_HASH_TABLE_ENUMERATOR Enumerator
 ))
 
-NTDLL_API(BOOLEAN, RtlExpandHashTable, (
+NTDLL_API(BOOLEAN, __stdcall, RtlExpandHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable
 ))
 
-NTDLL_API(BOOLEAN, RtlContractHashTable, (
+NTDLL_API(BOOLEAN, __stdcall, RtlContractHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable
 ))
 
@@ -700,18 +700,18 @@ NTDLL_API(BOOLEAN, RtlContractHashTable, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
-NTDLL_API(BOOLEAN, RtlInitStrongEnumerationHashTable, (
+NTDLL_API(BOOLEAN, __stdcall, RtlInitStrongEnumerationHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _Out_ PRTL_DYNAMIC_HASH_TABLE_ENUMERATOR Enumerator
 ))
 
 _Must_inspect_result_
-NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, RtlStronglyEnumerateEntryHashTable, (
+NTDLL_API(PRTL_DYNAMIC_HASH_TABLE_ENTRY, __stdcall, RtlStronglyEnumerateEntryHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _Inout_ PRTL_DYNAMIC_HASH_TABLE_ENUMERATOR Enumerator
 ))
 
-NTDLL_API_VOID(RtlEndStrongEnumerationHashTable, (
+NTDLL_API_VOID(__stdcall, RtlEndStrongEnumerationHashTable, (
     _In_ PRTL_DYNAMIC_HASH_TABLE HashTable,
     _Inout_ PRTL_DYNAMIC_HASH_TABLE_ENUMERATOR Enumerator
 ))
@@ -722,56 +722,56 @@ NTDLL_API_VOID(RtlEndStrongEnumerationHashTable, (
 
 // Critical sections
 
-NTDLL_API(NTSTATUS, RtlInitializeCriticalSection, (
+NTDLL_API(NTSTATUS, __stdcall, RtlInitializeCriticalSection, (
     _Out_ PRTL_CRITICAL_SECTION CriticalSection
 ))
 
-NTDLL_API(NTSTATUS, RtlInitializeCriticalSectionAndSpinCount, (
+NTDLL_API(NTSTATUS, __stdcall, RtlInitializeCriticalSectionAndSpinCount, (
     _Inout_ PRTL_CRITICAL_SECTION CriticalSection,
     _In_ ULONG SpinCount
 ))
 
-NTDLL_API(NTSTATUS, RtlDeleteCriticalSection, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeleteCriticalSection, (
     _Inout_ PRTL_CRITICAL_SECTION CriticalSection
 ))
 
-NTDLL_API(NTSTATUS, RtlEnterCriticalSection, (
+NTDLL_API(NTSTATUS, __stdcall, RtlEnterCriticalSection, (
     _Inout_ PRTL_CRITICAL_SECTION CriticalSection
 ))
 
-NTDLL_API(NTSTATUS, RtlLeaveCriticalSection, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLeaveCriticalSection, (
     _Inout_ PRTL_CRITICAL_SECTION CriticalSection
 ))
 
-NTDLL_API(LOGICAL, RtlTryEnterCriticalSection, (
+NTDLL_API(LOGICAL, __stdcall, RtlTryEnterCriticalSection, (
     _Inout_ PRTL_CRITICAL_SECTION CriticalSection
 ))
 
-NTDLL_API(LOGICAL, RtlIsCriticalSectionLocked, (
+NTDLL_API(LOGICAL, __stdcall, RtlIsCriticalSectionLocked, (
     _In_ PRTL_CRITICAL_SECTION CriticalSection
 ))
 
-NTDLL_API(LOGICAL, RtlIsCriticalSectionLockedByThread, (
+NTDLL_API(LOGICAL, __stdcall, RtlIsCriticalSectionLockedByThread, (
     _In_ PRTL_CRITICAL_SECTION CriticalSection
 ))
 
-NTDLL_API(ULONG, RtlGetCriticalSectionRecursionCount, (
+NTDLL_API(ULONG, __stdcall, RtlGetCriticalSectionRecursionCount, (
     _In_ PRTL_CRITICAL_SECTION CriticalSection
 ))
 
-NTDLL_API(ULONG, RtlSetCriticalSectionSpinCount, (
+NTDLL_API(ULONG, __stdcall, RtlSetCriticalSectionSpinCount, (
     _Inout_ PRTL_CRITICAL_SECTION CriticalSection,
     _In_ ULONG SpinCount
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(HANDLE, RtlQueryCriticalSectionOwner, (
+NTDLL_API(HANDLE, __stdcall, RtlQueryCriticalSectionOwner, (
     _In_ HANDLE EventHandle
 ))
 #endif
 
-NTDLL_API_VOID(RtlCheckForOrphanedCriticalSections, (
+NTDLL_API_VOID(__stdcall, RtlCheckForOrphanedCriticalSections, (
     _In_ HANDLE ThreadHandle
 ))
 
@@ -796,33 +796,33 @@ typedef struct _RTL_RESOURCE
 
 #define RTL_RESOURCE_FLAG_LONG_TERM ((ULONG)0x00000001)
 
-NTDLL_API_VOID(RtlInitializeResource, (
+NTDLL_API_VOID(__stdcall, RtlInitializeResource, (
     _Out_ PRTL_RESOURCE Resource
 ))
 
-NTDLL_API_VOID(RtlDeleteResource, (
+NTDLL_API_VOID(__stdcall, RtlDeleteResource, (
     _Inout_ PRTL_RESOURCE Resource
 ))
 
-NTDLL_API(BOOLEAN, RtlAcquireResourceShared, (
+NTDLL_API(BOOLEAN, __stdcall, RtlAcquireResourceShared, (
     _Inout_ PRTL_RESOURCE Resource,
     _In_ BOOLEAN Wait
 ))
 
-NTDLL_API(BOOLEAN, RtlAcquireResourceExclusive, (
+NTDLL_API(BOOLEAN, __stdcall, RtlAcquireResourceExclusive, (
     _Inout_ PRTL_RESOURCE Resource,
     _In_ BOOLEAN Wait
 ))
 
-NTDLL_API_VOID(RtlReleaseResource, (
+NTDLL_API_VOID(__stdcall, RtlReleaseResource, (
     _Inout_ PRTL_RESOURCE Resource
 ))
 
-NTDLL_API_VOID(RtlConvertSharedToExclusive, (
+NTDLL_API_VOID(__stdcall, RtlConvertSharedToExclusive, (
     _Inout_ PRTL_RESOURCE Resource
 ))
 
-NTDLL_API_VOID(RtlConvertExclusiveToShared, (
+NTDLL_API_VOID(__stdcall, RtlConvertExclusiveToShared, (
     _Inout_ PRTL_RESOURCE Resource
 ))
 
@@ -831,43 +831,43 @@ NTDLL_API_VOID(RtlConvertExclusiveToShared, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // winbase:InitializeSRWLock
-NTDLL_API_VOID(RtlInitializeSRWLock, (
+NTDLL_API_VOID(__stdcall, RtlInitializeSRWLock, (
     _Out_ PRTL_SRWLOCK SRWLock
 ))
 
 // winbase:AcquireSRWLockExclusive
-NTDLL_API_VOID(RtlAcquireSRWLockExclusive, (
+NTDLL_API_VOID(__stdcall, RtlAcquireSRWLockExclusive, (
     _Inout_ PRTL_SRWLOCK SRWLock
 ))
 
 // winbase:AcquireSRWLockShared
-NTDLL_API_VOID(RtlAcquireSRWLockShared, (
+NTDLL_API_VOID(__stdcall, RtlAcquireSRWLockShared, (
     _Inout_ PRTL_SRWLOCK SRWLock
 ))
 
 // winbase:ReleaseSRWLockExclusive
-NTDLL_API_VOID(RtlReleaseSRWLockExclusive, (
+NTDLL_API_VOID(__stdcall, RtlReleaseSRWLockExclusive, (
     _Inout_ PRTL_SRWLOCK SRWLock
 ))
 
 // winbase:ReleaseSRWLockShared
-NTDLL_API_VOID(RtlReleaseSRWLockShared, (
+NTDLL_API_VOID(__stdcall, RtlReleaseSRWLockShared, (
     _Inout_ PRTL_SRWLOCK SRWLock
 ))
 
 // winbase:TryAcquireSRWLockExclusive
-NTDLL_API(BOOLEAN, RtlTryAcquireSRWLockExclusive, (
+NTDLL_API(BOOLEAN, __stdcall, RtlTryAcquireSRWLockExclusive, (
     _Inout_ PRTL_SRWLOCK SRWLock
 ))
 
 // winbase:TryAcquireSRWLockShared
-NTDLL_API(BOOLEAN, RtlTryAcquireSRWLockShared, (
+NTDLL_API(BOOLEAN, __stdcall, RtlTryAcquireSRWLockShared, (
     _Inout_ PRTL_SRWLOCK SRWLock
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API_VOID(RtlAcquireReleaseSRWLockExclusive, (
+NTDLL_API_VOID(__stdcall, RtlAcquireReleaseSRWLockExclusive, (
     _Inout_ PRTL_SRWLOCK SRWLock
 ))
 #endif
@@ -877,19 +877,19 @@ NTDLL_API_VOID(RtlAcquireReleaseSRWLockExclusive, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // winbase:InitializeConditionVariable
-NTDLL_API_VOID(RtlInitializeConditionVariable, (
+NTDLL_API_VOID(__stdcall, RtlInitializeConditionVariable, (
     _Out_ PRTL_CONDITION_VARIABLE ConditionVariable
 ))
 
 // private
-NTDLL_API(NTSTATUS, RtlSleepConditionVariableCS, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSleepConditionVariableCS, (
     _Inout_ PRTL_CONDITION_VARIABLE ConditionVariable,
     _Inout_ PRTL_CRITICAL_SECTION CriticalSection,
     _In_opt_ PLARGE_INTEGER Timeout
 ))
 
 // private
-NTDLL_API(NTSTATUS, RtlSleepConditionVariableSRW, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSleepConditionVariableSRW, (
     _Inout_ PRTL_CONDITION_VARIABLE ConditionVariable,
     _Inout_ PRTL_SRWLOCK SRWLock,
     _In_opt_ PLARGE_INTEGER Timeout,
@@ -897,12 +897,12 @@ NTDLL_API(NTSTATUS, RtlSleepConditionVariableSRW, (
 ))
 
 // winbase:WakeConditionVariable
-NTDLL_API_VOID(RtlWakeConditionVariable, (
+NTDLL_API_VOID(__stdcall, RtlWakeConditionVariable, (
     _Inout_ PRTL_CONDITION_VARIABLE ConditionVariable
 ))
 
 // winbase:WakeAllConditionVariable
-NTDLL_API_VOID(RtlWakeAllConditionVariable, (
+NTDLL_API_VOID(__stdcall, RtlWakeAllConditionVariable, (
     _Inout_ PRTL_CONDITION_VARIABLE ConditionVariable
 ))
 
@@ -918,22 +918,22 @@ NTDLL_API_VOID(RtlWakeAllConditionVariable, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NTDLL_API(NTSTATUS, RtlInitBarrier, (
+NTDLL_API(NTSTATUS, __stdcall, RtlInitBarrier, (
     _Out_ PRTL_BARRIER Barrier,
     _In_ ULONG TotalThreads,
     _In_ ULONG SpinCount
 ))
 
-NTDLL_API(NTSTATUS, RtlDeleteBarrier, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeleteBarrier, (
     _In_ PRTL_BARRIER Barrier
 ))
 
-NTDLL_API(BOOLEAN, RtlBarrier, (
+NTDLL_API(BOOLEAN, __stdcall, RtlBarrier, (
     _Inout_ PRTL_BARRIER Barrier,
     _In_ ULONG Flags
 ))
 
-NTDLL_API(BOOLEAN, RtlBarrierForDelete, (
+NTDLL_API(BOOLEAN, __stdcall, RtlBarrierForDelete, (
     _Inout_ PRTL_BARRIER Barrier,
     _In_ ULONG Flags
 ))
@@ -948,18 +948,18 @@ NTDLL_API(BOOLEAN, RtlBarrierForDelete, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
-NTDLL_API(NTSTATUS, RtlWaitOnAddress, (
+NTDLL_API(NTSTATUS, __stdcall, RtlWaitOnAddress, (
     _In_ volatile VOID *Address,
     _In_ PVOID CompareAddress,
     _In_ SIZE_T AddressSize,
     _In_opt_ PLARGE_INTEGER Timeout
 ))
 
-NTDLL_API_VOID(RtlWakeAddressAll, (
+NTDLL_API_VOID(__stdcall, RtlWakeAddressAll, (
     _In_ PVOID Address
 ))
 
-NTDLL_API_VOID(RtlWakeAddressSingle, (
+NTDLL_API_VOID(__stdcall, RtlWakeAddressSingle, (
     _In_ PVOID Address
 ))
 
@@ -983,14 +983,14 @@ FORCEINLINE VOID RtlInitString(
     DestinationString->Buffer = SourceString;
 }
 #else
-NTDLL_API_VOID(RtlInitString, (
+NTDLL_API_VOID(__stdcall, RtlInitString, (
     _Out_ PSTRING DestinationString,
     _In_opt_ PSTR SourceString
 ))
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
-NTDLL_API(NTSTATUS, RtlInitStringEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlInitStringEx, (
     _Out_ PSTRING DestinationString,
     _In_opt_z_ PCSZ SourceString
 ))
@@ -1010,68 +1010,68 @@ FORCEINLINE VOID RtlInitAnsiString(
     DestinationString->Buffer = SourceString;
 }
 #else
-NTDLL_API_VOID(RtlInitAnsiString, (
+NTDLL_API_VOID(__stdcall, RtlInitAnsiString, (
     _Out_ PANSI_STRING DestinationString,
     _In_opt_ PSTR SourceString
 ))
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
-NTDLL_API(NTSTATUS, RtlInitAnsiStringEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlInitAnsiStringEx, (
     _Out_ PANSI_STRING DestinationString,
     _In_opt_z_ PCSZ SourceString
 ))
 #endif
 
-NTDLL_API_VOID(RtlFreeAnsiString, (
+NTDLL_API_VOID(__stdcall, RtlFreeAnsiString, (
     _In_ PANSI_STRING AnsiString
 ))
 
-NTDLL_API_VOID(RtlFreeOemString, (
+NTDLL_API_VOID(__stdcall, RtlFreeOemString, (
     _In_ POEM_STRING OemString
 ))
 
-NTDLL_API_VOID(RtlCopyString, (
+NTDLL_API_VOID(__stdcall, RtlCopyString, (
     _In_ PSTRING DestinationString,
     _In_opt_ PSTRING SourceString
 ))
 
-NTDLL_API(CHAR, RtlUpperChar, (
+NTDLL_API(CHAR, __stdcall, RtlUpperChar, (
     _In_ CHAR Character
 ))
 
 _Must_inspect_result_
-NTDLL_API(LONG, RtlCompareString, (
+NTDLL_API(LONG, __stdcall, RtlCompareString, (
     _In_ PSTRING String1,
     _In_ PSTRING String2,
     _In_ BOOLEAN CaseInSensitive
 ))
 
 _Must_inspect_result_
-NTDLL_API(BOOLEAN, RtlEqualString, (
+NTDLL_API(BOOLEAN, __stdcall, RtlEqualString, (
     _In_ PSTRING String1,
     _In_ PSTRING String2,
     _In_ BOOLEAN CaseInSensitive
 ))
 
 _Must_inspect_result_
-NTDLL_API(BOOLEAN, RtlPrefixString, (
+NTDLL_API(BOOLEAN, __stdcall, RtlPrefixString, (
     _In_ PSTRING String1,
     _In_ PSTRING String2,
     _In_ BOOLEAN CaseInSensitive
 ))
 
-NTDLL_API(NTSTATUS, RtlAppendStringToString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAppendStringToString, (
     _In_ PSTRING Destination,
     _In_ PSTRING Source
 ))
 
-NTDLL_API(NTSTATUS, RtlAppendAsciizToString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAppendAsciizToString, (
     _In_ PSTRING Destination,
     _In_opt_ PSTR Source
 ))
 
-NTDLL_API_VOID(RtlUpperString, (
+NTDLL_API_VOID(__stdcall, RtlUpperString, (
     _In_ PSTRING DestinationString,
     _In_ PSTRING SourceString
 ))
@@ -1113,55 +1113,55 @@ FORCEINLINE VOID RtlInitUnicodeString(
     DestinationString->Buffer = SourceString;
 }
 #else
-NTDLL_API_VOID(RtlInitUnicodeString, (
+NTDLL_API_VOID(__stdcall, RtlInitUnicodeString, (
     _Out_ PUNICODE_STRING DestinationString,
     _In_opt_ PWSTR SourceString
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlInitUnicodeStringEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlInitUnicodeStringEx, (
     _Out_ PUNICODE_STRING DestinationString,
     _In_opt_ PWSTR SourceString
 ))
 
-NTDLL_API(BOOLEAN, RtlCreateUnicodeString, (
+NTDLL_API(BOOLEAN, __stdcall, RtlCreateUnicodeString, (
     _Out_ PUNICODE_STRING DestinationString,
     _In_ PWSTR SourceString
 ))
 
-NTDLL_API(BOOLEAN, RtlCreateUnicodeStringFromAsciiz, (
+NTDLL_API(BOOLEAN, __stdcall, RtlCreateUnicodeStringFromAsciiz, (
     _Out_ PUNICODE_STRING DestinationString,
     _In_ PSTR SourceString
 ))
 
-NTDLL_API_VOID(RtlFreeUnicodeString, (
+NTDLL_API_VOID(__stdcall, RtlFreeUnicodeString, (
     _In_ PUNICODE_STRING UnicodeString
 ))
 
 #define RTL_DUPLICATE_UNICODE_STRING_NULL_TERMINATE (0x00000001)
 #define RTL_DUPLICATE_UNICODE_STRING_ALLOCATE_NULL_STRING (0x00000002)
 
-NTDLL_API(NTSTATUS, RtlDuplicateUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDuplicateUnicodeString, (
     _In_ ULONG Flags,
     _In_ PUNICODE_STRING StringIn,
     _Out_ PUNICODE_STRING StringOut
 ))
 
-NTDLL_API_VOID(RtlCopyUnicodeString, (
+NTDLL_API_VOID(__stdcall, RtlCopyUnicodeString, (
     _In_ PUNICODE_STRING DestinationString,
     _In_ PUNICODE_STRING SourceString
 ))
 
-NTDLL_API(WCHAR, RtlUpcaseUnicodeChar, (
+NTDLL_API(WCHAR, __stdcall, RtlUpcaseUnicodeChar, (
     _In_ WCHAR SourceCharacter
 ))
 
-NTDLL_API(WCHAR, RtlDowncaseUnicodeChar, (
+NTDLL_API(WCHAR, __stdcall, RtlDowncaseUnicodeChar, (
     _In_ WCHAR SourceCharacter
 ))
 
 _Must_inspect_result_
-NTDLL_API(LONG, RtlCompareUnicodeString, (
+NTDLL_API(LONG, __stdcall, RtlCompareUnicodeString, (
     _In_ PUNICODE_STRING String1,
     _In_ PUNICODE_STRING String2,
     _In_ BOOLEAN CaseInSensitive
@@ -1169,7 +1169,7 @@ NTDLL_API(LONG, RtlCompareUnicodeString, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 _Must_inspect_result_
-NTDLL_API(LONG, RtlCompareUnicodeStrings, (
+NTDLL_API(LONG, __stdcall, RtlCompareUnicodeStrings, (
     _In_reads_(String1Length) PWCH String1,
     _In_ SIZE_T String1Length,
     _In_reads_(String2Length) PWCH String2,
@@ -1179,7 +1179,7 @@ NTDLL_API(LONG, RtlCompareUnicodeStrings, (
 #endif
 
 _Must_inspect_result_
-NTDLL_API(BOOLEAN, RtlEqualUnicodeString, (
+NTDLL_API(BOOLEAN, __stdcall, RtlEqualUnicodeString, (
     _In_ PUNICODE_STRING String1,
     _In_ PUNICODE_STRING String2,
     _In_ BOOLEAN CaseInSensitive
@@ -1189,20 +1189,20 @@ NTDLL_API(BOOLEAN, RtlEqualUnicodeString, (
 #define HASH_STRING_ALGORITHM_X65599 1
 #define HASH_STRING_ALGORITHM_INVALID 0xffffffff
 
-NTDLL_API(NTSTATUS, RtlHashUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlHashUnicodeString, (
     _In_ PUNICODE_STRING String,
     _In_ BOOLEAN CaseInSensitive,
     _In_ ULONG HashAlgorithm,
     _Out_ PULONG HashValue
 ))
 
-NTDLL_API(NTSTATUS, RtlValidateUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlValidateUnicodeString, (
     _In_ ULONG Flags,
     _In_ PUNICODE_STRING String
 ))
 
 _Must_inspect_result_
-NTDLL_API(BOOLEAN, RtlPrefixUnicodeString, (
+NTDLL_API(BOOLEAN, __stdcall, RtlPrefixUnicodeString, (
     _In_ PUNICODE_STRING String1,
     _In_ PUNICODE_STRING String2,
     _In_ BOOLEAN CaseInSensitive
@@ -1210,7 +1210,7 @@ NTDLL_API(BOOLEAN, RtlPrefixUnicodeString, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 _Must_inspect_result_
-NTDLL_API(BOOLEAN, RtlSuffixUnicodeString, (
+NTDLL_API(BOOLEAN, __stdcall, RtlSuffixUnicodeString, (
     _In_ PUNICODE_STRING String1,
     _In_ PUNICODE_STRING String2,
     _In_ BOOLEAN CaseInSensitive
@@ -1219,7 +1219,7 @@ NTDLL_API(BOOLEAN, RtlSuffixUnicodeString, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 _Must_inspect_result_
-NTDLL_API(PWCHAR, RtlFindUnicodeSubstring, (
+NTDLL_API(PWCHAR, __stdcall, RtlFindUnicodeSubstring, (
     _In_ PUNICODE_STRING FullString,
     _In_ PUNICODE_STRING SearchString,
     _In_ BOOLEAN CaseInSensitive
@@ -1230,92 +1230,92 @@ NTDLL_API(PWCHAR, RtlFindUnicodeSubstring, (
 #define RTL_FIND_CHAR_IN_UNICODE_STRING_COMPLEMENT_CHAR_SET 0x00000002
 #define RTL_FIND_CHAR_IN_UNICODE_STRING_CASE_INSENSITIVE 0x00000004
 
-NTDLL_API(NTSTATUS, RtlFindCharInUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFindCharInUnicodeString, (
     _In_ ULONG Flags,
     _In_ PUNICODE_STRING StringToSearch,
     _In_ PUNICODE_STRING CharSet,
     _Out_ PUSHORT NonInclusivePrefixLength
 ))
 
-NTDLL_API(NTSTATUS, RtlAppendUnicodeStringToString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAppendUnicodeStringToString, (
     _In_ PUNICODE_STRING Destination,
     _In_ PUNICODE_STRING Source
 ))
 
-NTDLL_API(NTSTATUS, RtlAppendUnicodeToString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAppendUnicodeToString, (
     _In_ PUNICODE_STRING Destination,
     _In_opt_ PWSTR Source
 ))
 
-NTDLL_API(NTSTATUS, RtlUpcaseUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUpcaseUnicodeString, (
     _Inout_ PUNICODE_STRING DestinationString,
     _In_ PUNICODE_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API(NTSTATUS, RtlDowncaseUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDowncaseUnicodeString, (
     _Inout_ PUNICODE_STRING DestinationString,
     _In_ PUNICODE_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API_VOID(RtlEraseUnicodeString, (
+NTDLL_API_VOID(__stdcall, RtlEraseUnicodeString, (
     _Inout_ PUNICODE_STRING String
 ))
 
-NTDLL_API(NTSTATUS, RtlAnsiStringToUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAnsiStringToUnicodeString, (
     _Inout_ PUNICODE_STRING DestinationString,
     _In_ PANSI_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API(NTSTATUS, RtlUnicodeStringToAnsiString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnicodeStringToAnsiString, (
     _Inout_ PANSI_STRING DestinationString,
     _In_ PUNICODE_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API(WCHAR, RtlAnsiCharToUnicodeChar, (
+NTDLL_API(WCHAR, __stdcall, RtlAnsiCharToUnicodeChar, (
     _Inout_ PUCHAR *SourceCharacter
 ))
 
-NTDLL_API(NTSTATUS, RtlUpcaseUnicodeStringToAnsiString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUpcaseUnicodeStringToAnsiString, (
     _Inout_ PANSI_STRING DestinationString,
     _In_ PUNICODE_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API(NTSTATUS, RtlOemStringToUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlOemStringToUnicodeString, (
     _Inout_ PUNICODE_STRING DestinationString,
     _In_ POEM_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API(NTSTATUS, RtlUnicodeStringToOemString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnicodeStringToOemString, (
     _Inout_ POEM_STRING DestinationString,
     _In_ PUNICODE_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API(NTSTATUS, RtlUpcaseUnicodeStringToOemString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUpcaseUnicodeStringToOemString, (
     _Inout_ POEM_STRING DestinationString,
     _In_ PUNICODE_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API(NTSTATUS, RtlUnicodeStringToCountedOemString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnicodeStringToCountedOemString, (
     _Inout_ POEM_STRING DestinationString,
     _In_ PUNICODE_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API(NTSTATUS, RtlUpcaseUnicodeStringToCountedOemString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUpcaseUnicodeStringToCountedOemString, (
     _Inout_ POEM_STRING DestinationString,
     _In_ PUNICODE_STRING SourceString,
     _In_ BOOLEAN AllocateDestinationString
 ))
 
-NTDLL_API(NTSTATUS, RtlMultiByteToUnicodeN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlMultiByteToUnicodeN, (
     _Out_writes_bytes_to_(MaxBytesInUnicodeString, *BytesInUnicodeString) PWCH UnicodeString,
     _In_ ULONG MaxBytesInUnicodeString,
     _Out_opt_ PULONG BytesInUnicodeString,
@@ -1323,13 +1323,13 @@ NTDLL_API(NTSTATUS, RtlMultiByteToUnicodeN, (
     _In_ ULONG BytesInMultiByteString
 ))
 
-NTDLL_API(NTSTATUS, RtlMultiByteToUnicodeSize, (
+NTDLL_API(NTSTATUS, __stdcall, RtlMultiByteToUnicodeSize, (
     _Out_ PULONG BytesInUnicodeString,
     _In_reads_bytes_(BytesInMultiByteString) PSTR MultiByteString,
     _In_ ULONG BytesInMultiByteString
 ))
 
-NTDLL_API(NTSTATUS, RtlUnicodeToMultiByteN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnicodeToMultiByteN, (
     _Out_writes_bytes_to_(MaxBytesInMultiByteString, *BytesInMultiByteString) PCHAR MultiByteString,
     _In_ ULONG MaxBytesInMultiByteString,
     _Out_opt_ PULONG BytesInMultiByteString,
@@ -1337,13 +1337,13 @@ NTDLL_API(NTSTATUS, RtlUnicodeToMultiByteN, (
     _In_ ULONG BytesInUnicodeString
 ))
 
-NTDLL_API(NTSTATUS, RtlUnicodeToMultiByteSize, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnicodeToMultiByteSize, (
     _Out_ PULONG BytesInMultiByteString,
     _In_reads_bytes_(BytesInUnicodeString) PWCH UnicodeString,
     _In_ ULONG BytesInUnicodeString
 ))
 
-NTDLL_API(NTSTATUS, RtlUpcaseUnicodeToMultiByteN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUpcaseUnicodeToMultiByteN, (
     _Out_writes_bytes_to_(MaxBytesInMultiByteString, *BytesInMultiByteString) PCHAR MultiByteString,
     _In_ ULONG MaxBytesInMultiByteString,
     _Out_opt_ PULONG BytesInMultiByteString,
@@ -1351,7 +1351,7 @@ NTDLL_API(NTSTATUS, RtlUpcaseUnicodeToMultiByteN, (
     _In_ ULONG BytesInUnicodeString
 ))
 
-NTDLL_API(NTSTATUS, RtlOemToUnicodeN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlOemToUnicodeN, (
     _Out_writes_bytes_to_(MaxBytesInUnicodeString, *BytesInUnicodeString) PWSTR UnicodeString,
     _In_ ULONG MaxBytesInUnicodeString,
     _Out_opt_ PULONG BytesInUnicodeString,
@@ -1359,7 +1359,7 @@ NTDLL_API(NTSTATUS, RtlOemToUnicodeN, (
     _In_ ULONG BytesInOemString
 ))
 
-NTDLL_API(NTSTATUS, RtlUnicodeToOemN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnicodeToOemN, (
     _Out_writes_bytes_to_(MaxBytesInOemString, *BytesInOemString) PCHAR OemString,
     _In_ ULONG MaxBytesInOemString,
     _Out_opt_ PULONG BytesInOemString,
@@ -1367,7 +1367,7 @@ NTDLL_API(NTSTATUS, RtlUnicodeToOemN, (
     _In_ ULONG BytesInUnicodeString
 ))
 
-NTDLL_API(NTSTATUS, RtlUpcaseUnicodeToOemN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUpcaseUnicodeToOemN, (
     _Out_writes_bytes_to_(MaxBytesInOemString, *BytesInOemString) PCHAR OemString,
     _In_ ULONG MaxBytesInOemString,
     _Out_opt_ PULONG BytesInOemString,
@@ -1375,7 +1375,7 @@ NTDLL_API(NTSTATUS, RtlUpcaseUnicodeToOemN, (
     _In_ ULONG BytesInUnicodeString
 ))
 
-NTDLL_API(NTSTATUS, RtlConsoleMultiByteToUnicodeN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlConsoleMultiByteToUnicodeN, (
     _Out_writes_bytes_to_(MaxBytesInUnicodeString, *BytesInUnicodeString) PWCH UnicodeString,
     _In_ ULONG MaxBytesInUnicodeString,
     _Out_opt_ PULONG BytesInUnicodeString,
@@ -1385,7 +1385,7 @@ NTDLL_API(NTSTATUS, RtlConsoleMultiByteToUnicodeN, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NTDLL_API(NTSTATUS, RtlUTF8ToUnicodeN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUTF8ToUnicodeN, (
     _Out_writes_bytes_to_(UnicodeStringMaxByteCount, *UnicodeStringActualByteCount) PWSTR UnicodeStringDestination,
     _In_ ULONG UnicodeStringMaxByteCount,
     _Out_ PULONG UnicodeStringActualByteCount,
@@ -1395,7 +1395,7 @@ NTDLL_API(NTSTATUS, RtlUTF8ToUnicodeN, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NTDLL_API(NTSTATUS, RtlUnicodeToUTF8N, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnicodeToUTF8N, (
     _Out_writes_bytes_to_(UTF8StringMaxByteCount, *UTF8StringActualByteCount) PCHAR UTF8StringDestination,
     _In_ ULONG UTF8StringMaxByteCount,
     _Out_ PULONG UTF8StringActualByteCount,
@@ -1404,7 +1404,7 @@ NTDLL_API(NTSTATUS, RtlUnicodeToUTF8N, (
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlCustomCPToUnicodeN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCustomCPToUnicodeN, (
     _In_ PCPTABLEINFO CustomCP,
     _Out_writes_bytes_to_(MaxBytesInUnicodeString, *BytesInUnicodeString) PWCH UnicodeString,
     _In_ ULONG MaxBytesInUnicodeString,
@@ -1413,7 +1413,7 @@ NTDLL_API(NTSTATUS, RtlCustomCPToUnicodeN, (
     _In_ ULONG BytesInCustomCPString
 ))
 
-NTDLL_API(NTSTATUS, RtlUnicodeToCustomCPN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnicodeToCustomCPN, (
     _In_ PCPTABLEINFO CustomCP,
     _Out_writes_bytes_to_(MaxBytesInCustomCPString, *BytesInCustomCPString) PCH CustomCPString,
     _In_ ULONG MaxBytesInCustomCPString,
@@ -1422,7 +1422,7 @@ NTDLL_API(NTSTATUS, RtlUnicodeToCustomCPN, (
     _In_ ULONG BytesInUnicodeString
 ))
 
-NTDLL_API(NTSTATUS, RtlUpcaseUnicodeToCustomCPN, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUpcaseUnicodeToCustomCPN, (
     _In_ PCPTABLEINFO CustomCP,
     _Out_writes_bytes_to_(MaxBytesInCustomCPString, *BytesInCustomCPString) PCH CustomCPString,
     _In_ ULONG MaxBytesInCustomCPString,
@@ -1431,23 +1431,23 @@ NTDLL_API(NTSTATUS, RtlUpcaseUnicodeToCustomCPN, (
     _In_ ULONG BytesInUnicodeString
 ))
 
-NTDLL_API_VOID(RtlInitCodePageTable, (
+NTDLL_API_VOID(__stdcall, RtlInitCodePageTable, (
     _In_ PUSHORT TableBase,
     _Out_ PCPTABLEINFO CodePageTable
 ))
 
-NTDLL_API_VOID(RtlInitNlsTables, (
+NTDLL_API_VOID(__stdcall, RtlInitNlsTables, (
     _In_ PUSHORT AnsiNlsBase,
     _In_ PUSHORT OemNlsBase,
     _In_ PUSHORT LanguageNlsBase,
     _Out_ PNLSTABLEINFO TableInfo // PCPTABLEINFO?
 ))
 
-NTDLL_API_VOID(RtlResetRtlTranslations, (
+NTDLL_API_VOID(__stdcall, RtlResetRtlTranslations, (
     _In_ PNLSTABLEINFO TableInfo
 ))
 
-NTDLL_API(BOOLEAN, RtlIsTextUnicode, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsTextUnicode, (
     _In_ PVOID Buffer,
     _In_ ULONG Size,
     _Inout_opt_ PULONG Result
@@ -1470,7 +1470,7 @@ typedef enum _RTL_NORM_FORM
 } RTL_NORM_FORM;
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NTDLL_API(NTSTATUS, RtlNormalizeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlNormalizeString, (
     _In_ ULONG NormForm, // RTL_NORM_FORM
     _In_ PCWSTR SourceString,
     _In_ LONG SourceStringLength,
@@ -1480,7 +1480,7 @@ NTDLL_API(NTSTATUS, RtlNormalizeString, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NTDLL_API(NTSTATUS, RtlIsNormalizedString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIsNormalizedString, (
     _In_ ULONG NormForm, // RTL_NORM_FORM
     _In_ PCWSTR SourceString,
     _In_ LONG SourceStringLength,
@@ -1490,7 +1490,7 @@ NTDLL_API(NTSTATUS, RtlIsNormalizedString, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // ntifs:FsRtlIsNameInExpression
-NTDLL_API(BOOLEAN, RtlIsNameInExpression, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsNameInExpression, (
     _In_ PUNICODE_STRING Expression,
     _In_ PUNICODE_STRING Name,
     _In_ BOOLEAN IgnoreCase,
@@ -1500,7 +1500,7 @@ NTDLL_API(BOOLEAN, RtlIsNameInExpression, (
 
 #if (NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS14)
 // rev
-NTDLL_API(BOOLEAN, RtlIsNameInUnUpcasedExpression, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsNameInUnUpcasedExpression, (
     _In_ PUNICODE_STRING Expression,
     _In_ PUNICODE_STRING Name,
     _In_ BOOLEAN IgnoreCase,
@@ -1508,23 +1508,23 @@ NTDLL_API(BOOLEAN, RtlIsNameInUnUpcasedExpression, (
 ))
 #endif
 
-NTDLL_API(BOOLEAN, RtlEqualDomainName, (
+NTDLL_API(BOOLEAN, __stdcall, RtlEqualDomainName, (
     _In_ PUNICODE_STRING String1,
     _In_ PUNICODE_STRING String2
 ))
 
-NTDLL_API(BOOLEAN, RtlEqualComputerName, (
+NTDLL_API(BOOLEAN, __stdcall, RtlEqualComputerName, (
     _In_ PUNICODE_STRING String1,
     _In_ PUNICODE_STRING String2
 ))
 
-NTDLL_API(NTSTATUS, RtlDnsHostNameToComputerName, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDnsHostNameToComputerName, (
     _Out_ PUNICODE_STRING ComputerNameString,
     _In_ PUNICODE_STRING DnsHostNameString,
     _In_ BOOLEAN AllocateComputerNameString
 ))
 
-NTDLL_API(NTSTATUS, RtlStringFromGUID, (
+NTDLL_API(NTSTATUS, __stdcall, RtlStringFromGUID, (
     _In_ PGUID Guid,
     _Out_ PUNICODE_STRING GuidString
 ))
@@ -1532,7 +1532,7 @@ NTDLL_API(NTSTATUS, RtlStringFromGUID, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8_1)
 
 // rev
-NTDLL_API(NTSTATUS, RtlStringFromGUIDEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlStringFromGUIDEx, (
     _In_ PGUID Guid,
     _Inout_ PUNICODE_STRING GuidString,
     _In_ BOOLEAN AllocateGuidString
@@ -1540,19 +1540,19 @@ NTDLL_API(NTSTATUS, RtlStringFromGUIDEx, (
 
 #endif
 
-NTDLL_API(NTSTATUS, RtlGUIDFromString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGUIDFromString, (
     _In_ PUNICODE_STRING GuidString,
     _Out_ PGUID Guid
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NTDLL_API(LONG, RtlCompareAltitudes, (
+NTDLL_API(LONG, __stdcall, RtlCompareAltitudes, (
     _In_ PUNICODE_STRING Altitude1,
     _In_ PUNICODE_STRING Altitude2
 ))
 
-NTDLL_API(NTSTATUS, RtlIdnToAscii, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIdnToAscii, (
     _In_ ULONG Flags,
     _In_ PWSTR SourceString,
     _In_ LONG SourceStringLength,
@@ -1560,7 +1560,7 @@ NTDLL_API(NTSTATUS, RtlIdnToAscii, (
     _Inout_ PLONG DestinationStringLength
 ))
 
-NTDLL_API(NTSTATUS, RtlIdnToUnicode, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIdnToUnicode, (
     _In_ ULONG Flags,
     _In_ PWSTR SourceString,
     _In_ LONG SourceStringLength,
@@ -1568,7 +1568,7 @@ NTDLL_API(NTSTATUS, RtlIdnToUnicode, (
     _Inout_ PLONG DestinationStringLength
 ))
 
-NTDLL_API(NTSTATUS, RtlIdnToNameprepUnicode, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIdnToNameprepUnicode, (
     _In_ ULONG Flags,
     _In_ PWSTR SourceString,
     _In_ LONG SourceStringLength,
@@ -1596,22 +1596,22 @@ typedef struct _PREFIX_TABLE
     PPREFIX_TABLE_ENTRY NextPrefixTree;
 } PREFIX_TABLE, *PPREFIX_TABLE;
 
-NTDLL_API_VOID(PfxInitialize, (
+NTDLL_API_VOID(__stdcall, PfxInitialize, (
     _Out_ PPREFIX_TABLE PrefixTable
 ))
 
-NTDLL_API(BOOLEAN, PfxInsertPrefix, (
+NTDLL_API(BOOLEAN, __stdcall, PfxInsertPrefix, (
     _In_ PPREFIX_TABLE PrefixTable,
     _In_ PSTRING Prefix,
     _Out_ PPREFIX_TABLE_ENTRY PrefixTableEntry
 ))
 
-NTDLL_API_VOID(PfxRemovePrefix, (
+NTDLL_API_VOID(__stdcall, PfxRemovePrefix, (
     _In_ PPREFIX_TABLE PrefixTable,
     _In_ PPREFIX_TABLE_ENTRY PrefixTableEntry
 ))
 
-NTDLL_API(PPREFIX_TABLE_ENTRY, PfxFindPrefix, (
+NTDLL_API(PPREFIX_TABLE_ENTRY, __stdcall, PfxFindPrefix, (
     _In_ PPREFIX_TABLE PrefixTable,
     _In_ PSTRING FullName
 ))
@@ -1634,28 +1634,28 @@ typedef struct _UNICODE_PREFIX_TABLE
     PUNICODE_PREFIX_TABLE_ENTRY LastNextEntry;
 } UNICODE_PREFIX_TABLE, *PUNICODE_PREFIX_TABLE;
 
-NTDLL_API_VOID(RtlInitializeUnicodePrefix, (
+NTDLL_API_VOID(__stdcall, RtlInitializeUnicodePrefix, (
     _Out_ PUNICODE_PREFIX_TABLE PrefixTable
 ))
 
-NTDLL_API(BOOLEAN, RtlInsertUnicodePrefix, (
+NTDLL_API(BOOLEAN, __stdcall, RtlInsertUnicodePrefix, (
     _In_ PUNICODE_PREFIX_TABLE PrefixTable,
     _In_ PUNICODE_STRING Prefix,
     _Out_ PUNICODE_PREFIX_TABLE_ENTRY PrefixTableEntry
 ))
 
-NTDLL_API_VOID(RtlRemoveUnicodePrefix, (
+NTDLL_API_VOID(__stdcall, RtlRemoveUnicodePrefix, (
     _In_ PUNICODE_PREFIX_TABLE PrefixTable,
     _In_ PUNICODE_PREFIX_TABLE_ENTRY PrefixTableEntry
 ))
 
-NTDLL_API(PUNICODE_PREFIX_TABLE_ENTRY, RtlFindUnicodePrefix, (
+NTDLL_API(PUNICODE_PREFIX_TABLE_ENTRY, __stdcall, RtlFindUnicodePrefix, (
     _In_ PUNICODE_PREFIX_TABLE PrefixTable,
     _In_ PUNICODE_STRING FullName,
     _In_ ULONG CaseInsensitiveIndex
 ))
 
-NTDLL_API(PUNICODE_PREFIX_TABLE_ENTRY, RtlNextUnicodePrefix, (
+NTDLL_API(PUNICODE_PREFIX_TABLE_ENTRY, __stdcall, RtlNextUnicodePrefix, (
     _In_ PUNICODE_PREFIX_TABLE PrefixTable,
     _In_ BOOLEAN Restart
 ))
@@ -1676,13 +1676,13 @@ typedef struct _COMPRESSED_DATA_INFO
     ULONG CompressedChunkSizes[1];
 } COMPRESSED_DATA_INFO, *PCOMPRESSED_DATA_INFO;
 
-NTDLL_API(NTSTATUS, RtlGetCompressionWorkSpaceSize, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetCompressionWorkSpaceSize, (
     _In_ USHORT CompressionFormatAndEngine,
     _Out_ PULONG CompressBufferWorkSpaceSize,
     _Out_ PULONG CompressFragmentWorkSpaceSize
 ))
 
-NTDLL_API(NTSTATUS, RtlCompressBuffer, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCompressBuffer, (
     _In_ USHORT CompressionFormatAndEngine,
     _In_reads_bytes_(UncompressedBufferSize) PUCHAR UncompressedBuffer,
     _In_ ULONG UncompressedBufferSize,
@@ -1693,7 +1693,7 @@ NTDLL_API(NTSTATUS, RtlCompressBuffer, (
     _In_ PVOID WorkSpace
 ))
 
-NTDLL_API(NTSTATUS, RtlDecompressBuffer, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDecompressBuffer, (
     _In_ USHORT CompressionFormat,
     _Out_writes_bytes_to_(UncompressedBufferSize, *FinalUncompressedSize) PUCHAR UncompressedBuffer,
     _In_ ULONG UncompressedBufferSize,
@@ -1703,7 +1703,7 @@ NTDLL_API(NTSTATUS, RtlDecompressBuffer, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
-NTDLL_API(NTSTATUS, RtlDecompressBufferEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDecompressBufferEx, (
     _In_ USHORT CompressionFormat,
     _Out_writes_bytes_to_(UncompressedBufferSize, *FinalUncompressedSize) PUCHAR UncompressedBuffer,
     _In_ ULONG UncompressedBufferSize,
@@ -1714,7 +1714,7 @@ NTDLL_API(NTSTATUS, RtlDecompressBufferEx, (
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlDecompressFragment, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDecompressFragment, (
     _In_ USHORT CompressionFormat,
     _Out_writes_bytes_to_(UncompressedFragmentSize, *FinalUncompressedSize) PUCHAR UncompressedFragment,
     _In_ ULONG UncompressedFragmentSize,
@@ -1725,7 +1725,7 @@ NTDLL_API(NTSTATUS, RtlDecompressFragment, (
     _In_ PVOID WorkSpace
 ))
 
-NTDLL_API(NTSTATUS, RtlDescribeChunk, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDescribeChunk, (
     _In_ USHORT CompressionFormat,
     _Inout_ PUCHAR *CompressedBuffer,
     _In_ PUCHAR EndOfCompressedBufferPlus1,
@@ -1733,7 +1733,7 @@ NTDLL_API(NTSTATUS, RtlDescribeChunk, (
     _Out_ PULONG ChunkSize
 ))
 
-NTDLL_API(NTSTATUS, RtlReserveChunk, (
+NTDLL_API(NTSTATUS, __stdcall, RtlReserveChunk, (
     _In_ USHORT CompressionFormat,
     _Inout_ PUCHAR *CompressedBuffer,
     _In_ PUCHAR EndOfCompressedBufferPlus1,
@@ -1741,7 +1741,7 @@ NTDLL_API(NTSTATUS, RtlReserveChunk, (
     _In_ ULONG ChunkSize
 ))
 
-NTDLL_API(NTSTATUS, RtlDecompressChunks, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDecompressChunks, (
     _Out_writes_bytes_(UncompressedBufferSize) PUCHAR UncompressedBuffer,
     _In_ ULONG UncompressedBufferSize,
     _In_reads_bytes_(CompressedBufferSize) PUCHAR CompressedBuffer,
@@ -1751,7 +1751,7 @@ NTDLL_API(NTSTATUS, RtlDecompressChunks, (
     _In_ PCOMPRESSED_DATA_INFO CompressedDataInfo
 ))
 
-NTDLL_API(NTSTATUS, RtlCompressChunks, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCompressChunks, (
     _In_reads_bytes_(UncompressedBufferSize) PUCHAR UncompressedBuffer,
     _In_ ULONG UncompressedBufferSize,
     _Out_writes_bytes_(CompressedBufferSize) PUCHAR CompressedBuffer,
@@ -1766,7 +1766,7 @@ NTDLL_API(NTSTATUS, RtlCompressChunks, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, RtlConvertLCIDToString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlConvertLCIDToString, (
     _In_ LCID LcidValue,
     _In_ ULONG Base,
     _In_ ULONG Padding, // string is padded to this width
@@ -1775,13 +1775,13 @@ NTDLL_API(NTSTATUS, RtlConvertLCIDToString, (
 ))
 
 // private
-NTDLL_API(BOOLEAN, RtlIsValidLocaleName, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsValidLocaleName, (
     _In_ PWSTR LocaleName,
     _In_ ULONG Flags
 ))
 
 // private
-NTDLL_API(NTSTATUS, RtlGetParentLocaleName, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetParentLocaleName, (
     _In_ PWSTR LocaleName,
     _Inout_ PUNICODE_STRING ParentLocaleName,
     _In_ ULONG Flags,
@@ -1789,7 +1789,7 @@ NTDLL_API(NTSTATUS, RtlGetParentLocaleName, (
 ))
 
 // private
-NTDLL_API(NTSTATUS, RtlLcidToLocaleName, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLcidToLocaleName, (
     _In_ LCID lcid, // sic
     _Inout_ PUNICODE_STRING LocaleName,
     _In_ ULONG Flags,
@@ -1797,26 +1797,26 @@ NTDLL_API(NTSTATUS, RtlLcidToLocaleName, (
 ))
 
 // private
-NTDLL_API(NTSTATUS, RtlLocaleNameToLcid, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLocaleNameToLcid, (
     _In_ PWSTR LocaleName,
     _Out_ PLCID lcid,
     _In_ ULONG Flags
 ))
 
 // private
-NTDLL_API(BOOLEAN, RtlLCIDToCultureName, (
+NTDLL_API(BOOLEAN, __stdcall, RtlLCIDToCultureName, (
     _In_ LCID Lcid,
     _Inout_ PUNICODE_STRING String
 ))
 
 // private
-NTDLL_API(BOOLEAN, RtlCultureNameToLCID, (
+NTDLL_API(BOOLEAN, __stdcall, RtlCultureNameToLCID, (
     _In_ PUNICODE_STRING String,
     _Out_ PLCID Lcid
 ))
 
 // private
-NTDLL_API_VOID(RtlCleanUpTEBLangLists, (
+NTDLL_API_VOID(__stdcall, RtlCleanUpTEBLangLists, (
     VOID
 ))
 
@@ -1825,7 +1825,7 @@ NTDLL_API_VOID(RtlCleanUpTEBLangLists, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 
 // rev
-NTDLL_API(NTSTATUS, RtlGetLocaleFileMappingAddress, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetLocaleFileMappingAddress, (
     _Out_ PVOID *BaseAddress,
     _Out_ PLCID DefaultLocaleId,
     _Out_ PLARGE_INTEGER DefaultCasingTableSize
@@ -1835,31 +1835,31 @@ NTDLL_API(NTSTATUS, RtlGetLocaleFileMappingAddress, (
 
 // PEB
 
-NTDLL_API(PPEB, RtlGetCurrentPeb, (
+NTDLL_API(PPEB, __stdcall, RtlGetCurrentPeb, (
     VOID
 ))
 
-NTDLL_API_VOID(RtlAcquirePebLock, (
+NTDLL_API_VOID(__stdcall, RtlAcquirePebLock, (
     VOID
 ))
 
-NTDLL_API_VOID(RtlReleasePebLock, (
+NTDLL_API_VOID(__stdcall, RtlReleasePebLock, (
     VOID
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(LOGICAL, RtlTryAcquirePebLock, (
+NTDLL_API(LOGICAL, __stdcall, RtlTryAcquirePebLock, (
     VOID
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlAllocateFromPeb, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAllocateFromPeb, (
     _In_ ULONG Size,
     _Out_ PVOID *Block
 ))
 
-NTDLL_API(NTSTATUS, RtlFreeToPeb, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFreeToPeb, (
     _In_ PVOID Block,
     _In_ ULONG Size
 ))
@@ -1950,7 +1950,7 @@ typedef struct _RTL_USER_PROCESS_PARAMETERS
 #define RTL_USER_PROC_IMAGE_KEY_MISSING 0x00004000
 #define RTL_USER_PROC_OPTIN_PROCESS 0x00020000
 
-NTDLL_API(NTSTATUS, RtlCreateProcessParameters, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateProcessParameters, (
     _Out_ PRTL_USER_PROCESS_PARAMETERS *pProcessParameters,
     _In_ PUNICODE_STRING ImagePathName,
     _In_opt_ PUNICODE_STRING DllPath,
@@ -1965,7 +1965,7 @@ NTDLL_API(NTSTATUS, RtlCreateProcessParameters, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlCreateProcessParametersEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateProcessParametersEx, (
     _Out_ PRTL_USER_PROCESS_PARAMETERS *pProcessParameters,
     _In_ PUNICODE_STRING ImagePathName,
     _In_opt_ PUNICODE_STRING DllPath,
@@ -1980,15 +1980,15 @@ NTDLL_API(NTSTATUS, RtlCreateProcessParametersEx, (
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlDestroyProcessParameters, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDestroyProcessParameters, (
     _In_ _Post_invalid_ PRTL_USER_PROCESS_PARAMETERS ProcessParameters
 ))
 
-NTDLL_API(PRTL_USER_PROCESS_PARAMETERS, RtlNormalizeProcessParams, (
+NTDLL_API(PRTL_USER_PROCESS_PARAMETERS, __stdcall, RtlNormalizeProcessParams, (
     _Inout_ PRTL_USER_PROCESS_PARAMETERS ProcessParameters
 ))
 
-NTDLL_API(PRTL_USER_PROCESS_PARAMETERS, RtlDeNormalizeProcessParams, (
+NTDLL_API(PRTL_USER_PROCESS_PARAMETERS, __stdcall, RtlDeNormalizeProcessParams, (
     _Inout_ PRTL_USER_PROCESS_PARAMETERS ProcessParameters
 ))
 
@@ -2002,7 +2002,7 @@ typedef struct _RTL_USER_PROCESS_INFORMATION
 } RTL_USER_PROCESS_INFORMATION, *PRTL_USER_PROCESS_INFORMATION;
 
 // private
-NTDLL_API(NTSTATUS, RtlCreateUserProcess, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateUserProcess, (
     _In_ PUNICODE_STRING NtImagePathName,
     _In_ ULONG AttributesDeprecated,
     _In_ PRTL_USER_PROCESS_PARAMETERS ProcessParameters,
@@ -2015,7 +2015,7 @@ NTDLL_API(NTSTATUS, RtlCreateUserProcess, (
     _Out_ PRTL_USER_PROCESS_INFORMATION ProcessInformation
 ))
 
-NTDLL_API(NTSTATUS, RtlCreateUserProcessEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateUserProcessEx, (
     _In_ PUNICODE_STRING NtImagePathName,
     _In_ PRTL_USER_PROCESS_PARAMETERS ProcessParameters,
     _In_ BOOLEAN InheritHandles,
@@ -2025,7 +2025,7 @@ NTDLL_API(NTSTATUS, RtlCreateUserProcessEx, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 DECLSPEC_NORETURN
-NTDLL_API_VOID(RtlExitUserProcess, (
+NTDLL_API_VOID(__stdcall, RtlExitUserProcess, (
     _In_ NTSTATUS ExitStatus
 ))
 #else
@@ -2051,7 +2051,7 @@ FORCEINLINE VOID RtlExitUserProcess_R(
 // end_rev
 
 // private
-NTDLL_API(NTSTATUS, RtlCloneUserProcess, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCloneUserProcess, (
     _In_ ULONG ProcessFlags,
     _In_opt_ PSECURITY_DESCRIPTOR ProcessSecurityDescriptor,
     _In_opt_ PSECURITY_DESCRIPTOR ThreadSecurityDescriptor,
@@ -2060,12 +2060,12 @@ NTDLL_API(NTSTATUS, RtlCloneUserProcess, (
 ))
 
 // private
-NTDLL_API_VOID(RtlUpdateClonedCriticalSection, (
+NTDLL_API_VOID(__stdcall, RtlUpdateClonedCriticalSection, (
     _Inout_ PRTL_CRITICAL_SECTION CriticalSection
 ))
 
 // private
-NTDLL_API_VOID(RtlUpdateClonedSRWLock, (
+NTDLL_API_VOID(__stdcall, RtlUpdateClonedSRWLock, (
     _Inout_ PRTL_SRWLOCK SRWLock,
     _In_ LOGICAL Shared // TRUE to set to shared acquire
 ))
@@ -2080,7 +2080,7 @@ typedef struct _RTLP_PROCESS_REFLECTION_REFLECTION_INFORMATION
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, RtlCreateProcessReflection, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateProcessReflection, (
     _In_ HANDLE ProcessHandle,
     _In_ ULONG Flags,
     _In_opt_ PVOID StartRoutine,
@@ -2092,44 +2092,38 @@ NTDLL_API(NTSTATUS, RtlCreateProcessReflection, (
 
 #endif
 
-NTSYSAPI
-NTSTATUS
-STDAPIVCALLTYPE
-RtlSetProcessIsCritical(
+NTDLL_API(NTSTATUS, __cdecl, RtlSetProcessIsCritical, (
     _In_ BOOLEAN NewValue,
     _Out_opt_ PBOOLEAN OldValue,
     _In_ BOOLEAN CheckFlag
-    );
+))
 
-NTSYSAPI
-NTSTATUS
-STDAPIVCALLTYPE
-RtlSetThreadIsCritical(
+NTDLL_API(NTSTATUS, __cdecl, RtlSetThreadIsCritical, (
     _In_ BOOLEAN NewValue,
     _Out_opt_ PBOOLEAN OldValue,
     _In_ BOOLEAN CheckFlag
-    );
+))
 
 // rev
-NTDLL_API(BOOLEAN, RtlValidProcessProtection, (
+NTDLL_API(BOOLEAN, __stdcall, RtlValidProcessProtection, (
     _In_ PS_PROTECTION ProcessProtection
 ))
 
 // rev
-NTDLL_API(BOOLEAN, RtlTestProtectedAccess, (
+NTDLL_API(BOOLEAN, __stdcall, RtlTestProtectedAccess, (
     _In_ PS_PROTECTION Source,
     _In_ PS_PROTECTION Target
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS13)
 // rev
-NTDLL_API(BOOLEAN, RtlIsCurrentProcess, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsCurrentProcess, (
     // NtCompareObjects(NtCurrentProcess(), ProcessHandle)
     _In_ HANDLE ProcessHandle
 ))
 
 // rev
-NTDLL_API(BOOLEAN, RtlIsCurrentThread, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsCurrentThread, (
     // NtCompareObjects(NtCurrentThread(), ThreadHandle)
     _In_ HANDLE ThreadHandle
 ))
@@ -2141,7 +2135,7 @@ typedef NTSTATUS (NTAPI *PUSER_THREAD_START_ROUTINE)(
     _In_ PVOID ThreadParameter
     );
 
-NTDLL_API(NTSTATUS, RtlCreateUserThread, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateUserThread, (
     _In_ HANDLE Process,
     _In_opt_ PSECURITY_DESCRIPTOR ThreadSecurityDescriptor,
     _In_ BOOLEAN CreateSuspended,
@@ -2156,7 +2150,7 @@ NTDLL_API(NTSTATUS, RtlCreateUserThread, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA) // should be PHNT_WINXP, but is NTLIB_WIN_VISTA for consistency with RtlExitUserProcess
 DECLSPEC_NORETURN
-NTDLL_API_VOID(RtlExitUserThread, (
+NTDLL_API_VOID(__stdcall, RtlExitUserThread, (
     _In_ NTSTATUS ExitStatus
 ))
 #else
@@ -2176,7 +2170,7 @@ FORCEINLINE VOID RtlExitUserThread_R(
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // rev
-NTDLL_API(BOOLEAN, RtlIsCurrentThreadAttachExempt, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsCurrentThreadAttachExempt, (
     VOID
 ))
 
@@ -2185,7 +2179,7 @@ NTDLL_API(BOOLEAN, RtlIsCurrentThreadAttachExempt, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, RtlCreateUserStack, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateUserStack, (
     _In_opt_ SIZE_T CommittedStackSize,
     _In_opt_ SIZE_T MaximumStackSize,
     _In_opt_ ULONG_PTR ZeroBits,
@@ -2195,7 +2189,7 @@ NTDLL_API(NTSTATUS, RtlCreateUserStack, (
 ))
 
 // private
-NTDLL_API(NTSTATUS, RtlFreeUserStack, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFreeUserStack, (
     _In_ PVOID AllocationBase
 ))
 
@@ -2224,7 +2218,7 @@ typedef struct _CONTEXT_EX
 #define RTL_CONTEXT_LENGTH(Context, Chunk) RTL_CONTEXT_EX_LENGTH((PCONTEXT_EX)(Context + 1), Chunk)
 #define RTL_CONTEXT_CHUNK(Context, Chunk) RTL_CONTEXT_EX_CHUNK((PCONTEXT_EX)(Context + 1), (PCONTEXT_EX)(Context + 1), Chunk)
 
-NTDLL_API_VOID(RtlInitializeContext, (
+NTDLL_API_VOID(__stdcall, RtlInitializeContext, (
     _In_ HANDLE Process,
     _Out_ PCONTEXT Context,
     _In_opt_ PVOID Parameter,
@@ -2232,58 +2226,58 @@ NTDLL_API_VOID(RtlInitializeContext, (
     _In_opt_ PVOID InitialSp
 ))
 
-NTDLL_API(ULONG, RtlInitializeExtendedContext, (
+NTDLL_API(ULONG, __stdcall, RtlInitializeExtendedContext, (
     _Out_ PCONTEXT Context,
     _In_ ULONG ContextFlags,
     _Out_ PCONTEXT_EX* ContextEx
 ))
 
-NTDLL_API(ULONG, RtlCopyExtendedContext, (
+NTDLL_API(ULONG, __stdcall, RtlCopyExtendedContext, (
     _Out_ PCONTEXT_EX Destination,
     _In_ ULONG ContextFlags,
     _In_ PCONTEXT_EX Source
 ))
 
-NTDLL_API(ULONG, RtlGetExtendedContextLength, (
+NTDLL_API(ULONG, __stdcall, RtlGetExtendedContextLength, (
     _In_ ULONG ContextFlags,
     _Out_ PULONG ContextLength
 ))
 
-NTDLL_API(ULONG64, RtlGetExtendedFeaturesMask, (
+NTDLL_API(ULONG64, __stdcall, RtlGetExtendedFeaturesMask, (
     _In_ PCONTEXT_EX ContextEx
 ))
 
-NTDLL_API(PVOID, RtlLocateExtendedFeature, (
+NTDLL_API(PVOID, __stdcall, RtlLocateExtendedFeature, (
     _In_ PCONTEXT_EX ContextEx,
     _In_ ULONG FeatureId,
     _Out_opt_ PULONG Length
 ))
 
-NTDLL_API(PCONTEXT, RtlLocateLegacyContext, (
+NTDLL_API(PCONTEXT, __stdcall, RtlLocateLegacyContext, (
     _In_ PCONTEXT_EX ContextEx,
     _Out_opt_ PULONG Length
 ))
 
-NTDLL_API_VOID(RtlSetExtendedFeaturesMask, (
+NTDLL_API_VOID(__stdcall, RtlSetExtendedFeaturesMask, (
     __out PCONTEXT_EX ContextEx,
     _Out_ ULONG64 FeatureMask
 ))
 
 #if (defined(PHNT_COMPILE) || defined(_WIN64))
 // rev
-NTDLL_API(NTSTATUS, RtlWow64GetThreadContext, (
+NTDLL_API(NTSTATUS, __stdcall, RtlWow64GetThreadContext, (
     _In_ HANDLE ThreadHandle,
     _Inout_ PWOW64_CONTEXT ThreadContext
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlWow64SetThreadContext, (
+NTDLL_API(NTSTATUS, __stdcall, RtlWow64SetThreadContext, (
     _In_ HANDLE ThreadHandle,
     _In_ PWOW64_CONTEXT ThreadContext
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlRemoteCall, (
+NTDLL_API(NTSTATUS, __stdcall, RtlRemoteCall, (
     _In_ HANDLE Process,
     _In_ HANDLE Thread,
     _In_ PVOID CallSite,
@@ -2295,21 +2289,21 @@ NTDLL_API(NTSTATUS, RtlRemoteCall, (
 
 // Vectored exception handlers
 
-NTDLL_API(PVOID, RtlAddVectoredExceptionHandler, (
+NTDLL_API(PVOID, __stdcall, RtlAddVectoredExceptionHandler, (
     _In_ ULONG First,
     _In_ PVECTORED_EXCEPTION_HANDLER Handler
 ))
 
-NTDLL_API(ULONG, RtlRemoveVectoredExceptionHandler, (
+NTDLL_API(ULONG, __stdcall, RtlRemoveVectoredExceptionHandler, (
     _In_ PVOID Handle
 ))
 
-NTDLL_API(PVOID, RtlAddVectoredContinueHandler, (
+NTDLL_API(PVOID, __stdcall, RtlAddVectoredContinueHandler, (
     _In_ ULONG First,
     _In_ PVECTORED_EXCEPTION_HANDLER Handler
 ))
 
-NTDLL_API(ULONG, RtlRemoveVectoredContinueHandler, (
+NTDLL_API(ULONG, __stdcall, RtlRemoveVectoredContinueHandler, (
     _In_ PVOID Handle
 ))
 
@@ -2319,23 +2313,23 @@ typedef ULONG (NTAPI *PRTLP_UNHANDLED_EXCEPTION_FILTER)(
     _In_ PEXCEPTION_POINTERS ExceptionInfo
     );
 
-NTDLL_API_VOID(RtlSetUnhandledExceptionFilter, (
+NTDLL_API_VOID(__stdcall, RtlSetUnhandledExceptionFilter, (
     _In_ PRTLP_UNHANDLED_EXCEPTION_FILTER UnhandledExceptionFilter
 ))
 
 // rev
-NTDLL_API(LONG, RtlUnhandledExceptionFilter, (
+NTDLL_API(LONG, __stdcall, RtlUnhandledExceptionFilter, (
     _In_ PEXCEPTION_POINTERS ExceptionPointers
 ))
 
 // rev
-NTDLL_API(LONG, RtlUnhandledExceptionFilter2, (
+NTDLL_API(LONG, __stdcall, RtlUnhandledExceptionFilter2, (
     _In_ PEXCEPTION_POINTERS ExceptionPointers,
     _In_ ULONG Flags
 ))
 
 // rev
-NTDLL_API(LONG, RtlKnownExceptionFilter, (
+NTDLL_API(LONG, __stdcall, RtlKnownExceptionFilter, (
     _In_ PEXCEPTION_POINTERS ExceptionPointers
 ))
 
@@ -2368,7 +2362,7 @@ typedef struct _DYNAMIC_FUNCTION_TABLE
 } DYNAMIC_FUNCTION_TABLE, *PDYNAMIC_FUNCTION_TABLE;
 
 // rev
-NTDLL_API(PLIST_ENTRY, RtlGetFunctionTableListHead, (
+NTDLL_API(PLIST_ENTRY, __stdcall, RtlGetFunctionTableListHead, (
     VOID
 ))
 
@@ -2376,45 +2370,45 @@ NTDLL_API(PLIST_ENTRY, RtlGetFunctionTableListHead, (
 
 // Images
 
-NTDLL_API(PIMAGE_NT_HEADERS, RtlImageNtHeader, (
+NTDLL_API(PIMAGE_NT_HEADERS, __stdcall, RtlImageNtHeader, (
     _In_ PVOID BaseOfImage
 ))
 
 #define RTL_IMAGE_NT_HEADER_EX_FLAG_NO_RANGE_CHECK 0x00000001
 
-NTDLL_API(NTSTATUS, RtlImageNtHeaderEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlImageNtHeaderEx, (
     _In_ ULONG Flags,
     _In_ PVOID BaseOfImage,
     _In_ ULONG64 Size,
     _Out_ PIMAGE_NT_HEADERS *OutHeaders
 ))
 
-NTDLL_API(PVOID, RtlAddressInSectionTable, (
+NTDLL_API(PVOID, __stdcall, RtlAddressInSectionTable, (
     _In_ PIMAGE_NT_HEADERS NtHeaders,
     _In_ PVOID BaseOfImage,
     _In_ ULONG VirtualAddress
 ))
 
-NTDLL_API(PIMAGE_SECTION_HEADER, RtlSectionTableFromVirtualAddress, (
+NTDLL_API(PIMAGE_SECTION_HEADER, __stdcall, RtlSectionTableFromVirtualAddress, (
     _In_ PIMAGE_NT_HEADERS NtHeaders,
     _In_ PVOID BaseOfImage,
     _In_ ULONG VirtualAddress
 ))
 
-NTDLL_API(PVOID, RtlImageDirectoryEntryToData, (
+NTDLL_API(PVOID, __stdcall, RtlImageDirectoryEntryToData, (
     _In_ PVOID BaseOfImage,
     _In_ BOOLEAN MappedAsImage,
     _In_ USHORT DirectoryEntry,
     _Out_ PULONG Size
 ))
 
-NTDLL_API(PIMAGE_SECTION_HEADER, RtlImageRvaToSection, (
+NTDLL_API(PIMAGE_SECTION_HEADER, __stdcall, RtlImageRvaToSection, (
     _In_ PIMAGE_NT_HEADERS NtHeaders,
     _In_ PVOID BaseOfImage,
     _In_ ULONG Rva
 ))
 
-NTDLL_API(PVOID, RtlImageRvaToVa, (
+NTDLL_API(PVOID, __stdcall, RtlImageRvaToVa, (
     _In_ PIMAGE_NT_HEADERS NtHeaders,
     _In_ PVOID BaseOfImage,
     _In_ ULONG Rva,
@@ -2424,7 +2418,7 @@ NTDLL_API(PVOID, RtlImageRvaToVa, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 // rev
-NTDLL_API(PVOID, RtlFindExportedRoutineByName, (
+NTDLL_API(PVOID, __stdcall, RtlFindExportedRoutineByName, (
     _In_ PVOID BaseOfImage,
     _In_ PSTR RoutineName
 ))
@@ -2434,7 +2428,7 @@ NTDLL_API(PVOID, RtlFindExportedRoutineByName, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS1)
 
 // rev
-NTDLL_API(NTSTATUS, RtlGuardCheckLongJumpTarget, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGuardCheckLongJumpTarget, (
     _In_ PVOID PcValue, 
     _In_ BOOL IsFastFail, 
     _Out_ PBOOL IsLongJumpTarget
@@ -2444,19 +2438,19 @@ NTDLL_API(NTSTATUS, RtlGuardCheckLongJumpTarget, (
 
 // Memory
 
-NTDLL_API(SIZE_T, RtlCompareMemoryUlong, (
+NTDLL_API(SIZE_T, __stdcall, RtlCompareMemoryUlong, (
     _In_ PVOID Source,
     _In_ SIZE_T Length,
     _In_ ULONG Pattern
 ))
 
-NTDLL_API_VOID(RtlFillMemoryUlong, (
+NTDLL_API_VOID(__stdcall, RtlFillMemoryUlong, (
     _Out_ PVOID Destination,
     _In_ SIZE_T Length,
     _In_ ULONG Pattern
 ))
 
-NTDLL_API_VOID(RtlFillMemoryUlonglong, (
+NTDLL_API_VOID(__stdcall, RtlFillMemoryUlonglong, (
     _Out_ PVOID Destination,
     _In_ SIZE_T Length,
     _In_ ULONGLONG Pattern
@@ -2464,7 +2458,7 @@ NTDLL_API_VOID(RtlFillMemoryUlonglong, (
 
 // Environment
 
-NTDLL_API(NTSTATUS, RtlCreateEnvironment, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateEnvironment, (
     _In_ BOOLEAN CloneCurrentEnvironment,
     _Out_ PVOID *Environment
 ))
@@ -2477,25 +2471,25 @@ NTDLL_API(NTSTATUS, RtlCreateEnvironment, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlCreateEnvironmentEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateEnvironmentEx, (
     _In_ PVOID SourceEnv,
     _Out_ PVOID *Environment,
     _In_ ULONG Flags
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlDestroyEnvironment, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDestroyEnvironment, (
     _In_ PVOID Environment
 ))
 
-NTDLL_API(NTSTATUS, RtlSetCurrentEnvironment, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetCurrentEnvironment, (
     _In_ PVOID Environment,
     _Out_opt_ PVOID *PreviousEnvironment
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlSetEnvironmentVar, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetEnvironmentVar, (
     _In_opt_ PWSTR *Environment,
     _In_reads_(NameLength) PWSTR Name,
     _In_ SIZE_T NameLength,
@@ -2504,7 +2498,7 @@ NTDLL_API(NTSTATUS, RtlSetEnvironmentVar, (
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlSetEnvironmentVariable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetEnvironmentVariable, (
     _In_opt_ PVOID *Environment,
     _In_ PUNICODE_STRING Name,
     _In_opt_ PUNICODE_STRING Value
@@ -2512,7 +2506,7 @@ NTDLL_API(NTSTATUS, RtlSetEnvironmentVariable, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlQueryEnvironmentVariable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryEnvironmentVariable, (
     _In_opt_ PVOID Environment,
     _In_reads_(NameLength) PWSTR Name,
     _In_ SIZE_T NameLength,
@@ -2522,7 +2516,7 @@ NTDLL_API(NTSTATUS, RtlQueryEnvironmentVariable, (
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlQueryEnvironmentVariable_U, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryEnvironmentVariable_U, (
     _In_opt_ PVOID Environment,
     _In_ PUNICODE_STRING Name,
     _Out_ PUNICODE_STRING Value
@@ -2530,7 +2524,7 @@ NTDLL_API(NTSTATUS, RtlQueryEnvironmentVariable_U, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlExpandEnvironmentStrings, (
+NTDLL_API(NTSTATUS, __stdcall, RtlExpandEnvironmentStrings, (
     _In_opt_ PVOID Environment,
     _In_reads_(SrcLength) PWSTR Src,
     _In_ SIZE_T SrcLength,
@@ -2540,14 +2534,14 @@ NTDLL_API(NTSTATUS, RtlExpandEnvironmentStrings, (
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlExpandEnvironmentStrings_U, (
+NTDLL_API(NTSTATUS, __stdcall, RtlExpandEnvironmentStrings_U, (
     _In_opt_ PVOID Environment,
     _In_ PUNICODE_STRING Source,
     _Out_ PUNICODE_STRING Destination,
     _Out_opt_ PULONG ReturnedLength
 ))
 
-NTDLL_API(NTSTATUS, RtlSetEnvironmentStrings, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetEnvironmentStrings, (
     _In_ PWCHAR NewEnvironment,
     _In_ SIZE_T NewEnvironmentSize
 ))
@@ -2595,23 +2589,23 @@ NTSYSAPI UNICODE_STRING RtlNtPathSeperatorString;
 
 // Path functions
 
-NTDLL_API(RTL_PATH_TYPE, RtlDetermineDosPathNameType_U, (
+NTDLL_API(RTL_PATH_TYPE, __stdcall, RtlDetermineDosPathNameType_U, (
     _In_ PWSTR DosFileName
 ))
 
-NTDLL_API(RTL_PATH_TYPE, RtlDetermineDosPathNameType_Ustr, (
+NTDLL_API(RTL_PATH_TYPE, __stdcall, RtlDetermineDosPathNameType_Ustr, (
     _In_ PCUNICODE_STRING DosFileName
 ))
 
-NTDLL_API(ULONG, RtlIsDosDeviceName_U, (
+NTDLL_API(ULONG, __stdcall, RtlIsDosDeviceName_U, (
     _In_ PWSTR DosFileName
 ))
 
-NTDLL_API(ULONG, RtlIsDosDeviceName_Ustr, (
+NTDLL_API(ULONG, __stdcall, RtlIsDosDeviceName_Ustr, (
     _In_ PUNICODE_STRING DosFileName
 ))
 
-NTDLL_API(ULONG, RtlGetFullPathName_U, (
+NTDLL_API(ULONG, __stdcall, RtlGetFullPathName_U, (
     _In_ PWSTR FileName,
     _In_ ULONG BufferLength,
     _Out_writes_bytes_(BufferLength) PWSTR Buffer,
@@ -2620,7 +2614,7 @@ NTDLL_API(ULONG, RtlGetFullPathName_U, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, RtlGetFullPathName_UEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetFullPathName_UEx, (
     _In_ PWSTR FileName,
     _In_ ULONG BufferLength,
     _Out_writes_bytes_(BufferLength) PWSTR Buffer,
@@ -2630,7 +2624,7 @@ NTDLL_API(NTSTATUS, RtlGetFullPathName_UEx, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
-NTDLL_API(NTSTATUS, RtlGetFullPathName_UstrEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetFullPathName_UstrEx, (
     _In_ PUNICODE_STRING FileName,
     _Inout_ PUNICODE_STRING StaticString,
     _Out_opt_ PUNICODE_STRING DynamicString,
@@ -2642,20 +2636,20 @@ NTDLL_API(NTSTATUS, RtlGetFullPathName_UstrEx, (
 ))
 #endif
 
-NTDLL_API(ULONG, RtlGetCurrentDirectory_U, (
+NTDLL_API(ULONG, __stdcall, RtlGetCurrentDirectory_U, (
     _In_ ULONG BufferLength,
     _Out_writes_bytes_(BufferLength) PWSTR Buffer
 ))
 
-NTDLL_API(NTSTATUS, RtlSetCurrentDirectory_U, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetCurrentDirectory_U, (
     _In_ PUNICODE_STRING PathName
 ))
 
-NTDLL_API(ULONG, RtlGetLongestNtPathLength, (
+NTDLL_API(ULONG, __stdcall, RtlGetLongestNtPathLength, (
     VOID
 ))
 
-NTDLL_API(BOOLEAN, RtlDosPathNameToNtPathName_U, (
+NTDLL_API(BOOLEAN, __stdcall, RtlDosPathNameToNtPathName_U, (
     _In_ PWSTR DosFileName,
     _Out_ PUNICODE_STRING NtFileName,
     _Out_opt_ PWSTR *FilePart,
@@ -2663,7 +2657,7 @@ NTDLL_API(BOOLEAN, RtlDosPathNameToNtPathName_U, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
-NTDLL_API(NTSTATUS, RtlDosPathNameToNtPathName_U_WithStatus, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDosPathNameToNtPathName_U_WithStatus, (
     _In_ PWSTR DosFileName,
     _Out_ PUNICODE_STRING NtFileName,
     _Out_opt_ PWSTR *FilePart,
@@ -2673,7 +2667,7 @@ NTDLL_API(NTSTATUS, RtlDosPathNameToNtPathName_U_WithStatus, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS13)
 // rev
-NTDLL_API(NTSTATUS, RtlDosLongPathNameToNtPathName_U_WithStatus, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDosLongPathNameToNtPathName_U_WithStatus, (
     _In_ PWSTR DosFileName,
     _Out_ PUNICODE_STRING NtFileName,
     _Out_opt_ PWSTR *FilePart,
@@ -2682,7 +2676,7 @@ NTDLL_API(NTSTATUS, RtlDosLongPathNameToNtPathName_U_WithStatus, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
-NTDLL_API(BOOLEAN, RtlDosPathNameToRelativeNtPathName_U, (
+NTDLL_API(BOOLEAN, __stdcall, RtlDosPathNameToRelativeNtPathName_U, (
     _In_ PWSTR DosFileName,
     _Out_ PUNICODE_STRING NtFileName,
     _Out_opt_ PWSTR *FilePart,
@@ -2691,7 +2685,7 @@ NTDLL_API(BOOLEAN, RtlDosPathNameToRelativeNtPathName_U, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
-NTDLL_API(NTSTATUS, RtlDosPathNameToRelativeNtPathName_U_WithStatus, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDosPathNameToRelativeNtPathName_U_WithStatus, (
     _In_ PWSTR DosFileName,
     _Out_ PUNICODE_STRING NtFileName,
     _Out_opt_ PWSTR *FilePart,
@@ -2701,7 +2695,7 @@ NTDLL_API(NTSTATUS, RtlDosPathNameToRelativeNtPathName_U_WithStatus, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS13)
 // rev
-NTDLL_API(NTSTATUS, RtlDosLongPathNameToRelativeNtPathName_U_WithStatus, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDosLongPathNameToRelativeNtPathName_U_WithStatus, (
     _In_ PWSTR DosFileName,
     _Out_ PUNICODE_STRING NtFileName,
     _Out_opt_ PWSTR *FilePart,
@@ -2710,12 +2704,12 @@ NTDLL_API(NTSTATUS, RtlDosLongPathNameToRelativeNtPathName_U_WithStatus, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
-NTDLL_API_VOID(RtlReleaseRelativeName, (
+NTDLL_API_VOID(__stdcall, RtlReleaseRelativeName, (
     _Inout_ PRTL_RELATIVE_NAME_U RelativeName
 ))
 #endif
 
-NTDLL_API(ULONG, RtlDosSearchPath_U, (
+NTDLL_API(ULONG, __stdcall, RtlDosSearchPath_U, (
     _In_ PWSTR Path,
     _In_ PWSTR FileName,
     _In_opt_ PWSTR Extension,
@@ -2728,7 +2722,7 @@ NTDLL_API(ULONG, RtlDosSearchPath_U, (
 #define RTL_DOS_SEARCH_PATH_FLAG_DISALLOW_DOT_RELATIVE_PATH_SEARCH 0x00000002
 #define RTL_DOS_SEARCH_PATH_FLAG_APPLY_DEFAULT_EXTENSION_WHEN_NOT_RELATIVE_PATH_EVEN_IF_FILE_HAS_EXTENSION 0x00000004
 
-NTDLL_API(NTSTATUS, RtlDosSearchPath_Ustr, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDosSearchPath_Ustr, (
     _In_ ULONG Flags,
     _In_ PUNICODE_STRING Path,
     _In_ PUNICODE_STRING FileName,
@@ -2740,17 +2734,17 @@ NTDLL_API(NTSTATUS, RtlDosSearchPath_Ustr, (
     _Out_opt_ SIZE_T *BytesRequired
 ))
 
-NTDLL_API(BOOLEAN, RtlDoesFileExists_U, (
+NTDLL_API(BOOLEAN, __stdcall, RtlDoesFileExists_U, (
     _In_ PWSTR FileName
 ))
 
-NTDLL_API(NTSTATUS, RtlGetLengthWithoutLastFullDosOrNtPathElement, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetLengthWithoutLastFullDosOrNtPathElement, (
     _Reserved_ ULONG Flags,
     _In_ PUNICODE_STRING PathString,
     _Out_ PULONG Length
 ))
 
-NTDLL_API(NTSTATUS, RtlGetLengthWithoutTrailingPathSeperators, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetLengthWithoutTrailingPathSeperators, (
     _Reserved_ ULONG Flags,
     _In_ PUNICODE_STRING PathString,
     _Out_ PULONG Length
@@ -2768,7 +2762,7 @@ typedef struct _GENERATE_NAME_CONTEXT
 } GENERATE_NAME_CONTEXT, *PGENERATE_NAME_CONTEXT;
 
 // private
-NTDLL_API(NTSTATUS, RtlGenerate8dot3Name, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGenerate8dot3Name, (
     _In_ PUNICODE_STRING Name,
     _In_ BOOLEAN AllowExtendedCharacters,
     _In_ PGENERATE_NAME_CONTEXT Context,
@@ -2778,24 +2772,24 @@ NTDLL_API(NTSTATUS, RtlGenerate8dot3Name, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
 // private
-NTDLL_API(NTSTATUS, RtlComputePrivatizedDllName_U, (
+NTDLL_API(NTSTATUS, __stdcall, RtlComputePrivatizedDllName_U, (
     _In_ PUNICODE_STRING DllName,
     _Out_ PUNICODE_STRING RealName,
     _Out_ PUNICODE_STRING LocalName
 ))
 
 // rev
-NTDLL_API(BOOLEAN, RtlGetSearchPath, (
+NTDLL_API(BOOLEAN, __stdcall, RtlGetSearchPath, (
     _Out_ PWSTR *SearchPath
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlSetSearchPathMode, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetSearchPathMode, (
     _In_ ULONG Flags
 ))
 
 // rev
-NTDLL_API(PWSTR, RtlGetExePath, (
+NTDLL_API(PWSTR, __stdcall, RtlGetExePath, (
     VOID
 ))
 
@@ -2804,22 +2798,22 @@ NTDLL_API(PWSTR, RtlGetExePath, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS12)
 
 // private
-NTDLL_API(PWSTR, RtlGetNtSystemRoot, (
+NTDLL_API(PWSTR, __stdcall, RtlGetNtSystemRoot, (
     VOID
 ))
 
 // rev
-NTDLL_API(BOOLEAN, RtlAreLongPathsEnabled, (
+NTDLL_API(BOOLEAN, __stdcall, RtlAreLongPathsEnabled, (
     VOID
 ))
 
 #endif
 
-NTDLL_API(BOOLEAN, RtlIsThreadWithinLoaderCallout, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsThreadWithinLoaderCallout, (
     VOID
 ))
 
-NTDLL_API(BOOLEAN, RtlDllShutdownInProgress, (
+NTDLL_API(BOOLEAN, __stdcall, RtlDllShutdownInProgress, (
     VOID
 ))
 
@@ -2926,7 +2920,7 @@ typedef struct _RTL_HEAP_PARAMETERS
 #define HEAP_CLASS_8 0x00008000 // CSR port heap
 #define HEAP_CLASS_MASK 0x0000f000
 
-NTDLL_API(PVOID, RtlCreateHeap, (
+NTDLL_API(PVOID, __stdcall, RtlCreateHeap, (
     _In_ ULONG Flags,
     _In_opt_ PVOID HeapBase,
     _In_opt_ SIZE_T ReserveSize,
@@ -2935,56 +2929,56 @@ NTDLL_API(PVOID, RtlCreateHeap, (
     _In_opt_ PRTL_HEAP_PARAMETERS Parameters
 ))
 
-NTDLL_API(PVOID, RtlDestroyHeap, (
+NTDLL_API(PVOID, __stdcall, RtlDestroyHeap, (
     _Frees_ptr_ PVOID HeapHandle
 ))
 
-NTDLL_API(PVOID, RtlAllocateHeap, (
+NTDLL_API(PVOID, __stdcall, RtlAllocateHeap, (
     _In_ PVOID HeapHandle,
     _In_opt_ ULONG Flags,
     _In_ SIZE_T Size
 ))
 
-NTDLL_API(BOOLEAN, RtlFreeHeap, (
+NTDLL_API(BOOLEAN, __stdcall, RtlFreeHeap, (
     _In_ PVOID HeapHandle,
     _In_opt_ ULONG Flags,
     _Frees_ptr_opt_ PVOID BaseAddress
 ))
 
-NTDLL_API(SIZE_T, RtlSizeHeap, (
+NTDLL_API(SIZE_T, __stdcall, RtlSizeHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_ PVOID BaseAddress
 ))
 
-NTDLL_API(NTSTATUS, RtlZeroHeap, (
+NTDLL_API(NTSTATUS, __stdcall, RtlZeroHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags
 ))
 
-NTDLL_API_VOID(RtlProtectHeap, (
+NTDLL_API_VOID(__stdcall, RtlProtectHeap, (
     _In_ PVOID HeapHandle,
     _In_ BOOLEAN MakeReadOnly
 ))
 
 #define RtlProcessHeap() (NtCurrentPeb()->ProcessHeap)
 
-NTDLL_API(BOOLEAN, RtlLockHeap, (
+NTDLL_API(BOOLEAN, __stdcall, RtlLockHeap, (
     _In_ PVOID HeapHandle
 ))
 
-NTDLL_API(BOOLEAN, RtlUnlockHeap, (
+NTDLL_API(BOOLEAN, __stdcall, RtlUnlockHeap, (
     _In_ PVOID HeapHandle
 ))
 
-NTDLL_API(PVOID, RtlReAllocateHeap, (
+NTDLL_API(PVOID, __stdcall, RtlReAllocateHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _Frees_ptr_opt_ PVOID BaseAddress,
     _In_ SIZE_T Size
 ))
 
-NTDLL_API(BOOLEAN, RtlGetUserInfoHeap, (
+NTDLL_API(BOOLEAN, __stdcall, RtlGetUserInfoHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_ PVOID BaseAddress,
@@ -2992,14 +2986,14 @@ NTDLL_API(BOOLEAN, RtlGetUserInfoHeap, (
     _Out_opt_ PULONG UserFlags
 ))
 
-NTDLL_API(BOOLEAN, RtlSetUserValueHeap, (
+NTDLL_API(BOOLEAN, __stdcall, RtlSetUserValueHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_ PVOID BaseAddress,
     _In_ PVOID UserValue
 ))
 
-NTDLL_API(BOOLEAN, RtlSetUserFlagsHeap, (
+NTDLL_API(BOOLEAN, __stdcall, RtlSetUserFlagsHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_ PVOID BaseAddress,
@@ -3016,14 +3010,14 @@ typedef struct _RTL_HEAP_TAG_INFO
 
 #define RTL_HEAP_MAKE_TAG HEAP_MAKE_TAG_FLAGS
 
-NTDLL_API(ULONG, RtlCreateTagHeap, (
+NTDLL_API(ULONG, __stdcall, RtlCreateTagHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_opt_ PWSTR TagPrefix,
     _In_ PWSTR TagNames
 ))
 
-NTDLL_API(PWSTR, RtlQueryTagHeap, (
+NTDLL_API(PWSTR, __stdcall, RtlQueryTagHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_ USHORT TagIndex,
@@ -3031,29 +3025,29 @@ NTDLL_API(PWSTR, RtlQueryTagHeap, (
     _Out_opt_ PRTL_HEAP_TAG_INFO TagInfo
 ))
 
-NTDLL_API(NTSTATUS, RtlExtendHeap, (
+NTDLL_API(NTSTATUS, __stdcall, RtlExtendHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_ PVOID Base,
     _In_ SIZE_T Size
 ))
 
-NTDLL_API(SIZE_T, RtlCompactHeap, (
+NTDLL_API(SIZE_T, __stdcall, RtlCompactHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags
 ))
 
-NTDLL_API(BOOLEAN, RtlValidateHeap, (
+NTDLL_API(BOOLEAN, __stdcall, RtlValidateHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_ PVOID BaseAddress
 ))
 
-NTDLL_API(BOOLEAN, RtlValidateProcessHeaps, (
+NTDLL_API(BOOLEAN, __stdcall, RtlValidateProcessHeaps, (
     VOID
 ))
 
-NTDLL_API(ULONG, RtlGetProcessHeaps, (
+NTDLL_API(ULONG, __stdcall, RtlGetProcessHeaps, (
     _In_ ULONG NumberOfHeaps,
     _Out_ PVOID *ProcessHeaps
 ))
@@ -3063,7 +3057,7 @@ typedef NTSTATUS (NTAPI *PRTL_ENUM_HEAPS_ROUTINE)(
     _In_ PVOID Parameter
     );
 
-NTDLL_API(NTSTATUS, RtlEnumProcessHeaps, (
+NTDLL_API(NTSTATUS, __stdcall, RtlEnumProcessHeaps, (
     _In_ PRTL_ENUM_HEAPS_ROUTINE EnumRoutine,
     _In_ PVOID Parameter
 ))
@@ -3093,7 +3087,7 @@ typedef struct _RTL_HEAP_USAGE
 #define HEAP_USAGE_ALLOCATED_BLOCKS HEAP_REALLOC_IN_PLACE_ONLY
 #define HEAP_USAGE_FREE_BUFFER HEAP_ZERO_MEMORY
 
-NTDLL_API(NTSTATUS, RtlUsageHeap, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUsageHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _Inout_ PRTL_HEAP_USAGE Usage
@@ -3125,7 +3119,7 @@ typedef struct _RTL_HEAP_WALK_ENTRY
     };
 } RTL_HEAP_WALK_ENTRY, *PRTL_HEAP_WALK_ENTRY;
 
-NTDLL_API(NTSTATUS, RtlWalkHeap, (
+NTDLL_API(NTSTATUS, __stdcall, RtlWalkHeap, (
     _In_ PVOID HeapHandle,
     _Inout_ PRTL_HEAP_WALK_ENTRY Entry
 ))
@@ -3201,7 +3195,7 @@ typedef struct _HEAP_DEBUGGING_INFORMATION
     PRTL_HEAP_LEAK_ENUMERATION_ROUTINE HeapLeakEnumerationRoutine;
 } HEAP_DEBUGGING_INFORMATION, *PHEAP_DEBUGGING_INFORMATION;
 
-NTDLL_API(NTSTATUS, RtlQueryHeapInformation, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryHeapInformation, (
     _In_ PVOID HeapHandle,
     _In_ HEAP_INFORMATION_CLASS HeapInformationClass,
     _Out_opt_ PVOID HeapInformation,
@@ -3209,14 +3203,14 @@ NTDLL_API(NTSTATUS, RtlQueryHeapInformation, (
     _Out_opt_ PSIZE_T ReturnLength
 ))
 
-NTDLL_API(NTSTATUS, RtlSetHeapInformation, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetHeapInformation, (
     _In_ PVOID HeapHandle,
     _In_ HEAP_INFORMATION_CLASS HeapInformationClass,
     _In_opt_ PVOID HeapInformation,
     _In_opt_ SIZE_T HeapInformationLength
 ))
 
-NTDLL_API(ULONG, RtlMultipleAllocateHeap, (
+NTDLL_API(ULONG, __stdcall, RtlMultipleAllocateHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_ SIZE_T Size,
@@ -3224,7 +3218,7 @@ NTDLL_API(ULONG, RtlMultipleAllocateHeap, (
     _Out_ PVOID *Array
 ))
 
-NTDLL_API(ULONG, RtlMultipleFreeHeap, (
+NTDLL_API(ULONG, __stdcall, RtlMultipleFreeHeap, (
     _In_ PVOID HeapHandle,
     _In_ ULONG Flags,
     _In_ ULONG Count,
@@ -3232,12 +3226,12 @@ NTDLL_API(ULONG, RtlMultipleFreeHeap, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NTDLL_API_VOID(RtlDetectHeapLeaks, (
+NTDLL_API_VOID(__stdcall, RtlDetectHeapLeaks, (
     VOID
 ))
 #endif
 
-NTDLL_API_VOID(RtlFlushHeaps, (
+NTDLL_API_VOID(__stdcall, RtlFlushHeaps, (
     VOID
 ))
 
@@ -3263,31 +3257,31 @@ typedef struct _RTL_MEMORY_ZONE
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NTDLL_API(NTSTATUS, RtlCreateMemoryZone, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateMemoryZone, (
     _Out_ PVOID *MemoryZone,
     _In_ SIZE_T InitialSize,
     _Reserved_ ULONG Flags
 ))
 
-NTDLL_API(NTSTATUS, RtlDestroyMemoryZone, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDestroyMemoryZone, (
     _In_ _Post_invalid_ PVOID MemoryZone
 ))
 
-NTDLL_API(NTSTATUS, RtlAllocateMemoryZone, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAllocateMemoryZone, (
     _In_ PVOID MemoryZone,
     _In_ SIZE_T BlockSize,
     _Out_ PVOID *Block
 ))
 
-NTDLL_API(NTSTATUS, RtlResetMemoryZone, (
+NTDLL_API(NTSTATUS, __stdcall, RtlResetMemoryZone, (
     _In_ PVOID MemoryZone
 ))
 
-NTDLL_API(NTSTATUS, RtlLockMemoryZone, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLockMemoryZone, (
     _In_ PVOID MemoryZone
 ))
 
-NTDLL_API(NTSTATUS, RtlUnlockMemoryZone, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnlockMemoryZone, (
     _In_ PVOID MemoryZone
 ))
 
@@ -3301,7 +3295,7 @@ NTDLL_API(NTSTATUS, RtlUnlockMemoryZone, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NTDLL_API(NTSTATUS, RtlCreateMemoryBlockLookaside, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateMemoryBlockLookaside, (
     _Out_ PVOID *MemoryBlockLookaside,
     _Reserved_ ULONG Flags,
     _In_ ULONG InitialSize,
@@ -3309,35 +3303,35 @@ NTDLL_API(NTSTATUS, RtlCreateMemoryBlockLookaside, (
     _In_ ULONG MaximumBlockSize
 ))
 
-NTDLL_API(NTSTATUS, RtlDestroyMemoryBlockLookaside, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDestroyMemoryBlockLookaside, (
     _In_ PVOID MemoryBlockLookaside
 ))
 
-NTDLL_API(NTSTATUS, RtlAllocateMemoryBlockLookaside, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAllocateMemoryBlockLookaside, (
     _In_ PVOID MemoryBlockLookaside,
     _In_ ULONG BlockSize,
     _Out_ PVOID *Block
 ))
 
-NTDLL_API(NTSTATUS, RtlFreeMemoryBlockLookaside, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFreeMemoryBlockLookaside, (
     _In_ PVOID MemoryBlockLookaside,
     _In_ PVOID Block
 ))
 
-NTDLL_API(NTSTATUS, RtlExtendMemoryBlockLookaside, (
+NTDLL_API(NTSTATUS, __stdcall, RtlExtendMemoryBlockLookaside, (
     _In_ PVOID MemoryBlockLookaside,
     _In_ ULONG Increment
 ))
 
-NTDLL_API(NTSTATUS, RtlResetMemoryBlockLookaside, (
+NTDLL_API(NTSTATUS, __stdcall, RtlResetMemoryBlockLookaside, (
     _In_ PVOID MemoryBlockLookaside
 ))
 
-NTDLL_API(NTSTATUS, RtlLockMemoryBlockLookaside, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLockMemoryBlockLookaside, (
     _In_ PVOID MemoryBlockLookaside
 ))
 
-NTDLL_API(NTSTATUS, RtlUnlockMemoryBlockLookaside, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnlockMemoryBlockLookaside, (
     _In_ PVOID MemoryBlockLookaside
 ))
 
@@ -3349,14 +3343,14 @@ NTDLL_API(NTSTATUS, RtlUnlockMemoryBlockLookaside, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(HANDLE, RtlGetCurrentTransaction, (
+NTDLL_API(HANDLE, __stdcall, RtlGetCurrentTransaction, (
     VOID
 ))
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(LOGICAL, RtlSetCurrentTransaction, (
+NTDLL_API(LOGICAL, __stdcall, RtlSetCurrentTransaction, (
     _In_ HANDLE TransactionHandle
 ))
 #endif
@@ -3405,13 +3399,13 @@ FORCEINLINE LUID RtlConvertUlongToLuid(
     return tempLuid;
 }
 
-NTDLL_API_VOID(RtlCopyLuid, (
+NTDLL_API_VOID(__stdcall, RtlCopyLuid, (
     _Out_ PLUID DestinationLuid,
     _In_ PLUID SourceLuid
 ))
 
 // ros
-NTDLL_API_VOID(RtlCopyLuidAndAttributesArray, (
+NTDLL_API_VOID(__stdcall, RtlCopyLuidAndAttributesArray, (
     _In_ ULONG Count,
     _In_ PLUID_AND_ATTRIBUTES Src,
     _In_ PLUID_AND_ATTRIBUTES Dest
@@ -3424,26 +3418,17 @@ NTDLL_API_VOID(RtlCopyLuidAndAttributesArray, (
 #define RtlUlongByteSwap(_x) _byteswap_ulong((_x))
 #define RtlUlonglongByteSwap(_x) _byteswap_uint64((_x))
 #else
-NTSYSAPI
-USHORT
-FASTCALL
-RtlUshortByteSwap(
+NTDLL_API(USHORT, __fastcall, RtlUshortByteSwap, (
     _In_ USHORT Source
-    );
+))
 
-NTSYSAPI
-ULONG
-FASTCALL
-RtlUlongByteSwap(
+NTDLL_API(ULONG, __fastcall, RtlUlongByteSwap, (
     _In_ ULONG Source
-    );
+))
 
-NTSYSAPI
-ULONGLONG
-FASTCALL
-RtlUlonglongByteSwap(
+NTDLL_API(ULONGLONG, __fastcall, RtlUlonglongByteSwap, (
     _In_ ULONGLONG Source
-    );
+))
 #endif
 
 // Debugging
@@ -3488,25 +3473,25 @@ typedef struct _RTL_DEBUG_INFORMATION
     PVOID Reserved[4];
 } RTL_DEBUG_INFORMATION, *PRTL_DEBUG_INFORMATION;
 
-NTDLL_API(PRTL_DEBUG_INFORMATION, RtlCreateQueryDebugBuffer, (
+NTDLL_API(PRTL_DEBUG_INFORMATION, __stdcall, RtlCreateQueryDebugBuffer, (
     _In_opt_ ULONG MaximumCommit,
     _In_ BOOLEAN UseEventPair
 ))
 
-NTDLL_API(NTSTATUS, RtlDestroyQueryDebugBuffer, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDestroyQueryDebugBuffer, (
     _In_ PRTL_DEBUG_INFORMATION Buffer
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(PVOID, RtlCommitDebugInfo, (
+NTDLL_API(PVOID, __stdcall, RtlCommitDebugInfo, (
     _Inout_ PRTL_DEBUG_INFORMATION Buffer,
     _In_ SIZE_T Size
 ))
 
 // private
-NTDLL_API_VOID(RtlDeCommitDebugInfo, (
+NTDLL_API_VOID(__stdcall, RtlDeCommitDebugInfo, (
     _Inout_ PRTL_DEBUG_INFORMATION Buffer,
     _In_ PVOID p,
     _In_ SIZE_T Size
@@ -3527,7 +3512,7 @@ NTDLL_API_VOID(RtlDeCommitDebugInfo, (
 #define RTL_QUERY_PROCESS_CS_OWNER 0x00000400 // rev
 #define RTL_QUERY_PROCESS_NONINVASIVE 0x80000000
 
-NTDLL_API(NTSTATUS, RtlQueryProcessDebugInformation, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryProcessDebugInformation, (
     _In_ HANDLE UniqueProcessId,
     _In_ ULONG Flags,
     _Inout_ PRTL_DEBUG_INFORMATION Buffer
@@ -3535,7 +3520,7 @@ NTDLL_API(NTSTATUS, RtlQueryProcessDebugInformation, (
 
 // Messages
 
-NTDLL_API(NTSTATUS, RtlFindMessage, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFindMessage, (
     _In_ PVOID DllHandle,
     _In_ ULONG MessageTableId,
     _In_ ULONG MessageLanguageId,
@@ -3543,7 +3528,7 @@ NTDLL_API(NTSTATUS, RtlFindMessage, (
     _Out_ PMESSAGE_RESOURCE_ENTRY *MessageEntry
 ))
 
-NTDLL_API(NTSTATUS, RtlFormatMessage, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFormatMessage, (
     _In_ PWSTR MessageFormat,
     _In_ ULONG MaximumWidth,
     _In_ BOOLEAN IgnoreInserts,
@@ -3570,7 +3555,7 @@ typedef struct _PARSE_MESSAGE_CONTEXT
 #define SET_PARSE_MESSAGE_CONTEXT_FLAG(ctx, flag) ((ctx)->fFlags |= (flag))
 #define CLEAR_PARSE_MESSAGE_CONTEXT_FLAG(ctx, flag) ((ctx)->fFlags &= ~(flag))
 
-NTDLL_API(NTSTATUS, RtlFormatMessageEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFormatMessageEx, (
     _In_ PWSTR MessageFormat,
     _In_ ULONG MaximumWidth,
     _In_ BOOLEAN IgnoreInserts,
@@ -3585,31 +3570,31 @@ NTDLL_API(NTSTATUS, RtlFormatMessageEx, (
 
 // Errors
 
-NTDLL_API(ULONG, RtlNtStatusToDosError, (
+NTDLL_API(ULONG, __stdcall, RtlNtStatusToDosError, (
     _In_ NTSTATUS Status
 ))
 
-NTDLL_API(ULONG, RtlNtStatusToDosErrorNoTeb, (
+NTDLL_API(ULONG, __stdcall, RtlNtStatusToDosErrorNoTeb, (
     _In_ NTSTATUS Status
 ))
 
-NTDLL_API(NTSTATUS, RtlGetLastNtStatus, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetLastNtStatus, (
     VOID
 ))
 
-NTDLL_API(LONG, RtlGetLastWin32Error, (
+NTDLL_API(LONG, __stdcall, RtlGetLastWin32Error, (
     VOID
 ))
 
-NTDLL_API_VOID(RtlSetLastWin32ErrorAndNtStatusFromNtStatus, (
+NTDLL_API_VOID(__stdcall, RtlSetLastWin32ErrorAndNtStatusFromNtStatus, (
     _In_ NTSTATUS Status
 ))
 
-NTDLL_API_VOID(RtlSetLastWin32Error, (
+NTDLL_API_VOID(__stdcall, RtlSetLastWin32Error, (
     _In_ LONG Win32Error
 ))
 
-NTDLL_API_VOID(RtlRestoreLastWin32Error, (
+NTDLL_API_VOID(__stdcall, RtlRestoreLastWin32Error, (
     _In_ LONG Win32Error
 ))
 
@@ -3617,11 +3602,11 @@ NTDLL_API_VOID(RtlRestoreLastWin32Error, (
 #define RTL_ERRORMODE_NOGPFAULTERRORBOX 0x0020
 #define RTL_ERRORMODE_NOOPENFILEERRORBOX 0x0040
 
-NTDLL_API(ULONG, RtlGetThreadErrorMode, (
+NTDLL_API(ULONG, __stdcall, RtlGetThreadErrorMode, (
     VOID
 ))
 
-NTDLL_API(NTSTATUS, RtlSetThreadErrorMode, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetThreadErrorMode, (
     _In_ ULONG NewMode,
     _Out_opt_ PULONG OldMode
 ))
@@ -3630,7 +3615,7 @@ NTDLL_API(NTSTATUS, RtlSetThreadErrorMode, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlReportException, (
+NTDLL_API(NTSTATUS, __stdcall, RtlReportException, (
     _In_ PEXCEPTION_RECORD ExceptionRecord,
     _In_ PCONTEXT ContextRecord,
     _In_ ULONG Flags
@@ -3639,7 +3624,7 @@ NTDLL_API(NTSTATUS, RtlReportException, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS1)
 // rev
-NTDLL_API(NTSTATUS, RtlReportExceptionEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlReportExceptionEx, (
     _In_ PEXCEPTION_RECORD ExceptionRecord,
     _In_ PCONTEXT ContextRecord,
     _In_ ULONG Flags,
@@ -3649,7 +3634,7 @@ NTDLL_API(NTSTATUS, RtlReportExceptionEx, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlWerpReportException, (
+NTDLL_API(NTSTATUS, __stdcall, RtlWerpReportException, (
     _In_ ULONG ProcessId,
     _In_ HANDLE CrashReportSharedMem,
     _In_ ULONG Flags,
@@ -3659,7 +3644,7 @@ NTDLL_API(NTSTATUS, RtlWerpReportException, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, RtlReportSilentProcessExit, (
+NTDLL_API(NTSTATUS, __stdcall, RtlReportSilentProcessExit, (
     _In_ HANDLE ProcessHandle,
     _In_ NTSTATUS ExitStatus
 ))
@@ -3668,40 +3653,40 @@ NTDLL_API(NTSTATUS, RtlReportSilentProcessExit, (
 // Vectored Exception Handlers
 
 /*
-NTDLL_API(PVOID, RtlAddVectoredExceptionHandler, (
+NTDLL_API(PVOID, __stdcall, RtlAddVectoredExceptionHandler, (
     _In_ ULONG First,
     _In_ PVECTORED_EXCEPTION_HANDLER Handler
 ))
 
-NTDLL_API(ULONG, RtlRemoveVectoredExceptionHandler, (
+NTDLL_API(ULONG, __stdcall, RtlRemoveVectoredExceptionHandler, (
     _In_ PVOID Handle
 ))
 
-NTDLL_API(PVOID, RtlAddVectoredContinueHandler, (
+NTDLL_API(PVOID, __stdcall, RtlAddVectoredContinueHandler, (
     _In_ ULONG First,
     _In_ PVECTORED_EXCEPTION_HANDLER Handler
 ))
 
-NTDLL_API(ULONG, RtlRemoveVectoredContinueHandler, (
+NTDLL_API(ULONG, __stdcall, RtlRemoveVectoredContinueHandler, (
     _In_ PVOID Handle
 ))
 */
 
 // Random
 
-NTDLL_API(ULONG, RtlUniform, (
+NTDLL_API(ULONG, __stdcall, RtlUniform, (
     _Inout_ PULONG Seed
 ))
 
-NTDLL_API(ULONG, RtlRandom, (
+NTDLL_API(ULONG, __stdcall, RtlRandom, (
     _Inout_ PULONG Seed
 ))
 
-NTDLL_API(ULONG, RtlRandomEx, (
+NTDLL_API(ULONG, __stdcall, RtlRandomEx, (
     _Inout_ PULONG Seed
 ))
 
-NTDLL_API(NTSTATUS, RtlComputeImportTableHash, (
+NTDLL_API(NTSTATUS, __stdcall, RtlComputeImportTableHash, (
     _In_ HANDLE FileHandle,
     _Out_writes_bytes_(16) PCHAR Hash,
     _In_ ULONG ImportTableHashRevision // must be 1
@@ -3709,33 +3694,33 @@ NTDLL_API(NTSTATUS, RtlComputeImportTableHash, (
 
 // Integer conversion
 
-NTDLL_API(NTSTATUS, RtlIntegerToChar, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIntegerToChar, (
     _In_ ULONG Value,
     _In_opt_ ULONG Base,
     _In_ LONG OutputLength, // negative to pad to width
     _Out_ PSTR String
 ))
 
-NTDLL_API(NTSTATUS, RtlCharToInteger, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCharToInteger, (
     _In_ PSTR String,
     _In_opt_ ULONG Base,
     _Out_ PULONG Value
 ))
 
-NTDLL_API(NTSTATUS, RtlLargeIntegerToChar, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLargeIntegerToChar, (
     _In_ PLARGE_INTEGER Value,
     _In_opt_ ULONG Base,
     _In_ LONG OutputLength,
     _Out_ PSTR String
 ))
 
-NTDLL_API(NTSTATUS, RtlIntegerToUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIntegerToUnicodeString, (
     _In_ ULONG Value,
     _In_opt_ ULONG Base,
     _Inout_ PUNICODE_STRING String
 ))
 
-NTDLL_API(NTSTATUS, RtlInt64ToUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlInt64ToUnicodeString, (
     _In_ ULONGLONG Value,
     _In_opt_ ULONG Base,
     _Inout_ PUNICODE_STRING String
@@ -3747,7 +3732,7 @@ NTDLL_API(NTSTATUS, RtlInt64ToUnicodeString, (
 #define RtlIntPtrToUnicodeString(Value, Base, String) RtlIntegerToUnicodeString(Value, Base, String)
 #endif
 
-NTDLL_API(NTSTATUS, RtlUnicodeStringToInteger, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnicodeStringToInteger, (
     _In_ PUNICODE_STRING String,
     _In_opt_ ULONG Base,
     _Out_ PULONG Value
@@ -3758,24 +3743,24 @@ NTDLL_API(NTSTATUS, RtlUnicodeStringToInteger, (
 struct in_addr;
 struct in6_addr;
 
-NTDLL_API(PWSTR, RtlIpv4AddressToStringW, (
+NTDLL_API(PWSTR, __stdcall, RtlIpv4AddressToStringW, (
     _In_ const struct in_addr *Address,
     _Out_writes_(16) PWSTR AddressString
 ))
 
-NTDLL_API(NTSTATUS, RtlIpv4AddressToStringExW, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIpv4AddressToStringExW, (
     _In_ const struct in_addr *Address,
     _In_ USHORT Port,
     _Out_writes_to_(*AddressStringLength, *AddressStringLength) PWSTR AddressString,
     _Inout_ PULONG AddressStringLength
 ))
 
-NTDLL_API(PWSTR, RtlIpv6AddressToStringW, (
+NTDLL_API(PWSTR, __stdcall, RtlIpv6AddressToStringW, (
     _In_ const struct in6_addr *Address,
     _Out_writes_(46) PWSTR AddressString
 ))
 
-NTDLL_API(NTSTATUS, RtlIpv6AddressToStringExW, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIpv6AddressToStringExW, (
     _In_ const struct in6_addr *Address,
     _In_ ULONG ScopeId,
     _In_ USHORT Port,
@@ -3783,27 +3768,27 @@ NTDLL_API(NTSTATUS, RtlIpv6AddressToStringExW, (
     _Inout_ PULONG AddressStringLength
 ))
 
-NTDLL_API(NTSTATUS, RtlIpv4StringToAddressW, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIpv4StringToAddressW, (
     _In_ PCWSTR AddressString,
     _In_ BOOLEAN Strict,
     _Out_ LPCWSTR *Terminator,
     _Out_ struct in_addr *Address
 ))
 
-NTDLL_API(NTSTATUS, RtlIpv4StringToAddressExW, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIpv4StringToAddressExW, (
     _In_ PCWSTR AddressString,
     _In_ BOOLEAN Strict,
     _Out_ struct in_addr *Address,
     _Out_ PUSHORT Port
 ))
 
-NTDLL_API(NTSTATUS, RtlIpv6StringToAddressW, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIpv6StringToAddressW, (
     _In_ PCWSTR AddressString,
     _Out_ PCWSTR *Terminator,
     _Out_ struct in6_addr *Address
 ))
 
-NTDLL_API(NTSTATUS, RtlIpv6StringToAddressExW, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIpv6StringToAddressExW, (
     _In_ PCWSTR AddressString,
     _Out_ struct in6_addr *Address,
     _Out_ PULONG ScopeId,
@@ -3833,54 +3818,54 @@ typedef struct _TIME_FIELDS
     CSHORT Weekday; // 0..6 = Sunday..Saturday
 } TIME_FIELDS, *PTIME_FIELDS;
 
-NTDLL_API(BOOLEAN, RtlCutoverTimeToSystemTime, (
+NTDLL_API(BOOLEAN, __stdcall, RtlCutoverTimeToSystemTime, (
     _In_ PTIME_FIELDS CutoverTime,
     _Out_ PLARGE_INTEGER SystemTime,
     _In_ PLARGE_INTEGER CurrentSystemTime,
     _In_ BOOLEAN ThisYear
 ))
 
-NTDLL_API(NTSTATUS, RtlSystemTimeToLocalTime, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSystemTimeToLocalTime, (
     _In_ PLARGE_INTEGER SystemTime,
     _Out_ PLARGE_INTEGER LocalTime
 ))
 
-NTDLL_API(NTSTATUS, RtlLocalTimeToSystemTime, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLocalTimeToSystemTime, (
     _In_ PLARGE_INTEGER LocalTime,
     _Out_ PLARGE_INTEGER SystemTime
 ))
 
-NTDLL_API_VOID(RtlTimeToElapsedTimeFields, (
+NTDLL_API_VOID(__stdcall, RtlTimeToElapsedTimeFields, (
     _In_ PLARGE_INTEGER Time,
     _Out_ PTIME_FIELDS TimeFields
 ))
 
-NTDLL_API_VOID(RtlTimeToTimeFields, (
+NTDLL_API_VOID(__stdcall, RtlTimeToTimeFields, (
     _In_ PLARGE_INTEGER Time,
     _Out_ PTIME_FIELDS TimeFields
 ))
 
-NTDLL_API(BOOLEAN, RtlTimeFieldsToTime, (
+NTDLL_API(BOOLEAN, __stdcall, RtlTimeFieldsToTime, (
     _In_ PTIME_FIELDS TimeFields, // Weekday is ignored
     _Out_ PLARGE_INTEGER Time
 ))
 
-NTDLL_API(BOOLEAN, RtlTimeToSecondsSince1980, (
+NTDLL_API(BOOLEAN, __stdcall, RtlTimeToSecondsSince1980, (
     _In_ PLARGE_INTEGER Time,
     _Out_ PULONG ElapsedSeconds
 ))
 
-NTDLL_API_VOID(RtlSecondsSince1980ToTime, (
+NTDLL_API_VOID(__stdcall, RtlSecondsSince1980ToTime, (
     _In_ ULONG ElapsedSeconds,
     _Out_ PLARGE_INTEGER Time
 ))
 
-NTDLL_API(BOOLEAN, RtlTimeToSecondsSince1970, (
+NTDLL_API(BOOLEAN, __stdcall, RtlTimeToSecondsSince1970, (
     _In_ PLARGE_INTEGER Time,
     _Out_ PULONG ElapsedSeconds
 ))
 
-NTDLL_API_VOID(RtlSecondsSince1970ToTime, (
+NTDLL_API_VOID(__stdcall, RtlSecondsSince1970ToTime, (
     _In_ ULONG ElapsedSeconds,
     _Out_ PLARGE_INTEGER Time
 ))
@@ -3898,11 +3883,11 @@ typedef struct _RTL_TIME_ZONE_INFORMATION
     LONG DaylightBias;
 } RTL_TIME_ZONE_INFORMATION, *PRTL_TIME_ZONE_INFORMATION;
 
-NTDLL_API(NTSTATUS, RtlQueryTimeZoneInformation, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryTimeZoneInformation, (
     _Out_ PRTL_TIME_ZONE_INFORMATION TimeZoneInformation
 ))
 
-NTDLL_API(NTSTATUS, RtlSetTimeZoneInformation, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetTimeZoneInformation, (
     _In_ PRTL_TIME_ZONE_INFORMATION TimeZoneInformation
 ))
 
@@ -3914,43 +3899,43 @@ typedef struct _RTL_BITMAP
     PULONG Buffer;
 } RTL_BITMAP, *PRTL_BITMAP;
 
-NTDLL_API_VOID(RtlInitializeBitMap, (
+NTDLL_API_VOID(__stdcall, RtlInitializeBitMap, (
     _Out_ PRTL_BITMAP BitMapHeader,
     _In_ PULONG BitMapBuffer,
     _In_ ULONG SizeOfBitMap
 ))
 
 #if (defined(PHNT_COMPILE) || (NTLIB_CPU_MODE == NTLIB_KERNEL_MODE || NTLIB_WIN_VERSION >= NTLIB_WIN_8))
-NTDLL_API_VOID(RtlClearBit, (
+NTDLL_API_VOID(__stdcall, RtlClearBit, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_range_(<, BitMapHeader->SizeOfBitMap) ULONG BitNumber
 ))
 #endif
 
 #if (defined(PHNT_COMPILE) || (NTLIB_CPU_MODE == NTLIB_KERNEL_MODE || NTLIB_WIN_VERSION >= NTLIB_WIN_8))
-NTDLL_API_VOID(RtlSetBit, (
+NTDLL_API_VOID(__stdcall, RtlSetBit, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_range_(<, BitMapHeader->SizeOfBitMap) ULONG BitNumber
 ))
 #endif
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlTestBit, (
+NTDLL_API(BOOLEAN, __stdcall, RtlTestBit, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_range_(<, BitMapHeader->SizeOfBitMap) ULONG BitNumber
 ))
 
-NTDLL_API_VOID(RtlClearAllBits, (
+NTDLL_API_VOID(__stdcall, RtlClearAllBits, (
     _In_ PRTL_BITMAP BitMapHeader
 ))
 
-NTDLL_API_VOID(RtlSetAllBits, (
+NTDLL_API_VOID(__stdcall, RtlSetAllBits, (
     _In_ PRTL_BITMAP BitMapHeader
 ))
 
 _Success_(return != -1)
 _Check_return_
-NTDLL_API(ULONG, RtlFindClearBits, (
+NTDLL_API(ULONG, __stdcall, RtlFindClearBits, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG NumberToFind,
     _In_ ULONG HintIndex
@@ -3958,43 +3943,43 @@ NTDLL_API(ULONG, RtlFindClearBits, (
 
 _Success_(return != -1)
 _Check_return_
-NTDLL_API(ULONG, RtlFindSetBits, (
+NTDLL_API(ULONG, __stdcall, RtlFindSetBits, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG NumberToFind,
     _In_ ULONG HintIndex
 ))
 
 _Success_(return != -1)
-NTDLL_API(ULONG, RtlFindClearBitsAndSet, (
+NTDLL_API(ULONG, __stdcall, RtlFindClearBitsAndSet, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG NumberToFind,
     _In_ ULONG HintIndex
 ))
 
 _Success_(return != -1)
-NTDLL_API(ULONG, RtlFindSetBitsAndClear, (
+NTDLL_API(ULONG, __stdcall, RtlFindSetBitsAndClear, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG NumberToFind,
     _In_ ULONG HintIndex
 ))
 
-NTDLL_API_VOID(RtlClearBits, (
+NTDLL_API_VOID(__stdcall, RtlClearBits, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_range_(0, BitMapHeader->SizeOfBitMap - NumberToClear) ULONG StartingIndex,
     _In_range_(0, BitMapHeader->SizeOfBitMap - StartingIndex) ULONG NumberToClear
 ))
 
-NTDLL_API_VOID(RtlSetBits, (
+NTDLL_API_VOID(__stdcall, RtlSetBits, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_range_(0, BitMapHeader->SizeOfBitMap - NumberToSet) ULONG StartingIndex,
     _In_range_(0, BitMapHeader->SizeOfBitMap - StartingIndex) ULONG NumberToSet
 ))
 
-NTDLL_API(CCHAR, RtlFindMostSignificantBit, (
+NTDLL_API(CCHAR, __stdcall, RtlFindMostSignificantBit, (
     _In_ ULONGLONG Set
 ))
 
-NTDLL_API(CCHAR, RtlFindLeastSignificantBit, (
+NTDLL_API(CCHAR, __stdcall, RtlFindLeastSignificantBit, (
     _In_ ULONGLONG Set
 ))
 
@@ -4004,19 +3989,19 @@ typedef struct _RTL_BITMAP_RUN
     ULONG NumberOfBits;
 } RTL_BITMAP_RUN, *PRTL_BITMAP_RUN;
 
-NTDLL_API(ULONG, RtlFindClearRuns, (
+NTDLL_API(ULONG, __stdcall, RtlFindClearRuns, (
     _In_ PRTL_BITMAP BitMapHeader,
     _Out_writes_to_(SizeOfRunArray, return) PRTL_BITMAP_RUN RunArray,
     _In_range_(>, 0) ULONG SizeOfRunArray,
     _In_ BOOLEAN LocateLongestRuns
 ))
 
-NTDLL_API(ULONG, RtlFindLongestRunClear, (
+NTDLL_API(ULONG, __stdcall, RtlFindLongestRunClear, (
     _In_ PRTL_BITMAP BitMapHeader,
     _Out_ PULONG StartingIndex
 ))
 
-NTDLL_API(ULONG, RtlFindFirstRunClear, (
+NTDLL_API(ULONG, __stdcall, RtlFindFirstRunClear, (
     _In_ PRTL_BITMAP BitMapHeader,
     _Out_ PULONG StartingIndex
 ))
@@ -4036,35 +4021,35 @@ RtlCheckBit(
 #endif
 }
 
-NTDLL_API(ULONG, RtlNumberOfClearBits, (
+NTDLL_API(ULONG, __stdcall, RtlNumberOfClearBits, (
     _In_ PRTL_BITMAP BitMapHeader
 ))
 
-NTDLL_API(ULONG, RtlNumberOfSetBits, (
+NTDLL_API(ULONG, __stdcall, RtlNumberOfSetBits, (
     _In_ PRTL_BITMAP BitMapHeader
 ))
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlAreBitsClear, (
+NTDLL_API(BOOLEAN, __stdcall, RtlAreBitsClear, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG StartingIndex,
     _In_ ULONG Length
 ))
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlAreBitsSet, (
+NTDLL_API(BOOLEAN, __stdcall, RtlAreBitsSet, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG StartingIndex,
     _In_ ULONG Length
 ))
 
-NTDLL_API(ULONG, RtlFindNextForwardRunClear, (
+NTDLL_API(ULONG, __stdcall, RtlFindNextForwardRunClear, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG FromIndex,
     _Out_ PULONG StartingRunIndex
 ))
 
-NTDLL_API(ULONG, RtlFindLastBackwardRunClear, (
+NTDLL_API(ULONG, __stdcall, RtlFindLastBackwardRunClear, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG FromIndex,
     _Out_ PULONG StartingRunIndex
@@ -4072,7 +4057,7 @@ NTDLL_API(ULONG, RtlFindLastBackwardRunClear, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NTDLL_API(ULONG, RtlNumberOfSetBitsUlongPtr, (
+NTDLL_API(ULONG, __stdcall, RtlNumberOfSetBitsUlongPtr, (
     _In_ ULONG_PTR Target
 ))
 
@@ -4081,14 +4066,14 @@ NTDLL_API(ULONG, RtlNumberOfSetBitsUlongPtr, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 
 // rev
-NTDLL_API_VOID(RtlInterlockedClearBitRun, (
+NTDLL_API_VOID(__stdcall, RtlInterlockedClearBitRun, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_range_(0, BitMapHeader->SizeOfBitMap - NumberToClear) ULONG StartingIndex,
     _In_range_(0, BitMapHeader->SizeOfBitMap - StartingIndex) ULONG NumberToClear
 ))
 
 // rev
-NTDLL_API_VOID(RtlInterlockedSetBitRun, (
+NTDLL_API_VOID(__stdcall, RtlInterlockedSetBitRun, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_range_(0, BitMapHeader->SizeOfBitMap - NumberToSet) ULONG StartingIndex,
     _In_range_(0, BitMapHeader->SizeOfBitMap - StartingIndex) ULONG NumberToSet
@@ -4098,26 +4083,26 @@ NTDLL_API_VOID(RtlInterlockedSetBitRun, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
-NTDLL_API_VOID(RtlCopyBitMap, (
+NTDLL_API_VOID(__stdcall, RtlCopyBitMap, (
     _In_ PRTL_BITMAP Source,
     _In_ PRTL_BITMAP Destination,
     _In_range_(0, Destination->SizeOfBitMap - 1) ULONG TargetBit
 ))
 
-NTDLL_API_VOID(RtlExtractBitMap, (
+NTDLL_API_VOID(__stdcall, RtlExtractBitMap, (
     _In_ PRTL_BITMAP Source,
     _In_ PRTL_BITMAP Destination,
     _In_range_(0, Source->SizeOfBitMap - 1) ULONG TargetBit,
     _In_range_(0, Source->SizeOfBitMap) ULONG NumberOfBits
 ))
 
-NTDLL_API(ULONG, RtlNumberOfClearBitsInRange, (
+NTDLL_API(ULONG, __stdcall, RtlNumberOfClearBitsInRange, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG StartingIndex,
     _In_ ULONG Length
 ))
 
-NTDLL_API(ULONG, RtlNumberOfSetBitsInRange, (
+NTDLL_API(ULONG, __stdcall, RtlNumberOfSetBitsInRange, (
     _In_ PRTL_BITMAP BitMapHeader,
     _In_ ULONG StartingIndex,
     _In_ ULONG Length
@@ -4136,7 +4121,7 @@ typedef struct _RTL_BITMAP_EX
 } RTL_BITMAP_EX, *PRTL_BITMAP_EX;
 
 // rev
-NTDLL_API_VOID(RtlInitializeBitMapEx, (
+NTDLL_API_VOID(__stdcall, RtlInitializeBitMapEx, (
     _Out_ PRTL_BITMAP_EX BitMapHeader,
     _In_ PULONG64 BitMapBuffer,
     _In_ ULONG64 SizeOfBitMap
@@ -4144,37 +4129,37 @@ NTDLL_API_VOID(RtlInitializeBitMapEx, (
 
 // rev
 _Check_return_
-NTDLL_API(BOOLEAN, RtlTestBitEx, (
+NTDLL_API(BOOLEAN, __stdcall, RtlTestBitEx, (
     _In_ PRTL_BITMAP_EX BitMapHeader,
     _In_range_(<, BitMapHeader->SizeOfBitMap) ULONG64 BitNumber
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE == NTLIB_KERNEL_MODE)
 // rev
-NTDLL_API_VOID(RtlClearAllBitsEx, (
+NTDLL_API_VOID(__stdcall, RtlClearAllBitsEx, (
     _In_ PRTL_BITMAP_EX BitMapHeader
 ))
 
 // rev
-NTDLL_API_VOID(RtlClearBitEx, (
+NTDLL_API_VOID(__stdcall, RtlClearBitEx, (
     _In_ PRTL_BITMAP_EX BitMapHeader,
     _In_range_(<, BitMapHeader->SizeOfBitMap) ULONG64 BitNumber
 ))
 
 // rev
-NTDLL_API_VOID(RtlSetBitEx, (
+NTDLL_API_VOID(__stdcall, RtlSetBitEx, (
     _In_ PRTL_BITMAP_EX BitMapHeader,
     _In_range_(<, BitMapHeader->SizeOfBitMap) ULONG64 BitNumber
 ))
 
 // rev
-NTDLL_API(ULONG64, RtlFindSetBitsEx, (
+NTDLL_API(ULONG64, __stdcall, RtlFindSetBitsEx, (
     _In_ PRTL_BITMAP_EX BitMapHeader,
     _In_ ULONG64 NumberToFind,
     _In_ ULONG64 HintIndex
 ))
 
-NTDLL_API(ULONG64, RtlFindSetBitsAndClearEx, (
+NTDLL_API(ULONG64, __stdcall, RtlFindSetBitsAndClearEx, (
     _In_ PRTL_BITMAP_EX BitMapHeader,
     _In_ ULONG64 NumberToFind,
     _In_ ULONG64 HintIndex
@@ -4207,32 +4192,32 @@ typedef struct _RTL_HANDLE_TABLE
     PRTL_HANDLE_TABLE_ENTRY MaxReservedHandles;
 } RTL_HANDLE_TABLE, *PRTL_HANDLE_TABLE;
 
-NTDLL_API_VOID(RtlInitializeHandleTable, (
+NTDLL_API_VOID(__stdcall, RtlInitializeHandleTable, (
     _In_ ULONG MaximumNumberOfHandles,
     _In_ ULONG SizeOfHandleTableEntry,
     _Out_ PRTL_HANDLE_TABLE HandleTable
 ))
 
-NTDLL_API(NTSTATUS, RtlDestroyHandleTable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDestroyHandleTable, (
     _Inout_ PRTL_HANDLE_TABLE HandleTable
 ))
 
-NTDLL_API(PRTL_HANDLE_TABLE_ENTRY, RtlAllocateHandle, (
+NTDLL_API(PRTL_HANDLE_TABLE_ENTRY, __stdcall, RtlAllocateHandle, (
     _In_ PRTL_HANDLE_TABLE HandleTable,
     _Out_opt_ PULONG HandleIndex
 ))
 
-NTDLL_API(BOOLEAN, RtlFreeHandle, (
+NTDLL_API(BOOLEAN, __stdcall, RtlFreeHandle, (
     _In_ PRTL_HANDLE_TABLE HandleTable,
     _In_ PRTL_HANDLE_TABLE_ENTRY Handle
 ))
 
-NTDLL_API(BOOLEAN, RtlIsValidHandle, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsValidHandle, (
     _In_ PRTL_HANDLE_TABLE HandleTable,
     _In_ PRTL_HANDLE_TABLE_ENTRY Handle
 ))
 
-NTDLL_API(BOOLEAN, RtlIsValidIndexHandle, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsValidIndexHandle, (
     _In_ PRTL_HANDLE_TABLE HandleTable,
     _In_ ULONG HandleIndex,
     _Out_ PRTL_HANDLE_TABLE_ENTRY *Handle
@@ -4246,43 +4231,43 @@ NTDLL_API(BOOLEAN, RtlIsValidIndexHandle, (
 #define RTL_ATOM_MAXIMUM_NAME_LENGTH 255
 #define RTL_ATOM_PINNED 0x01
 
-NTDLL_API(NTSTATUS, RtlCreateAtomTable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateAtomTable, (
     _In_ ULONG NumberOfBuckets,
     _Out_ PVOID *AtomTableHandle
 ))
 
-NTDLL_API(NTSTATUS, RtlDestroyAtomTable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDestroyAtomTable, (
     _In_ _Post_invalid_ PVOID AtomTableHandle
 ))
 
-NTDLL_API(NTSTATUS, RtlEmptyAtomTable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlEmptyAtomTable, (
     _In_ PVOID AtomTableHandle,
     _In_ BOOLEAN IncludePinnedAtoms
 ))
 
-NTDLL_API(NTSTATUS, RtlAddAtomToAtomTable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAtomToAtomTable, (
     _In_ PVOID AtomTableHandle,
     _In_ PWSTR AtomName,
     _Inout_opt_ PRTL_ATOM Atom
 ))
 
-NTDLL_API(NTSTATUS, RtlLookupAtomInAtomTable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLookupAtomInAtomTable, (
     _In_ PVOID AtomTableHandle,
     _In_ PWSTR AtomName,
     _Out_opt_ PRTL_ATOM Atom
 ))
 
-NTDLL_API(NTSTATUS, RtlDeleteAtomFromAtomTable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeleteAtomFromAtomTable, (
     _In_ PVOID AtomTableHandle,
     _In_ RTL_ATOM Atom
 ))
 
-NTDLL_API(NTSTATUS, RtlPinAtomInAtomTable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlPinAtomInAtomTable, (
     _In_ PVOID AtomTableHandle,
     _In_ RTL_ATOM Atom
 ))
 
-NTDLL_API(NTSTATUS, RtlQueryAtomInAtomTable, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryAtomInAtomTable, (
     _In_ PVOID AtomTableHandle,
     _In_ RTL_ATOM Atom,
     _Out_opt_ PULONG AtomUsage,
@@ -4293,7 +4278,7 @@ NTDLL_API(NTSTATUS, RtlQueryAtomInAtomTable, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // rev
-NTDLL_API(BOOLEAN, RtlGetIntegerAtom, (
+NTDLL_API(BOOLEAN, __stdcall, RtlGetIntegerAtom, (
     _In_ PWSTR AtomName,
     _Out_opt_ PUSHORT IntegerAtom
 ))
@@ -4302,32 +4287,32 @@ NTDLL_API(BOOLEAN, RtlGetIntegerAtom, (
 // SIDs
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlValidSid, (
+NTDLL_API(BOOLEAN, __stdcall, RtlValidSid, (
     _In_ PSID Sid
 ))
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlEqualSid, (
+NTDLL_API(BOOLEAN, __stdcall, RtlEqualSid, (
     _In_ PSID Sid1,
     _In_ PSID Sid2
 ))
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlEqualPrefixSid, (
+NTDLL_API(BOOLEAN, __stdcall, RtlEqualPrefixSid, (
     _In_ PSID Sid1,
     _In_ PSID Sid2
 ))
 
-NTDLL_API(ULONG, RtlLengthRequiredSid, (
+NTDLL_API(ULONG, __stdcall, RtlLengthRequiredSid, (
     _In_ ULONG SubAuthorityCount
 ))
 
-NTDLL_API(PVOID, RtlFreeSid, (
+NTDLL_API(PVOID, __stdcall, RtlFreeSid, (
     _In_ _Post_invalid_ PSID Sid
 ))
 
 _Check_return_
-NTDLL_API(NTSTATUS, RtlAllocateAndInitializeSid, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAllocateAndInitializeSid, (
     _In_ PSID_IDENTIFIER_AUTHORITY IdentifierAuthority,
     _In_ UCHAR SubAuthorityCount,
     _In_ ULONG SubAuthority0,
@@ -4341,14 +4326,14 @@ NTDLL_API(NTSTATUS, RtlAllocateAndInitializeSid, (
     _Outptr_ PSID *Sid
 ))
 
-NTDLL_API(NTSTATUS, RtlInitializeSid, (
+NTDLL_API(NTSTATUS, __stdcall, RtlInitializeSid, (
     _Out_ PSID Sid,
     _In_ PSID_IDENTIFIER_AUTHORITY IdentifierAuthority,
     _In_ UCHAR SubAuthorityCount
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
-NTDLL_API(NTSTATUS, RtlInitializeSidEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlInitializeSidEx, (
     _Out_writes_bytes_(SECURITY_SID_SIZE(SubAuthorityCount)) PSID Sid,
     _In_ PSID_IDENTIFIER_AUTHORITY IdentifierAuthority,
     _In_ UCHAR SubAuthorityCount,
@@ -4356,31 +4341,31 @@ NTDLL_API(NTSTATUS, RtlInitializeSidEx, (
 ))
 #endif
 
-NTDLL_API(PSID_IDENTIFIER_AUTHORITY, RtlIdentifierAuthoritySid, (
+NTDLL_API(PSID_IDENTIFIER_AUTHORITY, __stdcall, RtlIdentifierAuthoritySid, (
     _In_ PSID Sid
 ))
 
-NTDLL_API(PULONG, RtlSubAuthoritySid, (
+NTDLL_API(PULONG, __stdcall, RtlSubAuthoritySid, (
     _In_ PSID Sid,
     _In_ ULONG SubAuthority
 ))
 
-NTDLL_API(PUCHAR, RtlSubAuthorityCountSid, (
+NTDLL_API(PUCHAR, __stdcall, RtlSubAuthorityCountSid, (
     _In_ PSID Sid
 ))
 
-NTDLL_API(ULONG, RtlLengthSid, (
+NTDLL_API(ULONG, __stdcall, RtlLengthSid, (
     _In_ PSID Sid
 ))
 
-NTDLL_API(NTSTATUS, RtlCopySid, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCopySid, (
     _In_ ULONG DestinationSidLength,
     _In_reads_bytes_(DestinationSidLength) PSID DestinationSid,
     _In_ PSID SourceSid
 ))
 
 // ros
-NTDLL_API(NTSTATUS, RtlCopySidAndAttributesArray, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCopySidAndAttributesArray, (
     _In_ ULONG Count,
     _In_ PSID_AND_ATTRIBUTES Src,
     _In_ ULONG SidAreaSize,
@@ -4392,7 +4377,7 @@ NTDLL_API(NTSTATUS, RtlCopySidAndAttributesArray, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NTDLL_API(NTSTATUS, RtlCreateServiceSid, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateServiceSid, (
     _In_ PUNICODE_STRING ServiceName,
     _Out_writes_bytes_opt_(*ServiceSidLength) PSID ServiceSid,
     _Inout_ PULONG ServiceSidLength
@@ -4403,7 +4388,7 @@ NTDLL_API(NTSTATUS, RtlCreateServiceSid, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, RtlSidDominates, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSidDominates, (
     _In_ PSID Sid1,
     _In_ PSID Sid2,
     _Out_ PBOOLEAN Dominates
@@ -4414,7 +4399,7 @@ NTDLL_API(NTSTATUS, RtlSidDominates, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8_1)
 
 // rev
-NTDLL_API(NTSTATUS, RtlSidDominatesForTrust, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSidDominatesForTrust, (
     _In_ PSID Sid1,
     _In_ PSID Sid2,
     _Out_ PBOOLEAN DominatesTrust // TokenProcessTrustLevel
@@ -4424,14 +4409,14 @@ NTDLL_API(NTSTATUS, RtlSidDominatesForTrust, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlSidEqualLevel, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSidEqualLevel, (
     _In_ PSID Sid1,
     _In_ PSID Sid2,
     _Out_ PBOOLEAN EqualLevel
 ))
 
 // private
-NTDLL_API(NTSTATUS, RtlSidIsHigherLevel, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSidIsHigherLevel, (
     _In_ PSID Sid1,
     _In_ PSID Sid2,
     _Out_ PBOOLEAN HigherLevel
@@ -4439,7 +4424,7 @@ NTDLL_API(NTSTATUS, RtlSidIsHigherLevel, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NTDLL_API(NTSTATUS, RtlCreateVirtualAccountSid, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateVirtualAccountSid, (
     _In_ PUNICODE_STRING Name,
     _In_ ULONG BaseSubAuthority,
     _Out_writes_bytes_(*SidLength) PSID Sid,
@@ -4448,7 +4433,7 @@ NTDLL_API(NTSTATUS, RtlCreateVirtualAccountSid, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NTDLL_API(NTSTATUS, RtlReplaceSidInSd, (
+NTDLL_API(NTSTATUS, __stdcall, RtlReplaceSidInSd, (
     _Inout_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _In_ PSID OldSid,
     _In_ PSID NewSid,
@@ -4458,7 +4443,7 @@ NTDLL_API(NTSTATUS, RtlReplaceSidInSd, (
 
 #define MAX_UNICODE_STACK_BUFFER_LENGTH 256
 
-NTDLL_API(NTSTATUS, RtlConvertSidToUnicodeString, (
+NTDLL_API(NTSTATUS, __stdcall, RtlConvertSidToUnicodeString, (
     _Inout_ PUNICODE_STRING UnicodeString,
     _In_ PSID Sid,
     _In_ BOOLEAN AllocateDestinationString
@@ -4466,7 +4451,7 @@ NTDLL_API(NTSTATUS, RtlConvertSidToUnicodeString, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlSidHashInitialize, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSidHashInitialize, (
     _In_reads_(SidCount) PSID_AND_ATTRIBUTES SidAttr,
     _In_ ULONG SidCount,
     _Out_ PSID_AND_ATTRIBUTES_HASH SidAttrHash
@@ -4475,7 +4460,7 @@ NTDLL_API(NTSTATUS, RtlSidHashInitialize, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(PSID_AND_ATTRIBUTES, RtlSidHashLookup, (
+NTDLL_API(PSID_AND_ATTRIBUTES, __stdcall, RtlSidHashLookup, (
     _In_ PSID_AND_ATTRIBUTES_HASH SidAttrHash,
     _In_ PSID Sid
 ))
@@ -4483,14 +4468,14 @@ NTDLL_API(PSID_AND_ATTRIBUTES, RtlSidHashLookup, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // rev
-NTDLL_API(BOOLEAN, RtlIsElevatedRid, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsElevatedRid, (
     _In_ PSID_AND_ATTRIBUTES SidAttr
 ))
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS12)
 // rev
-NTDLL_API(NTSTATUS, RtlDeriveCapabilitySidsFromName, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeriveCapabilitySidsFromName, (
     _Inout_ PUNICODE_STRING UnicodeString,
     _Out_ PSID CapabilityGroupSid,
     _Out_ PSID CapabilitySid
@@ -4499,70 +4484,70 @@ NTDLL_API(NTSTATUS, RtlDeriveCapabilitySidsFromName, (
 
 // Security Descriptors
 
-NTDLL_API(NTSTATUS, RtlCreateSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateSecurityDescriptor, (
     _Out_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _In_ ULONG Revision
 ))
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlValidSecurityDescriptor, (
+NTDLL_API(BOOLEAN, __stdcall, RtlValidSecurityDescriptor, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor
 ))
 
-NTDLL_API(ULONG, RtlLengthSecurityDescriptor, (
+NTDLL_API(ULONG, __stdcall, RtlLengthSecurityDescriptor, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor
 ))
 
 _Check_return_
-NTDLL_API(BOOLEAN, RtlValidRelativeSecurityDescriptor, (
+NTDLL_API(BOOLEAN, __stdcall, RtlValidRelativeSecurityDescriptor, (
     _In_reads_bytes_(SecurityDescriptorLength) PSECURITY_DESCRIPTOR SecurityDescriptorInput,
     _In_ ULONG SecurityDescriptorLength,
     _In_ SECURITY_INFORMATION RequiredInformation
 ))
 
-NTDLL_API(NTSTATUS, RtlGetControlSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetControlSecurityDescriptor, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _Out_ PSECURITY_DESCRIPTOR_CONTROL Control,
     _Out_ PULONG Revision
 ))
 
-NTDLL_API(NTSTATUS, RtlSetControlSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetControlSecurityDescriptor, (
     _Inout_ PSECURITY_DESCRIPTOR SecurityDescriptor,
      _In_ SECURITY_DESCRIPTOR_CONTROL ControlBitsOfInterest,
      _In_ SECURITY_DESCRIPTOR_CONTROL ControlBitsToSet
 ))
 
-NTDLL_API(NTSTATUS, RtlSetAttributesSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetAttributesSecurityDescriptor, (
     _Inout_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _In_ SECURITY_DESCRIPTOR_CONTROL Control,
     _Out_ PULONG Revision
 ))
 
-NTDLL_API(BOOLEAN, RtlGetSecurityDescriptorRMControl, (
+NTDLL_API(BOOLEAN, __stdcall, RtlGetSecurityDescriptorRMControl, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _Out_ PUCHAR RMControl
 ))
 
-NTDLL_API_VOID(RtlSetSecurityDescriptorRMControl, (
+NTDLL_API_VOID(__stdcall, RtlSetSecurityDescriptorRMControl, (
     _Inout_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _In_opt_ PUCHAR RMControl
 ))
 
-NTDLL_API(NTSTATUS, RtlSetDaclSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetDaclSecurityDescriptor, (
     _Inout_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _In_ BOOLEAN DaclPresent,
     _In_opt_ PACL Dacl,
     _In_opt_ BOOLEAN DaclDefaulted
 ))
 
-NTDLL_API(NTSTATUS, RtlGetDaclSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetDaclSecurityDescriptor, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _Out_ PBOOLEAN DaclPresent,
     _Out_ PACL *Dacl,
     _Out_ PBOOLEAN DaclDefaulted
 ))
 
-NTDLL_API(NTSTATUS, RtlSetSaclSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetSaclSecurityDescriptor, (
     _Inout_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _In_ BOOLEAN SaclPresent,
     _In_opt_ PACL Sacl,
@@ -4570,7 +4555,7 @@ NTDLL_API(NTSTATUS, RtlSetSaclSecurityDescriptor, (
 ))
 
 /*
-NTDLL_API(NTSTATUS, RtlGetSaclSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetSaclSecurityDescriptor, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _Out_ PBOOLEAN SaclPresent,
     _Out_ PACL *Sacl,
@@ -4578,50 +4563,50 @@ NTDLL_API(NTSTATUS, RtlGetSaclSecurityDescriptor, (
 ))
 */
 
-NTDLL_API(NTSTATUS, RtlGetSaclSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetSaclSecurityDescriptor, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _Out_ PBOOLEAN SaclPresent,
     _Out_ PACL *Sacl,
     _Out_ PBOOLEAN SaclDefaulted
 ))
 
-NTDLL_API(NTSTATUS, RtlSetOwnerSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetOwnerSecurityDescriptor, (
     _Inout_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _In_opt_ PSID Owner,
     _In_opt_ BOOLEAN OwnerDefaulted
 ))
 
-NTDLL_API(NTSTATUS, RtlGetOwnerSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetOwnerSecurityDescriptor, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _Out_ PSID *Owner,
     _Out_ PBOOLEAN OwnerDefaulted
 ))
 
-NTDLL_API(NTSTATUS, RtlSetGroupSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetGroupSecurityDescriptor, (
     _Inout_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _In_opt_ PSID Group,
     _In_opt_ BOOLEAN GroupDefaulted
 ))
 
-NTDLL_API(NTSTATUS, RtlGetGroupSecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetGroupSecurityDescriptor, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor,
     _Out_ PSID *Group,
     _Out_ PBOOLEAN GroupDefaulted
 ))
 
-NTDLL_API(NTSTATUS, RtlMakeSelfRelativeSD, (
+NTDLL_API(NTSTATUS, __stdcall, RtlMakeSelfRelativeSD, (
     _In_ PSECURITY_DESCRIPTOR AbsoluteSecurityDescriptor,
     _Out_writes_bytes_(*BufferLength) PSECURITY_DESCRIPTOR SelfRelativeSecurityDescriptor,
     _Inout_ PULONG BufferLength
 ))
 
-NTDLL_API(NTSTATUS, RtlAbsoluteToSelfRelativeSD, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAbsoluteToSelfRelativeSD, (
     _In_ PSECURITY_DESCRIPTOR AbsoluteSecurityDescriptor,
     _Out_writes_bytes_to_opt_(*BufferLength, *BufferLength) PSECURITY_DESCRIPTOR SelfRelativeSecurityDescriptor,
     _Inout_ PULONG BufferLength
 ))
 
-NTDLL_API(NTSTATUS, RtlSelfRelativeToAbsoluteSD, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSelfRelativeToAbsoluteSD, (
     _In_ PSECURITY_DESCRIPTOR SelfRelativeSecurityDescriptor,
     _Out_writes_bytes_to_opt_(*AbsoluteSecurityDescriptorSize, *AbsoluteSecurityDescriptorSize) PSECURITY_DESCRIPTOR AbsoluteSecurityDescriptor,
     _Inout_ PULONG AbsoluteSecurityDescriptorSize,
@@ -4636,55 +4621,55 @@ NTDLL_API(NTSTATUS, RtlSelfRelativeToAbsoluteSD, (
 ))
 
 // private
-NTDLL_API(NTSTATUS, RtlSelfRelativeToAbsoluteSD2, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSelfRelativeToAbsoluteSD2, (
     _Inout_ PSECURITY_DESCRIPTOR pSelfRelativeSecurityDescriptor,
     _Inout_ PULONG pBufferSize
 ))
 
 // Access masks
 
-NTDLL_API(BOOLEAN, RtlAreAllAccessesGranted, (
+NTDLL_API(BOOLEAN, __stdcall, RtlAreAllAccessesGranted, (
     _In_ ACCESS_MASK GrantedAccess,
     _In_ ACCESS_MASK DesiredAccess
 ))
 
-NTDLL_API(BOOLEAN, RtlAreAnyAccessesGranted, (
+NTDLL_API(BOOLEAN, __stdcall, RtlAreAnyAccessesGranted, (
     _In_ ACCESS_MASK GrantedAccess,
     _In_ ACCESS_MASK DesiredAccess
 ))
 
-NTDLL_API_VOID(RtlMapGenericMask, (
+NTDLL_API_VOID(__stdcall, RtlMapGenericMask, (
     _Inout_ PACCESS_MASK AccessMask,
     _In_ PGENERIC_MAPPING GenericMapping
 ))
 
 // ACLs
 
-NTDLL_API(NTSTATUS, RtlCreateAcl, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateAcl, (
     _Out_writes_bytes_(AclLength) PACL Acl,
     _In_ ULONG AclLength,
     _In_ ULONG AclRevision
 ))
 
-NTDLL_API(BOOLEAN, RtlValidAcl, (
+NTDLL_API(BOOLEAN, __stdcall, RtlValidAcl, (
     _In_ PACL Acl
 ))
 
-NTDLL_API(NTSTATUS, RtlQueryInformationAcl, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryInformationAcl, (
     _In_ PACL Acl,
     _Out_writes_bytes_(AclInformationLength) PVOID AclInformation,
     _In_ ULONG AclInformationLength,
     _In_ ACL_INFORMATION_CLASS AclInformationClass
 ))
 
-NTDLL_API(NTSTATUS, RtlSetInformationAcl, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetInformationAcl, (
     _Inout_ PACL Acl,
     _In_reads_bytes_(AclInformationLength) PVOID AclInformation,
     _In_ ULONG AclInformationLength,
     _In_ ACL_INFORMATION_CLASS AclInformationClass
 ))
 
-NTDLL_API(NTSTATUS, RtlAddAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAce, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ ULONG StartingAceIndex,
@@ -4692,25 +4677,25 @@ NTDLL_API(NTSTATUS, RtlAddAce, (
     _In_ ULONG AceListLength
 ))
 
-NTDLL_API(NTSTATUS, RtlDeleteAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeleteAce, (
     _Inout_ PACL Acl,
     _In_ ULONG AceIndex
 ))
 
-NTDLL_API(NTSTATUS, RtlGetAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetAce, (
     _In_ PACL Acl,
     _In_ ULONG AceIndex,
     _Outptr_ PVOID *Ace
 ))
 
-NTDLL_API(BOOLEAN, RtlFirstFreeAce, (
+NTDLL_API(BOOLEAN, __stdcall, RtlFirstFreeAce, (
     _In_ PACL Acl,
     _Out_ PVOID *FirstFree
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(PVOID, RtlFindAceByType, (
+NTDLL_API(PVOID, __stdcall, RtlFindAceByType, (
     _In_ PACL pAcl,
     _In_ UCHAR AceType,
     _Out_opt_ PULONG pIndex
@@ -4719,34 +4704,19 @@ NTDLL_API(PVOID, RtlFindAceByType, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(BOOLEAN, RtlOwnerAcesPresent, (
+NTDLL_API(BOOLEAN, __stdcall, RtlOwnerAcesPresent, (
     _In_ PACL pAcl
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlAddAccessAllowedAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAccessAllowedAce, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ ACCESS_MASK AccessMask,
     _In_ PSID Sid
 ))
 
-NTDLL_API(NTSTATUS, RtlAddAccessAllowedAceEx, (
-    _Inout_ PACL Acl,
-    _In_ ULONG AceRevision,
-    _In_ ULONG AceFlags,
-    _In_ ACCESS_MASK AccessMask,
-    _In_ PSID Sid
-))
-
-NTDLL_API(NTSTATUS, RtlAddAccessDeniedAce, (
-    _Inout_ PACL Acl,
-    _In_ ULONG AceRevision,
-    _In_ ACCESS_MASK AccessMask,
-    _In_ PSID Sid
-))
-
-NTDLL_API(NTSTATUS, RtlAddAccessDeniedAceEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAccessAllowedAceEx, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ ULONG AceFlags,
@@ -4754,7 +4724,22 @@ NTDLL_API(NTSTATUS, RtlAddAccessDeniedAceEx, (
     _In_ PSID Sid
 ))
 
-NTDLL_API(NTSTATUS, RtlAddAuditAccessAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAccessDeniedAce, (
+    _Inout_ PACL Acl,
+    _In_ ULONG AceRevision,
+    _In_ ACCESS_MASK AccessMask,
+    _In_ PSID Sid
+))
+
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAccessDeniedAceEx, (
+    _Inout_ PACL Acl,
+    _In_ ULONG AceRevision,
+    _In_ ULONG AceFlags,
+    _In_ ACCESS_MASK AccessMask,
+    _In_ PSID Sid
+))
+
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAuditAccessAce, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ ACCESS_MASK AccessMask,
@@ -4763,7 +4748,7 @@ NTDLL_API(NTSTATUS, RtlAddAuditAccessAce, (
     _In_ BOOLEAN AuditFailure
 ))
 
-NTDLL_API(NTSTATUS, RtlAddAuditAccessAceEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAuditAccessAceEx, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ ULONG AceFlags,
@@ -4773,7 +4758,7 @@ NTDLL_API(NTSTATUS, RtlAddAuditAccessAceEx, (
     _In_ BOOLEAN AuditFailure
 ))
 
-NTDLL_API(NTSTATUS, RtlAddAccessAllowedObjectAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAccessAllowedObjectAce, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ ULONG AceFlags,
@@ -4783,7 +4768,7 @@ NTDLL_API(NTSTATUS, RtlAddAccessAllowedObjectAce, (
     _In_ PSID Sid
 ))
 
-NTDLL_API(NTSTATUS, RtlAddAccessDeniedObjectAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAccessDeniedObjectAce, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ ULONG AceFlags,
@@ -4793,7 +4778,7 @@ NTDLL_API(NTSTATUS, RtlAddAccessDeniedObjectAce, (
     _In_ PSID Sid
 ))
 
-NTDLL_API(NTSTATUS, RtlAddAuditAccessObjectAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddAuditAccessObjectAce, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ ULONG AceFlags,
@@ -4805,7 +4790,7 @@ NTDLL_API(NTSTATUS, RtlAddAuditAccessObjectAce, (
     _In_ BOOLEAN AuditFailure
 ))
 
-NTDLL_API(NTSTATUS, RtlAddCompoundAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddCompoundAce, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ UCHAR AceType,
@@ -4816,7 +4801,7 @@ NTDLL_API(NTSTATUS, RtlAddCompoundAce, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlAddMandatoryAce, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddMandatoryAce, (
     _Inout_ PACL Acl,
     _In_ ULONG AceRevision,
     _In_ ULONG AceFlags,
@@ -4828,13 +4813,13 @@ NTDLL_API(NTSTATUS, RtlAddMandatoryAce, (
 
 // Named pipes
 
-NTDLL_API(NTSTATUS, RtlDefaultNpAcl, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDefaultNpAcl, (
     _Out_ PACL *Acl
 ))
 
 // Security objects
 
-NTDLL_API(NTSTATUS, RtlNewSecurityObject, (
+NTDLL_API(NTSTATUS, __stdcall, RtlNewSecurityObject, (
     _In_opt_ PSECURITY_DESCRIPTOR ParentDescriptor,
     _In_opt_ PSECURITY_DESCRIPTOR CreatorDescriptor,
     _Out_ PSECURITY_DESCRIPTOR *NewDescriptor,
@@ -4843,7 +4828,7 @@ NTDLL_API(NTSTATUS, RtlNewSecurityObject, (
     _In_ PGENERIC_MAPPING GenericMapping
 ))
 
-NTDLL_API(NTSTATUS, RtlNewSecurityObjectEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlNewSecurityObjectEx, (
     _In_opt_ PSECURITY_DESCRIPTOR ParentDescriptor,
     _In_opt_ PSECURITY_DESCRIPTOR CreatorDescriptor,
     _Out_ PSECURITY_DESCRIPTOR *NewDescriptor,
@@ -4854,7 +4839,7 @@ NTDLL_API(NTSTATUS, RtlNewSecurityObjectEx, (
     _In_ PGENERIC_MAPPING GenericMapping
 ))
 
-NTDLL_API(NTSTATUS, RtlNewSecurityObjectWithMultipleInheritance, (
+NTDLL_API(NTSTATUS, __stdcall, RtlNewSecurityObjectWithMultipleInheritance, (
     _In_opt_ PSECURITY_DESCRIPTOR ParentDescriptor,
     _In_opt_ PSECURITY_DESCRIPTOR CreatorDescriptor,
     _Out_ PSECURITY_DESCRIPTOR *NewDescriptor,
@@ -4866,11 +4851,11 @@ NTDLL_API(NTSTATUS, RtlNewSecurityObjectWithMultipleInheritance, (
     _In_ PGENERIC_MAPPING GenericMapping
 ))
 
-NTDLL_API(NTSTATUS, RtlDeleteSecurityObject, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeleteSecurityObject, (
     _Inout_ PSECURITY_DESCRIPTOR *ObjectDescriptor
 ))
 
-NTDLL_API(NTSTATUS, RtlQuerySecurityObject, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQuerySecurityObject, (
     _In_ PSECURITY_DESCRIPTOR ObjectDescriptor,
      _In_ SECURITY_INFORMATION SecurityInformation,
      _Out_opt_ PSECURITY_DESCRIPTOR ResultantDescriptor,
@@ -4878,7 +4863,7 @@ NTDLL_API(NTSTATUS, RtlQuerySecurityObject, (
      _Out_ PULONG ReturnLength
 ))
 
-NTDLL_API(NTSTATUS, RtlSetSecurityObject, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetSecurityObject, (
     _In_ SECURITY_INFORMATION SecurityInformation,
     _In_ PSECURITY_DESCRIPTOR ModificationDescriptor,
     _Inout_ PSECURITY_DESCRIPTOR *ObjectsSecurityDescriptor,
@@ -4886,7 +4871,7 @@ NTDLL_API(NTSTATUS, RtlSetSecurityObject, (
     _In_opt_ HANDLE Token
 ))
 
-NTDLL_API(NTSTATUS, RtlSetSecurityObjectEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetSecurityObjectEx, (
     _In_ SECURITY_INFORMATION SecurityInformation,
     _In_ PSECURITY_DESCRIPTOR ModificationDescriptor,
     _Inout_ PSECURITY_DESCRIPTOR *ObjectsSecurityDescriptor,
@@ -4895,7 +4880,7 @@ NTDLL_API(NTSTATUS, RtlSetSecurityObjectEx, (
     _In_opt_ HANDLE Token
 ))
 
-NTDLL_API(NTSTATUS, RtlConvertToAutoInheritSecurityObject, (
+NTDLL_API(NTSTATUS, __stdcall, RtlConvertToAutoInheritSecurityObject, (
     _In_opt_ PSECURITY_DESCRIPTOR ParentDescriptor,
     _In_ PSECURITY_DESCRIPTOR CurrentSecurityDescriptor,
     _Out_ PSECURITY_DESCRIPTOR *NewSecurityDescriptor,
@@ -4904,7 +4889,7 @@ NTDLL_API(NTSTATUS, RtlConvertToAutoInheritSecurityObject, (
     _In_ PGENERIC_MAPPING GenericMapping
 ))
 
-NTDLL_API(NTSTATUS, RtlNewInstanceSecurityObject, (
+NTDLL_API(NTSTATUS, __stdcall, RtlNewInstanceSecurityObject, (
     _In_ BOOLEAN ParentDescriptorChanged,
     _In_ BOOLEAN CreatorDescriptorChanged,
     _In_ PLUID OldClientTokenModifiedId,
@@ -4917,37 +4902,37 @@ NTDLL_API(NTSTATUS, RtlNewInstanceSecurityObject, (
     _In_ PGENERIC_MAPPING GenericMapping
 ))
 
-NTDLL_API(NTSTATUS, RtlCopySecurityDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCopySecurityDescriptor, (
     _In_ PSECURITY_DESCRIPTOR InputSecurityDescriptor,
     _Out_ PSECURITY_DESCRIPTOR *OutputSecurityDescriptor
 ))
 
 // Misc. security
 
-NTDLL_API_VOID(RtlRunEncodeUnicodeString, (
+NTDLL_API_VOID(__stdcall, RtlRunEncodeUnicodeString, (
     _Inout_ PUCHAR Seed,
     _In_ PUNICODE_STRING String
 ))
 
-NTDLL_API_VOID(RtlRunDecodeUnicodeString, (
+NTDLL_API_VOID(__stdcall, RtlRunDecodeUnicodeString, (
     _In_ UCHAR Seed,
     _In_ PUNICODE_STRING String
 ))
 
-NTDLL_API(NTSTATUS, RtlImpersonateSelf, (
+NTDLL_API(NTSTATUS, __stdcall, RtlImpersonateSelf, (
     _In_ SECURITY_IMPERSONATION_LEVEL ImpersonationLevel
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlImpersonateSelfEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlImpersonateSelfEx, (
     _In_ SECURITY_IMPERSONATION_LEVEL ImpersonationLevel,
     _In_opt_ ACCESS_MASK AdditionalAccess,
     _Out_opt_ PHANDLE ThreadToken
 ))
 #endif
 
-NTDLL_API(NTSTATUS, RtlAdjustPrivilege, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAdjustPrivilege, (
     _In_ ULONG Privilege,
     _In_ BOOLEAN Enable,
     _In_ BOOLEAN Client,
@@ -4957,20 +4942,20 @@ NTDLL_API(NTSTATUS, RtlAdjustPrivilege, (
 #define RTL_ACQUIRE_PRIVILEGE_REVERT 0x00000001
 #define RTL_ACQUIRE_PRIVILEGE_PROCESS 0x00000002
 
-NTDLL_API(NTSTATUS, RtlAcquirePrivilege, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAcquirePrivilege, (
     _In_ PULONG Privilege,
     _In_ ULONG NumPriv,
     _In_ ULONG Flags,
     _Out_ PVOID *ReturnedState
 ))
 
-NTDLL_API_VOID(RtlReleasePrivilege, (
+NTDLL_API_VOID(__stdcall, RtlReleasePrivilege, (
     _In_ PVOID StatePointer
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, RtlRemovePrivileges, (
+NTDLL_API(NTSTATUS, __stdcall, RtlRemovePrivileges, (
     _In_ HANDLE TokenHandle,
     _In_ PULONG PrivilegesToKeep,
     _In_ ULONG PrivilegeCount
@@ -4980,13 +4965,13 @@ NTDLL_API(NTSTATUS, RtlRemovePrivileges, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
 // rev
-NTDLL_API(NTSTATUS, RtlIsUntrustedObject, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIsUntrustedObject, (
     _In_opt_ HANDLE Handle,
     _In_opt_ PVOID Object,
     _Out_ PBOOLEAN IsUntrustedObject
 ))
 
-NTDLL_API(ULONG, RtlQueryValidationRunlevel, (
+NTDLL_API(ULONG, __stdcall, RtlQueryValidationRunlevel, (
     _In_opt_ PUNICODE_STRING ComponentName
 ))
 
@@ -4998,23 +4983,23 @@ NTDLL_API(ULONG, RtlQueryValidationRunlevel, (
 
 // begin_private
 
-NTDLL_API(PVOID, RtlCreateBoundaryDescriptor, (
+NTDLL_API(PVOID, __stdcall, RtlCreateBoundaryDescriptor, (
     _In_ PUNICODE_STRING Name,
     _In_ ULONG Flags
 ))
 
-NTDLL_API_VOID(RtlDeleteBoundaryDescriptor, (
+NTDLL_API_VOID(__stdcall, RtlDeleteBoundaryDescriptor, (
     _In_ PVOID BoundaryDescriptor
 ))
 
-NTDLL_API(NTSTATUS, RtlAddSIDToBoundaryDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddSIDToBoundaryDescriptor, (
     _Inout_ PVOID *BoundaryDescriptor,
     _In_ PSID RequiredSid
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, RtlAddIntegrityLabelToBoundaryDescriptor, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAddIntegrityLabelToBoundaryDescriptor, (
     _Inout_ PVOID *BoundaryDescriptor,
     _In_ PSID IntegrityLabel
 ))
@@ -5026,18 +5011,18 @@ NTDLL_API(NTSTATUS, RtlAddIntegrityLabelToBoundaryDescriptor, (
 
 // Version
 
-NTDLL_API(NTSTATUS, RtlGetVersion, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetVersion, (
     _Out_ PRTL_OSVERSIONINFOW lpVersionInformation
 ))
 
-NTDLL_API(NTSTATUS, RtlVerifyVersionInfo, (
+NTDLL_API(NTSTATUS, __stdcall, RtlVerifyVersionInfo, (
     _In_ PRTL_OSVERSIONINFOEXW VersionInfo,
     _In_ ULONG TypeMask,
     _In_ ULONGLONG ConditionMask
 ))
 
 // rev
-NTDLL_API_VOID(RtlGetNtVersionNumbers, (
+NTDLL_API_VOID(__stdcall, RtlGetNtVersionNumbers, (
     _Out_opt_ PULONG NtMajorVersion,
     _Out_opt_ PULONG NtMinorVersion,
     _Out_opt_ PULONG NtBuildNumber
@@ -5046,27 +5031,27 @@ NTDLL_API_VOID(RtlGetNtVersionNumbers, (
 // System information
 
 // rev
-NTDLL_API(ULONG, RtlGetNtGlobalFlags, (
+NTDLL_API(ULONG, __stdcall, RtlGetNtGlobalFlags, (
     VOID
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS1)
 // rev
-NTDLL_API(BOOLEAN, RtlGetNtProductType, (
+NTDLL_API(BOOLEAN, __stdcall, RtlGetNtProductType, (
     _Out_ PNT_PRODUCT_TYPE NtProductType
 ))
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS12)
 // private
-NTDLL_API(ULONG, RtlGetSuiteMask, (
+NTDLL_API(ULONG, __stdcall, RtlGetSuiteMask, (
     VOID
 ))
 #endif
 
 // Thread pool (old)
 
-NTDLL_API(NTSTATUS, RtlRegisterWait, (
+NTDLL_API(NTSTATUS, __stdcall, RtlRegisterWait, (
     _Out_ PHANDLE WaitHandle,
     _In_ HANDLE Handle,
     _In_ WAITORTIMERCALLBACKFUNC Function,
@@ -5075,22 +5060,22 @@ NTDLL_API(NTSTATUS, RtlRegisterWait, (
     _In_ ULONG Flags
 ))
 
-NTDLL_API(NTSTATUS, RtlDeregisterWait, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeregisterWait, (
     _In_ HANDLE WaitHandle
 ))
 
-NTDLL_API(NTSTATUS, RtlDeregisterWaitEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeregisterWaitEx, (
     _In_ HANDLE WaitHandle,
     _In_ HANDLE Event
 ))
 
-NTDLL_API(NTSTATUS, RtlQueueWorkItem, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueueWorkItem, (
     _In_ WORKERCALLBACKFUNC Function,
     _In_ PVOID Context,
     _In_ ULONG Flags
 ))
 
-NTDLL_API(NTSTATUS, RtlSetIoCompletionCallback, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetIoCompletionCallback, (
     _In_ HANDLE FileHandle,
     _In_ APC_CALLBACK_FUNCTION CompletionProc,
     _In_ ULONG Flags
@@ -5106,28 +5091,28 @@ typedef NTSTATUS (NTAPI *PRTL_EXIT_POOL_THREAD)(
     _In_ NTSTATUS ExitStatus
     );
 
-NTDLL_API(NTSTATUS, RtlSetThreadPoolStartFunc, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetThreadPoolStartFunc, (
     _In_ PRTL_START_POOL_THREAD StartPoolThread,
     _In_ PRTL_EXIT_POOL_THREAD ExitPoolThread
 ))
 
-NTDLL_API_VOID(RtlUserThreadStart, (
+NTDLL_API_VOID(__stdcall, RtlUserThreadStart, (
     _In_ PTHREAD_START_ROUTINE Function,
     _In_ PVOID Parameter
 ))
 
-NTDLL_API_VOID(LdrInitializeThunk, (
+NTDLL_API_VOID(__stdcall, LdrInitializeThunk, (
     _In_ PCONTEXT ContextRecord,
     _In_ PVOID Parameter
 ))
 
 // Timer support
 
-NTDLL_API(NTSTATUS, RtlCreateTimerQueue, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateTimerQueue, (
     _Out_ PHANDLE TimerQueueHandle
 ))
 
-NTDLL_API(NTSTATUS, RtlCreateTimer, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateTimer, (
     _In_ HANDLE TimerQueueHandle,
     _Out_ PHANDLE Handle,
     _In_ WAITORTIMERCALLBACKFUNC Function,
@@ -5137,35 +5122,35 @@ NTDLL_API(NTSTATUS, RtlCreateTimer, (
     _In_ ULONG Flags
 ))
 
-NTDLL_API(NTSTATUS, RtlUpdateTimer, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUpdateTimer, (
     _In_ HANDLE TimerQueueHandle,
     _In_ HANDLE TimerHandle,
     _In_ ULONG DueTime,
     _In_ ULONG Period
 ))
 
-NTDLL_API(NTSTATUS, RtlDeleteTimer, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeleteTimer, (
     _In_ HANDLE TimerQueueHandle,
     _In_ HANDLE TimerToCancel,
     _In_ HANDLE Event
 ))
 
-NTDLL_API(NTSTATUS, RtlDeleteTimerQueue, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeleteTimerQueue, (
     _In_ HANDLE TimerQueueHandle
 ))
 
-NTDLL_API(NTSTATUS, RtlDeleteTimerQueueEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeleteTimerQueueEx, (
     _In_ HANDLE TimerQueueHandle,
     _In_ HANDLE Event
 ))
 
 // Registry access
 
-NTDLL_API(NTSTATUS, RtlFormatCurrentUserKeyPath, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFormatCurrentUserKeyPath, (
     _Out_ PUNICODE_STRING CurrentUserKeyPath
 ))
 
-NTDLL_API(NTSTATUS, RtlOpenCurrentUser, (
+NTDLL_API(NTSTATUS, __stdcall, RtlOpenCurrentUser, (
     _In_ ACCESS_MASK DesiredAccess,
     _Out_ PHANDLE CurrentUserKey
 ))
@@ -5180,12 +5165,12 @@ NTDLL_API(NTSTATUS, RtlOpenCurrentUser, (
 #define RTL_REGISTRY_HANDLE 0x40000000
 #define RTL_REGISTRY_OPTIONAL 0x80000000
 
-NTDLL_API(NTSTATUS, RtlCreateRegistryKey, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateRegistryKey, (
     _In_ ULONG RelativeTo,
     _In_ PWSTR Path
 ))
 
-NTDLL_API(NTSTATUS, RtlCheckRegistryKey, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCheckRegistryKey, (
     _In_ ULONG RelativeTo,
     _In_ PWSTR Path
 ))
@@ -5218,7 +5203,7 @@ typedef struct _RTL_QUERY_REGISTRY_TABLE
 #define RTL_QUERY_REGISTRY_DIRECT 0x00000020
 #define RTL_QUERY_REGISTRY_DELETE 0x00000040
 
-NTDLL_API(NTSTATUS, RtlQueryRegistryValues, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryRegistryValues, (
     _In_ ULONG RelativeTo,
     _In_ PWSTR Path,
     _In_ PRTL_QUERY_REGISTRY_TABLE QueryTable,
@@ -5227,7 +5212,7 @@ NTDLL_API(NTSTATUS, RtlQueryRegistryValues, (
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlQueryRegistryValuesEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryRegistryValuesEx, (
     _In_ ULONG RelativeTo,
     _In_ PWSTR Path,
     _In_ PRTL_QUERY_REGISTRY_TABLE QueryTable,
@@ -5235,7 +5220,7 @@ NTDLL_API(NTSTATUS, RtlQueryRegistryValuesEx, (
     _In_opt_ PVOID Environment
 ))
 
-NTDLL_API(NTSTATUS, RtlWriteRegistryValue, (
+NTDLL_API(NTSTATUS, __stdcall, RtlWriteRegistryValue, (
     _In_ ULONG RelativeTo,
     _In_ PWSTR Path,
     _In_ PWSTR ValueName,
@@ -5244,7 +5229,7 @@ NTDLL_API(NTSTATUS, RtlWriteRegistryValue, (
     _In_ ULONG ValueLength
 ))
 
-NTDLL_API(NTSTATUS, RtlDeleteRegistryValue, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeleteRegistryValue, (
     _In_ ULONG RelativeTo,
     _In_ PWSTR Path,
     _In_ PWSTR ValueName
@@ -5255,7 +5240,7 @@ NTDLL_API(NTSTATUS, RtlDeleteRegistryValue, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 
 // rev
-NTDLL_API(NTSTATUS, RtlEnableThreadProfiling, (
+NTDLL_API(NTSTATUS, __stdcall, RtlEnableThreadProfiling, (
     _In_ HANDLE ThreadHandle,
     _In_ ULONG Flags,
     _In_ ULONG64 HardwareCounters,
@@ -5263,18 +5248,18 @@ NTDLL_API(NTSTATUS, RtlEnableThreadProfiling, (
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlDisableThreadProfiling, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDisableThreadProfiling, (
     _In_ PVOID PerformanceDataHandle
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlQueryThreadProfiling, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryThreadProfiling, (
     _In_ HANDLE ThreadHandle,
     _Out_ PBOOLEAN Enabled
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlReadThreadProfilingData, (
+NTDLL_API(NTSTATUS, __stdcall, RtlReadThreadProfilingData, (
     _In_ HANDLE PerformanceDataHandle,
     _In_ ULONG Flags,
     _Out_ PPERFORMANCE_DATA PerformanceData
@@ -5284,14 +5269,14 @@ NTDLL_API(NTSTATUS, RtlReadThreadProfilingData, (
 
 // WOW64
 
-NTDLL_API(NTSTATUS, RtlGetNativeSystemInformation, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetNativeSystemInformation, (
     _In_ ULONG SystemInformationClass,
     _In_ PVOID NativeSystemInformation,
     _In_ ULONG InformationLength,
     _Out_opt_ PULONG ReturnLength
 ))
 
-NTDLL_API(NTSTATUS, RtlQueueApcWow64Thread, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueueApcWow64Thread, (
     _In_ HANDLE ThreadHandle,
     _In_ PPS_APC_ROUTINE ApcRoutine,
     _In_opt_ PVOID ApcArgument1,
@@ -5299,49 +5284,49 @@ NTDLL_API(NTSTATUS, RtlQueueApcWow64Thread, (
     _In_opt_ PVOID ApcArgument3
 ))
 
-NTDLL_API(NTSTATUS, RtlWow64EnableFsRedirection, (
+NTDLL_API(NTSTATUS, __stdcall, RtlWow64EnableFsRedirection, (
     _In_ BOOLEAN Wow64FsEnableRedirection
 ))
 
-NTDLL_API(NTSTATUS, RtlWow64EnableFsRedirectionEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlWow64EnableFsRedirectionEx, (
     _In_ PVOID Wow64FsEnableRedirection,
     _Out_ PVOID *OldFsRedirectionLevel
 ))
 
 // Misc.
 
-NTDLL_API(ULONG32, RtlComputeCrc32, (
+NTDLL_API(ULONG32, __stdcall, RtlComputeCrc32, (
     _In_ ULONG32 PartialCrc,
     _In_ PVOID Buffer,
     _In_ ULONG Length
 ))
 
-NTDLL_API(PVOID, RtlEncodePointer, (
+NTDLL_API(PVOID, __stdcall, RtlEncodePointer, (
     _In_ PVOID Ptr
 ))
 
-NTDLL_API(PVOID, RtlDecodePointer, (
+NTDLL_API(PVOID, __stdcall, RtlDecodePointer, (
     _In_ PVOID Ptr
 ))
 
-NTDLL_API(PVOID, RtlEncodeSystemPointer, (
+NTDLL_API(PVOID, __stdcall, RtlEncodeSystemPointer, (
     _In_ PVOID Ptr
 ))
 
-NTDLL_API(PVOID, RtlDecodeSystemPointer, (
+NTDLL_API(PVOID, __stdcall, RtlDecodeSystemPointer, (
     _In_ PVOID Ptr
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 // rev
-NTDLL_API(NTSTATUS, RtlEncodeRemotePointer, (
+NTDLL_API(NTSTATUS, __stdcall, RtlEncodeRemotePointer, (
     _In_ HANDLE ProcessHandle,
     _In_ PVOID Pointer,
     _Out_ PVOID *EncodedPointer
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlDecodeRemotePointer, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDecodeRemotePointer, (
     _In_ HANDLE ProcessHandle,
     _In_ PVOID Pointer,
     _Out_ PVOID *DecodedPointer
@@ -5349,19 +5334,19 @@ NTDLL_API(NTSTATUS, RtlDecodeRemotePointer, (
 #endif
 
 // rev
-NTDLL_API(BOOLEAN, RtlIsProcessorFeaturePresent, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsProcessorFeaturePresent, (
     _In_ ULONG ProcessorFeature
 ))
 
 // rev
-NTDLL_API(ULONG, RtlGetCurrentProcessorNumber, (
+NTDLL_API(ULONG, __stdcall, RtlGetCurrentProcessorNumber, (
     VOID
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
 // rev
-NTDLL_API_VOID(RtlGetCurrentProcessorNumberEx, (
+NTDLL_API_VOID(__stdcall, RtlGetCurrentProcessorNumberEx, (
     _Out_ PPROCESSOR_NUMBER ProcessorNumber
 ))
 
@@ -5369,15 +5354,15 @@ NTDLL_API_VOID(RtlGetCurrentProcessorNumberEx, (
 
 // Stack support
 
-NTDLL_API_VOID(RtlPushFrame, (
+NTDLL_API_VOID(__stdcall, RtlPushFrame, (
     _In_ PTEB_ACTIVE_FRAME Frame
 ))
 
-NTDLL_API_VOID(RtlPopFrame, (
+NTDLL_API_VOID(__stdcall, RtlPopFrame, (
     _In_ PTEB_ACTIVE_FRAME Frame
 ))
 
-NTDLL_API(PTEB_ACTIVE_FRAME, RtlGetFrame, (
+NTDLL_API(PTEB_ACTIVE_FRAME, __stdcall, RtlGetFrame, (
     VOID
 ))
 
@@ -5386,14 +5371,14 @@ NTDLL_API(PTEB_ACTIVE_FRAME, RtlGetFrame, (
 #define RTL_STACK_WALKING_MODE_FRAMES_TO_SKIP_SHIFT 0x00000008
 
 // private
-NTDLL_API(ULONG, RtlWalkFrameChain, (
+NTDLL_API(ULONG, __stdcall, RtlWalkFrameChain, (
     _Out_writes_(Count - (Flags >> RTL_STACK_WALKING_MODE_FRAMES_TO_SKIP_SHIFT)) PVOID *Callers,
     _In_ ULONG Count,
     _In_ ULONG Flags
 ))
 
 // rev
-NTDLL_API_VOID(RtlGetCallersAddress, (
+NTDLL_API_VOID(__stdcall, RtlGetCallersAddress, (
     // Use the intrinsic _ReturnAddress instead.
     _Out_ PVOID *CallersAddress,
     _Out_ PVOID *CallersCaller
@@ -5401,7 +5386,7 @@ NTDLL_API_VOID(RtlGetCallersAddress, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 
-NTDLL_API(ULONG64, RtlGetEnabledExtendedFeatures, (
+NTDLL_API(ULONG64, __stdcall, RtlGetEnabledExtendedFeatures, (
     _In_ ULONG64 FeatureMask
 ))
 
@@ -5410,14 +5395,14 @@ NTDLL_API(ULONG64, RtlGetEnabledExtendedFeatures, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS14)
 
 // msdn
-NTDLL_API(ULONG64, RtlGetEnabledExtendedAndSupervisorFeatures, (
+NTDLL_API(ULONG64, __stdcall, RtlGetEnabledExtendedAndSupervisorFeatures, (
     _In_ ULONG64 FeatureMask
 ))
 
 // msdn
 _Ret_maybenull_
 _Success_(return != NULL)
-NTDLL_API(PVOID, RtlLocateSupervisorFeature, (
+NTDLL_API(PVOID, __stdcall, RtlLocateSupervisorFeature, (
     _In_ PXSAVE_AREA_HEADER XStateHeader,
     _In_range_(XSTATE_AVX, MAXIMUM_XSTATE_FEATURES - 1) ULONG FeatureId,
     _Out_opt_ PULONG Length
@@ -5441,7 +5426,7 @@ typedef union _RTL_ELEVATION_FLAGS
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, RtlQueryElevationFlags, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryElevationFlags, (
     _Out_ PRTL_ELEVATION_FLAGS Flags
 ))
 
@@ -5450,7 +5435,7 @@ NTDLL_API(NTSTATUS, RtlQueryElevationFlags, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, RtlRegisterThreadWithCsrss, (
+NTDLL_API(NTSTATUS, __stdcall, RtlRegisterThreadWithCsrss, (
     VOID
 ))
 
@@ -5459,7 +5444,7 @@ NTDLL_API(NTSTATUS, RtlRegisterThreadWithCsrss, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, RtlLockCurrentThread, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLockCurrentThread, (
     VOID
 ))
 
@@ -5468,7 +5453,7 @@ NTDLL_API(NTSTATUS, RtlLockCurrentThread, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, RtlUnlockCurrentThread, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnlockCurrentThread, (
     VOID
 ))
 
@@ -5477,7 +5462,7 @@ NTDLL_API(NTSTATUS, RtlUnlockCurrentThread, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, RtlLockModuleSection, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLockModuleSection, (
     _In_ PVOID Address
 ))
 
@@ -5486,7 +5471,7 @@ NTDLL_API(NTSTATUS, RtlLockModuleSection, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, RtlUnlockModuleSection, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnlockModuleSection, (
     _In_ PVOID Address
 ))
 
@@ -5519,12 +5504,12 @@ typedef struct _RTL_UNLOAD_EVENT_TRACE32
     ULONG Version[2];
 } RTL_UNLOAD_EVENT_TRACE32, *PRTL_UNLOAD_EVENT_TRACE32;
 
-NTDLL_API(PRTL_UNLOAD_EVENT_TRACE, RtlGetUnloadEventTrace, (
+NTDLL_API(PRTL_UNLOAD_EVENT_TRACE, __stdcall, RtlGetUnloadEventTrace, (
     VOID
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NTDLL_API_VOID(RtlGetUnloadEventTraceEx, (
+NTDLL_API_VOID(__stdcall, RtlGetUnloadEventTraceEx, (
     _Out_ PULONG *ElementSize,
     _Out_ PULONG *ElementCount,
     _Out_ PVOID *EventTrace // works across all processes
@@ -5535,14 +5520,14 @@ NTDLL_API_VOID(RtlGetUnloadEventTraceEx, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(LOGICAL, RtlQueryPerformanceCounter, (
+NTDLL_API(LOGICAL, __stdcall, RtlQueryPerformanceCounter, (
     _Out_ PLARGE_INTEGER PerformanceCounter
 ))
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(LOGICAL, RtlQueryPerformanceFrequency, (
+NTDLL_API(LOGICAL, __stdcall, RtlQueryPerformanceFrequency, (
     _Out_ PLARGE_INTEGER PerformanceFrequency
 ))
 #endif
@@ -5701,7 +5686,7 @@ typedef enum _RTL_IMAGE_MITIGATION_OPTION_STATE
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS13)
 
 // rev
-NTDLL_API(NTSTATUS, RtlQueryImageMitigationPolicy, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryImageMitigationPolicy, (
     _In_opt_ PWSTR ImagePath, // NULL for system-wide defaults
     _In_ IMAGE_MITIGATION_POLICY Policy,
     _In_ ULONG Flags,
@@ -5710,7 +5695,7 @@ NTDLL_API(NTSTATUS, RtlQueryImageMitigationPolicy, (
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlSetImageMitigationPolicy, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetImageMitigationPolicy, (
     _In_opt_ PWSTR ImagePath, // NULL for system-wide defaults
     _In_ IMAGE_MITIGATION_POLICY Policy,
     _In_ ULONG Flags,
@@ -5723,18 +5708,18 @@ NTDLL_API(NTSTATUS, RtlSetImageMitigationPolicy, (
 // session 
 
 // rev
-NTDLL_API(ULONG, RtlGetCurrentServiceSessionId, (
+NTDLL_API(ULONG, __stdcall, RtlGetCurrentServiceSessionId, (
     VOID
 ))
 
 // private
-NTDLL_API(ULONG, RtlGetActiveConsoleId, (
+NTDLL_API(ULONG, __stdcall, RtlGetActiveConsoleId, (
     VOID
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS1)
 // private
-NTDLL_API(ULONGLONG, RtlGetConsoleSessionForegroundProcessId, (
+NTDLL_API(ULONGLONG, __stdcall, RtlGetConsoleSessionForegroundProcessId, (
     VOID
 ))
 #endif
@@ -5742,14 +5727,14 @@ NTDLL_API(ULONGLONG, RtlGetConsoleSessionForegroundProcessId, (
 // Appcontainer
 
 // rev
-NTDLL_API(NTSTATUS, RtlGetTokenNamedObjectPath, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetTokenNamedObjectPath, (
     _In_ HANDLE Token, 
     _In_opt_ PSID Sid, 
     _Out_ PUNICODE_STRING ObjectPath // RtlFreeUnicodeString
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlGetAppContainerNamedObjectPath, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetAppContainerNamedObjectPath, (
     _In_opt_ HANDLE Token,
     _In_opt_ PSID AppContainerSid,
     _In_ BOOLEAN RelativePath,
@@ -5757,40 +5742,40 @@ NTDLL_API(NTSTATUS, RtlGetAppContainerNamedObjectPath, (
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlGetAppContainerParent, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetAppContainerParent, (
     _In_ PSID AppContainerSid, 
     _Out_ PSID* AppContainerSidParent // RtlFreeSid
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlCheckSandboxedToken, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCheckSandboxedToken, (
     _In_opt_ HANDLE TokenHandle,
     _Out_ PBOOLEAN IsSandboxed
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlCheckTokenCapability, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCheckTokenCapability, (
     _In_opt_ HANDLE TokenHandle,
     _In_ PSID CapabilitySidToCheck,
     _Out_ PBOOLEAN HasCapability
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlCapabilityCheck, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCapabilityCheck, (
     _In_opt_ HANDLE TokenHandle,
     _In_ PUNICODE_STRING CapabilityName,
     _Out_ PBOOLEAN HasCapability
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlCheckTokenMembership, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCheckTokenMembership, (
     _In_opt_ HANDLE TokenHandle,
     _In_ PSID SidToCheck,
     _Out_ PBOOLEAN IsMember
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlCheckTokenMembershipEx, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCheckTokenMembershipEx, (
     _In_opt_ HANDLE TokenHandle,
     _In_ PSID SidToCheck,
     _In_ ULONG Flags, // CTMF_VALID_FLAGS
@@ -5798,33 +5783,33 @@ NTDLL_API(NTSTATUS, RtlCheckTokenMembershipEx, (
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlQueryTokenHostIdAsUlong64, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryTokenHostIdAsUlong64, (
     _In_ HANDLE TokenHandle,
     _Out_ PULONG64 HostId // (WIN://PKGHOSTID)
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlIsParentOfChildAppContainer, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIsParentOfChildAppContainer, (
     _In_ PSID ParentAppContainerSid,
     _In_ PSID ChildAppContainerSid
 ))
 
 // rev
-NTDLL_API(BOOLEAN, RtlIsCapabilitySid, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsCapabilitySid, (
     _In_ PSID Sid
 ))
 
 // rev
-NTDLL_API(BOOLEAN, RtlIsPackageSid, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsPackageSid, (
     _In_ PSID Sid
 ))
 
 // rev
-NTDLL_API(BOOLEAN, RtlIsValidProcessTrustLabelSid, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsValidProcessTrustLabelSid, (
     _In_ PSID Sid
 ))
 
-NTDLL_API(BOOLEAN, RtlIsStateSeparationEnabled, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsStateSeparationEnabled, (
     VOID
 ))
 
@@ -5838,17 +5823,17 @@ typedef enum _APPCONTAINER_SID_TYPE
 } APPCONTAINER_SID_TYPE, *PAPPCONTAINER_SID_TYPE;
 
 // rev
-NTDLL_API(NTSTATUS, RtlGetAppContainerSidType, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetAppContainerSidType, (
     _In_ PSID AppContainerSid,
     _Out_ PAPPCONTAINER_SID_TYPE AppContainerSidType
 ))
 
-NTDLL_API(NTSTATUS, RtlFlsAlloc, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFlsAlloc, (
     _In_ PFLS_CALLBACK_FUNCTION Callback,
     _Out_ PULONG FlsIndex
 ))
 
-NTDLL_API(NTSTATUS, RtlFlsFree, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFlsFree, (
     _In_ ULONG FlsIndex
 ))
 
@@ -5860,7 +5845,7 @@ typedef enum _STATE_LOCATION_TYPE
 } STATE_LOCATION_TYPE;
 
 // private
-NTDLL_API(NTSTATUS, RtlGetPersistedStateLocation, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetPersistedStateLocation, (
     _In_ PCWSTR SourceID,
     _In_opt_ PCWSTR CustomValue,
     _In_opt_ PCWSTR DefaultPath,
@@ -5871,37 +5856,37 @@ NTDLL_API(NTSTATUS, RtlGetPersistedStateLocation, (
 ))
 
 // msdn
-NTDLL_API(BOOLEAN, RtlIsCloudFilesPlaceholder, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsCloudFilesPlaceholder, (
     _In_ ULONG FileAttributes,
     _In_ ULONG ReparseTag
 ))
 
 // msdn
-NTDLL_API(BOOLEAN, RtlIsPartialPlaceholder, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsPartialPlaceholder, (
     _In_ ULONG FileAttributes,
     _In_ ULONG ReparseTag
 ))
 
 // msdn
-NTDLL_API(NTSTATUS, RtlIsPartialPlaceholderFileHandle, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIsPartialPlaceholderFileHandle, (
     _In_ HANDLE FileHandle,
     _Out_ PBOOLEAN IsPartialPlaceholder
 ))
 
 // msdn
-NTDLL_API(NTSTATUS, RtlIsPartialPlaceholderFileInfo, (
+NTDLL_API(NTSTATUS, __stdcall, RtlIsPartialPlaceholderFileInfo, (
     _In_ PVOID InfoBuffer,
     _In_ FILE_INFORMATION_CLASS InfoClass,
     _Out_ PBOOLEAN IsPartialPlaceholder
 ))
 
 // rev
-NTDLL_API(BOOLEAN, RtlIsNonEmptyDirectoryReparsePointAllowed, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsNonEmptyDirectoryReparsePointAllowed, (
     _In_ ULONG ReparseTag
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlAppxIsFileOwnedByTrustedInstaller, (
+NTDLL_API(NTSTATUS, __stdcall, RtlAppxIsFileOwnedByTrustedInstaller, (
     _In_ HANDLE FileHandle, 
     _Out_ PBOOLEAN IsFileOwnedByTrustedInstaller
 ))
@@ -5913,7 +5898,7 @@ typedef struct _PS_PKG_CLAIM
     ULONGLONG Origin;
 } PS_PKG_CLAIM, *PPS_PKG_CLAIM;
 
-NTDLL_API(NTSTATUS, RtlQueryPackageClaims, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryPackageClaims, (
     _In_ HANDLE TokenHandle,
     _Out_writes_bytes_to_opt_(*PackageSize, *PackageSize) PWSTR PackageFullName,
     _Inout_opt_ PSIZE_T PackageSize,
@@ -5927,13 +5912,13 @@ NTDLL_API(NTSTATUS, RtlQueryPackageClaims, (
 // Protected policies
 
 // rev
-NTDLL_API(NTSTATUS, RtlQueryProtectedPolicy, (
+NTDLL_API(NTSTATUS, __stdcall, RtlQueryProtectedPolicy, (
     _In_ PGUID PolicyGuid,
     _Out_ PULONG_PTR PolicyValue
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlSetProtectedPolicy, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetProtectedPolicy, (
     _In_ PGUID PolicyGuid,
     _In_ ULONG_PTR PolicyValue,
     _Out_ PULONG_PTR OldPolicyValue
@@ -5941,14 +5926,14 @@ NTDLL_API(NTSTATUS, RtlSetProtectedPolicy, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS1)
 // private
-NTDLL_API(BOOLEAN, RtlIsMultiSessionSku, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsMultiSessionSku, (
     VOID
 ))
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS1)
 // private
-NTDLL_API(BOOLEAN, RtlIsMultiUsersInSessionSku, (
+NTDLL_API(BOOLEAN, __stdcall, RtlIsMultiUsersInSessionSku, (
     VOID
 ))
 #endif
@@ -5984,22 +5969,22 @@ typedef struct _RTL_BSD_ITEM
 } RTL_BSD_ITEM, *PRTL_BSD_ITEM;
 
 // ros
-NTDLL_API(NTSTATUS, RtlCreateBootStatusDataFile, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCreateBootStatusDataFile, (
     VOID
 ))
 
 // ros
-NTDLL_API(NTSTATUS, RtlLockBootStatusData, (
+NTDLL_API(NTSTATUS, __stdcall, RtlLockBootStatusData, (
     _Out_ PHANDLE FileHandle
 ))
 
 // ros
-NTDLL_API(NTSTATUS, RtlUnlockBootStatusData, (
+NTDLL_API(NTSTATUS, __stdcall, RtlUnlockBootStatusData, (
     _In_ HANDLE FileHandle
 ))
 
 // ros
-NTDLL_API(NTSTATUS, RtlGetSetBootStatusData, (
+NTDLL_API(NTSTATUS, __stdcall, RtlGetSetBootStatusData, (
     _In_ HANDLE FileHandle,
     _In_ BOOLEAN Read,
     _In_ RTL_BSD_ITEM_TYPE DataClass,
@@ -6009,24 +5994,24 @@ NTDLL_API(NTSTATUS, RtlGetSetBootStatusData, (
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlCheckBootStatusIntegrity, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCheckBootStatusIntegrity, (
     _In_ HANDLE FileHandle, 
     _Out_ PBOOLEAN Verified
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlCheckPortableOperatingSystem, (
+NTDLL_API(NTSTATUS, __stdcall, RtlCheckPortableOperatingSystem, (
     _Out_ PBOOLEAN IsPortable // VOID
 ))
 
 // rev
-NTDLL_API(NTSTATUS, RtlSetPortableOperatingSystem, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSetPortableOperatingSystem, (
     _In_ BOOLEAN IsPortable
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
-NTDLL_API(OS_DEPLOYEMENT_STATE_VALUES, RtlOsDeploymentState, (
+NTDLL_API(OS_DEPLOYEMENT_STATE_VALUES, __stdcall, RtlOsDeploymentState, (
     _Reserved_ _In_ ULONG Flags
 ))
 
@@ -6034,7 +6019,7 @@ NTDLL_API(OS_DEPLOYEMENT_STATE_VALUES, RtlOsDeploymentState, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NTDLL_API(NTSTATUS, RtlFindClosestEncodableLength, (
+NTDLL_API(NTSTATUS, __stdcall, RtlFindClosestEncodableLength, (
     _In_ ULONGLONG SourceLength,
     _Out_ PULONGLONG TargetLength
 ))
@@ -6049,16 +6034,16 @@ typedef NTSTATUS (NTAPI *PRTL_SECURE_MEMORY_CACHE_CALLBACK)(
     );
 
 // ros
-NTDLL_API(NTSTATUS, RtlRegisterSecureMemoryCacheCallback, (
+NTDLL_API(NTSTATUS, __stdcall, RtlRegisterSecureMemoryCacheCallback, (
     _In_ PRTL_SECURE_MEMORY_CACHE_CALLBACK Callback
 ))
 
-NTDLL_API(NTSTATUS, RtlDeregisterSecureMemoryCacheCallback, (
+NTDLL_API(NTSTATUS, __stdcall, RtlDeregisterSecureMemoryCacheCallback, (
     _In_ PRTL_SECURE_MEMORY_CACHE_CALLBACK Callback
 ))
 
 // ros
-NTDLL_API(BOOLEAN, RtlFlushSecureMemoryCache, (
+NTDLL_API(BOOLEAN, __stdcall, RtlFlushSecureMemoryCache, (
     _In_ PVOID MemoryCache,
     _In_opt_ SIZE_T MemoryLength
 ))

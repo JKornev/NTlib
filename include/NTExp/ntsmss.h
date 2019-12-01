@@ -12,14 +12,14 @@
 #ifndef _NTSMSS_H
 #define _NTSMSS_H
 
-NTDLL_API(NTSTATUS, RtlConnectToSm, (
+NTDLL_API(NTSTATUS, __stdcall, RtlConnectToSm, (
     _In_ PUNICODE_STRING ApiPortName,
     _In_ HANDLE ApiPortHandle,
     _In_ DWORD ProcessImageType,
     _Out_ PHANDLE SmssConnection
 ))
 
-NTDLL_API(NTSTATUS, RtlSendMsgToSm, (
+NTDLL_API(NTSTATUS, __stdcall, RtlSendMsgToSm, (
     _In_ HANDLE ApiPortHandle,
     _In_ PPORT_MESSAGE MessageData
 ))

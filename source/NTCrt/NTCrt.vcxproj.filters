@@ -8,6 +8,12 @@
     <ClCompile Include="security-check.cpp">
       <Filter>crt</Filter>
     </ClCompile>
+    <ClCompile Include="seh4.cpp">
+      <Filter>crt</Filter>
+    </ClCompile>
+    <ClCompile Include="seh3.cpp">
+      <Filter>crt</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="crt">
@@ -22,6 +28,9 @@
       <Filter>crt</Filter>
     </ClInclude>
     <ClInclude Include="helper-asm.h">
+      <Filter>crt</Filter>
+    </ClInclude>
+    <ClInclude Include="seh.h">
       <Filter>crt</Filter>
     </ClInclude>
   </ItemGroup>

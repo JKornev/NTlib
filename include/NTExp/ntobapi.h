@@ -121,7 +121,7 @@ typedef struct _OBJECT_HANDLE_FLAG_INFORMATION
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryObject, (
     _In_opt_ HANDLE Handle,
     _In_ OBJECT_INFORMATION_CLASS ObjectInformationClass,
     _Out_writes_bytes_opt_(ObjectInformationLength) PVOID ObjectInformation,
@@ -129,7 +129,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryObject, (
     _Out_opt_ PULONG ReturnLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetInformationObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationObject, (
     _In_ HANDLE Handle,
     _In_ OBJECT_INFORMATION_CLASS ObjectInformationClass,
     _In_reads_bytes_(ObjectInformationLength) PVOID ObjectInformation,
@@ -140,7 +140,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetInformationObject, (
 #define DUPLICATE_SAME_ACCESS 0x00000002
 #define DUPLICATE_SAME_ATTRIBUTES 0x00000004
 
-NATIVE_API(NTSTATUS, /*Nt*/DuplicateObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DuplicateObject, (
     _In_ HANDLE SourceProcessHandle,
     _In_ HANDLE SourceHandle,
     _In_opt_ HANDLE TargetProcessHandle,
@@ -150,28 +150,28 @@ NATIVE_API(NTSTATUS, /*Nt*/DuplicateObject, (
     _In_ ULONG Options
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/MakeTemporaryObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/MakeTemporaryObject, (
     _In_ HANDLE Handle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/MakePermanentObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/MakePermanentObject, (
     _In_ HANDLE Handle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SignalAndWaitForSingleObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SignalAndWaitForSingleObject, (
     _In_ HANDLE SignalHandle,
     _In_ HANDLE WaitHandle,
     _In_ BOOLEAN Alertable,
     _In_opt_ PLARGE_INTEGER Timeout
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/WaitForSingleObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WaitForSingleObject, (
     _In_ HANDLE Handle,
     _In_ BOOLEAN Alertable,
     _In_opt_ PLARGE_INTEGER Timeout
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/WaitForMultipleObjects, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WaitForMultipleObjects, (
     _In_ ULONG Count,
     _In_reads_(Count) HANDLE Handles[],
     _In_ WAIT_TYPE WaitType,
@@ -180,7 +180,7 @@ NATIVE_API(NTSTATUS, /*Nt*/WaitForMultipleObjects, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
-NATIVE_API(NTSTATUS, /*Nt*/WaitForMultipleObjects32, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WaitForMultipleObjects32, (
     _In_ ULONG Count,
     _In_reads_(Count) LONG Handles[],
     _In_ WAIT_TYPE WaitType,
@@ -189,13 +189,13 @@ NATIVE_API(NTSTATUS, /*Nt*/WaitForMultipleObjects32, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/SetSecurityObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetSecurityObject, (
     _In_ HANDLE Handle,
     _In_ SECURITY_INFORMATION SecurityInformation,
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QuerySecurityObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QuerySecurityObject, (
     _In_ HANDLE Handle,
     _In_ SECURITY_INFORMATION SecurityInformation,
     _Out_writes_bytes_opt_(Length) PSECURITY_DESCRIPTOR SecurityDescriptor,
@@ -203,12 +203,12 @@ NATIVE_API(NTSTATUS, /*Nt*/QuerySecurityObject, (
     _Out_ PULONG LengthNeeded
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/Close, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/Close, (
     _In_ HANDLE Handle
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
-NATIVE_API(NTSTATUS, /*Nt*/CompareObjects, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CompareObjects, (
     _In_ HANDLE FirstObjectHandle,
     _In_ HANDLE SecondObjectHandle
 ))
@@ -220,14 +220,14 @@ NATIVE_API(NTSTATUS, /*Nt*/CompareObjects, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateDirectoryObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateDirectoryObject, (
     _Out_ PHANDLE DirectoryHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
-NATIVE_API(NTSTATUS, /*Nt*/CreateDirectoryObjectEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateDirectoryObjectEx, (
     _Out_ PHANDLE DirectoryHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -236,7 +236,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateDirectoryObjectEx, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenDirectoryObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenDirectoryObject, (
     _Out_ PHANDLE DirectoryHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
@@ -248,7 +248,7 @@ typedef struct _OBJECT_DIRECTORY_INFORMATION
     UNICODE_STRING TypeName;
 } OBJECT_DIRECTORY_INFORMATION, *POBJECT_DIRECTORY_INFORMATION;
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryDirectoryObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryDirectoryObject, (
     _In_ HANDLE DirectoryHandle,
     _Out_writes_bytes_opt_(Length) PVOID Buffer,
     _In_ ULONG Length,
@@ -266,21 +266,21 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryDirectoryObject, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreatePrivateNamespace, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreatePrivateNamespace, (
     _Out_ PHANDLE NamespaceHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ PVOID BoundaryDescriptor
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenPrivateNamespace, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenPrivateNamespace, (
     _Out_ PHANDLE NamespaceHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ PVOID BoundaryDescriptor
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/DeletePrivateNamespace, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeletePrivateNamespace, (
     _In_ HANDLE NamespaceHandle
 ))
 
@@ -292,20 +292,20 @@ NATIVE_API(NTSTATUS, /*Nt*/DeletePrivateNamespace, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateSymbolicLinkObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateSymbolicLinkObject, (
     _Out_ PHANDLE LinkHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ PUNICODE_STRING LinkTarget
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenSymbolicLinkObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenSymbolicLinkObject, (
     _Out_ PHANDLE LinkHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QuerySymbolicLinkObject, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QuerySymbolicLinkObject, (
     _In_ HANDLE LinkHandle,
     _Inout_ PUNICODE_STRING LinkTarget,
     _Out_opt_ PULONG ReturnedLength

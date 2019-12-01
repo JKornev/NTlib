@@ -262,7 +262,7 @@ typedef struct _KEY_OPEN_SUBKEYS_INFORMATION
 
 // System calls
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateKey, (
     _Out_ PHANDLE KeyHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -273,7 +273,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateKey, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API(NTSTATUS, /*Nt*/CreateKeyTransacted, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateKeyTransacted, (
     _Out_ PHANDLE KeyHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -285,14 +285,14 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateKeyTransacted, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenKey, (
     _Out_ PHANDLE KeyHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API(NTSTATUS, /*Nt*/OpenKeyTransacted, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenKeyTransacted, (
     _Out_ PHANDLE KeyHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -301,7 +301,7 @@ NATIVE_API(NTSTATUS, /*Nt*/OpenKeyTransacted, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, /*Nt*/OpenKeyEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenKeyEx, (
     _Out_ PHANDLE KeyHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -310,7 +310,7 @@ NATIVE_API(NTSTATUS, /*Nt*/OpenKeyEx, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, /*Nt*/OpenKeyTransactedEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenKeyTransactedEx, (
     _Out_ PHANDLE KeyHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -319,21 +319,21 @@ NATIVE_API(NTSTATUS, /*Nt*/OpenKeyTransactedEx, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/DeleteKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeleteKey, (
     _In_ HANDLE KeyHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/RenameKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RenameKey, (
     _In_ HANDLE KeyHandle,
     _In_ PUNICODE_STRING NewName
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/DeleteValueKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeleteValueKey, (
     _In_ HANDLE KeyHandle,
     _In_ PUNICODE_STRING ValueName
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryKey, (
     _In_ HANDLE KeyHandle,
     _In_ KEY_INFORMATION_CLASS KeyInformationClass,
     _Out_writes_bytes_opt_(Length) PVOID KeyInformation,
@@ -341,14 +341,14 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryKey, (
     _Out_ PULONG ResultLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetInformationKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationKey, (
     _In_ HANDLE KeyHandle,
     _In_ KEY_SET_INFORMATION_CLASS KeySetInformationClass,
     _In_reads_bytes_(KeySetInformationLength) PVOID KeySetInformation,
     _In_ ULONG KeySetInformationLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryValueKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryValueKey, (
     _In_ HANDLE KeyHandle,
     _In_ PUNICODE_STRING ValueName,
     _In_ KEY_VALUE_INFORMATION_CLASS KeyValueInformationClass,
@@ -357,7 +357,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryValueKey, (
     _Out_ PULONG ResultLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetValueKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetValueKey, (
     _In_ HANDLE KeyHandle,
     _In_ PUNICODE_STRING ValueName,
     _In_opt_ ULONG TitleIndex,
@@ -366,7 +366,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetValueKey, (
     _In_ ULONG DataSize
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryMultipleValueKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryMultipleValueKey, (
     _In_ HANDLE KeyHandle,
     _Inout_updates_(EntryCount) PKEY_VALUE_ENTRY ValueEntries,
     _In_ ULONG EntryCount,
@@ -375,7 +375,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryMultipleValueKey, (
     _Out_opt_ PULONG RequiredBufferLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/EnumerateKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/EnumerateKey, (
     _In_ HANDLE KeyHandle,
     _In_ ULONG Index,
     _In_ KEY_INFORMATION_CLASS KeyInformationClass,
@@ -384,7 +384,7 @@ NATIVE_API(NTSTATUS, /*Nt*/EnumerateKey, (
     _Out_ PULONG ResultLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/EnumerateValueKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/EnumerateValueKey, (
     _In_ HANDLE KeyHandle,
     _In_ ULONG Index,
     _In_ KEY_VALUE_INFORMATION_CLASS KeyValueInformationClass,
@@ -393,31 +393,31 @@ NATIVE_API(NTSTATUS, /*Nt*/EnumerateValueKey, (
     _Out_ PULONG ResultLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/FlushKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FlushKey, (
     _In_ HANDLE KeyHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/CompactKeys, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CompactKeys, (
     _In_ ULONG Count,
     _In_reads_(Count) HANDLE KeyArray[]
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/CompressKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CompressKey, (
     _In_ HANDLE Key
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/LoadKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/LoadKey, (
     _In_ POBJECT_ATTRIBUTES TargetKey,
     _In_ POBJECT_ATTRIBUTES SourceFile
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/LoadKey2, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/LoadKey2, (
     _In_ POBJECT_ATTRIBUTES TargetKey,
     _In_ POBJECT_ATTRIBUTES SourceFile,
     _In_ ULONG Flags
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/LoadKeyEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/LoadKeyEx, (
     _In_ POBJECT_ATTRIBUTES TargetKey,
     _In_ POBJECT_ATTRIBUTES SourceFile,
     _In_ ULONG Flags,
@@ -428,36 +428,36 @@ NATIVE_API(NTSTATUS, /*Nt*/LoadKeyEx, (
     _Out_opt_ PIO_STATUS_BLOCK IoStatus
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ReplaceKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReplaceKey, (
     _In_ POBJECT_ATTRIBUTES NewFile,
     _In_ HANDLE TargetHandle,
     _In_ POBJECT_ATTRIBUTES OldFile
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SaveKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SaveKey, (
     _In_ HANDLE KeyHandle,
     _In_ HANDLE FileHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SaveKeyEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SaveKeyEx, (
     _In_ HANDLE KeyHandle,
     _In_ HANDLE FileHandle,
     _In_ ULONG Format
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SaveMergedKeys, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SaveMergedKeys, (
     _In_ HANDLE HighPrecedenceKeyHandle,
     _In_ HANDLE LowPrecedenceKeyHandle,
     _In_ HANDLE FileHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/RestoreKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RestoreKey, (
     _In_ HANDLE KeyHandle,
     _In_ HANDLE FileHandle,
     _In_ ULONG Flags
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/UnloadKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnloadKey, (
     _In_ POBJECT_ATTRIBUTES TargetKey
 ))
 
@@ -467,17 +467,17 @@ NATIVE_API(NTSTATUS, /*Nt*/UnloadKey, (
 //#define REG_FORCE_UNLOAD            1
 //#define REG_UNLOAD_LEGAL_FLAGS      (REG_FORCE_UNLOAD)
 
-NATIVE_API(NTSTATUS, /*Nt*/UnloadKey2, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnloadKey2, (
     _In_ POBJECT_ATTRIBUTES TargetKey,
     _In_ ULONG Flags
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/UnloadKeyEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnloadKeyEx, (
     _In_ POBJECT_ATTRIBUTES TargetKey,
     _In_opt_ HANDLE Event
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/NotifyChangeKey, (
     _In_ HANDLE KeyHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -490,7 +490,7 @@ NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeKey, (
     _In_ BOOLEAN Asynchronous
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeMultipleKeys, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/NotifyChangeMultipleKeys, (
     _In_ HANDLE MasterKeyHandle,
     _In_opt_ ULONG Count,
     _In_reads_opt_(Count) OBJECT_ATTRIBUTES SubordinateObjects[],
@@ -505,41 +505,41 @@ NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeMultipleKeys, (
     _In_ BOOLEAN Asynchronous
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryOpenSubKeys, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryOpenSubKeys, (
     _In_ POBJECT_ATTRIBUTES TargetKey,
     _Out_ PULONG HandleCount
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryOpenSubKeysEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryOpenSubKeysEx, (
     _In_ POBJECT_ATTRIBUTES TargetKey,
     _In_ ULONG BufferLength,
     _Out_writes_bytes_(BufferLength) PVOID Buffer,
     _Out_ PULONG RequiredSize
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/InitializeRegistry, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/InitializeRegistry, (
     _In_ USHORT BootCondition
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/LockRegistryKey, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/LockRegistryKey, (
     _In_ HANDLE KeyHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/LockProductActivationKeys, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/LockProductActivationKeys, (
     _Inout_opt_ ULONG *pPrivateVer,
     _Out_opt_ ULONG *pSafeMode
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NATIVE_API(NTSTATUS, /*Nt*/FreezeRegistry, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FreezeRegistry, (
     _In_ ULONG TimeOutInSeconds
 ))
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NATIVE_API(NTSTATUS, /*Nt*/ThawRegistry, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ThawRegistry, (
     VOID
 ))
 #endif

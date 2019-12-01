@@ -12,44 +12,37 @@
 #ifndef _NTXCAPI_H
 #define _NTXCAPI_H
 
-NTDLL_API(BOOLEAN, RtlDispatchException, (
+NTDLL_API(BOOLEAN, __stdcall, RtlDispatchException, (
     _In_ PEXCEPTION_RECORD ExceptionRecord,
     _In_ PCONTEXT ContextRecord
 ))
 
-NTSYSAPI
-DECLSPEC_NORETURN
-VOID
-NTAPI
-RtlRaiseStatus(
+NTDLL_API_VOID(__stdcall, RtlRaiseStatus, (
     _In_ NTSTATUS Status
-    );
+))
 
-NTDLL_API_VOID(RtlRaiseException, (
+NTDLL_API_VOID(__stdcall, RtlRaiseException, (
     _In_ PEXCEPTION_RECORD ExceptionRecord
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/Continue, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/Continue, (
     _In_ PCONTEXT ContextRecord,
     _In_ BOOLEAN TestAlert
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/RaiseException, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RaiseException, (
     _In_ PEXCEPTION_RECORD ExceptionRecord,
     _In_ PCONTEXT ContextRecord,
     _In_ BOOLEAN FirstChance
 ))
 
 __analysis_noreturn
-NTSYSCALLAPI
-VOID
-NTAPI
-RtlAssert(
+NTDLL_API_VOID(__stdcall, RtlAssert, (
     _In_ PVOID VoidFailedAssertion,
     _In_ PVOID VoidFileName,
     _In_ ULONG LineNumber,
     _In_opt_ PSTR MutableMessage
-    );
+))
 
 #define RTL_ASSERT(exp) \
     ((!(exp)) ? (RtlAssert((PVOID)#exp, (PVOID)__FILE__, __LINE__, NULL), FALSE) : TRUE)

@@ -2,6 +2,8 @@
 
 #include "NTExp.h"
 
+HANDLE NtlPsGetCurrentProcess();
+
 NTSTATUS NtlPsCreateProcess(
     _Out_    PHANDLE Handle,
     _In_     LPWSTR Path,

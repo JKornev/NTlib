@@ -27,11 +27,14 @@
     <ClCompile Include="NTCrt.cpp" />
     <ClCompile Include="runtime-checks.cpp" />
     <ClCompile Include="security-check.cpp" />
+    <ClCompile Include="seh3.cpp" />
+    <ClCompile Include="seh4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="helper-asm.h" />
     <ClInclude Include="runtime-checks.h" />
     <ClInclude Include="security-check.h" />
+    <ClInclude Include="seh.h" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="helper-x64.asm">
@@ -195,6 +198,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

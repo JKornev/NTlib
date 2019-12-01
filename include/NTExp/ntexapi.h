@@ -18,26 +18,26 @@
 
 // Thread execution
 
-NATIVE_API(NTSTATUS, /*Nt*/DelayExecution, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DelayExecution, (
     _In_ BOOLEAN Alertable,
     _In_opt_ PLARGE_INTEGER DelayInterval
 ))
 
 // Environment values
 
-NATIVE_API(NTSTATUS, /*Nt*/QuerySystemEnvironmentValue, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QuerySystemEnvironmentValue, (
     _In_ PUNICODE_STRING VariableName,
     _Out_writes_bytes_(ValueLength) PWSTR VariableValue,
     _In_ USHORT ValueLength,
     _Out_opt_ PUSHORT ReturnLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetSystemEnvironmentValue, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetSystemEnvironmentValue, (
     _In_ PUNICODE_STRING VariableName,
     _In_ PUNICODE_STRING VariableValue
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QuerySystemEnvironmentValueEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QuerySystemEnvironmentValueEx, (
     _In_ PUNICODE_STRING VariableName,
     _In_ LPGUID VendorGuid,
     _Out_writes_bytes_opt_(*ValueLength) PVOID Value,
@@ -45,7 +45,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QuerySystemEnvironmentValueEx, (
     _Out_opt_ PULONG Attributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetSystemEnvironmentValueEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetSystemEnvironmentValueEx, (
     _In_ PUNICODE_STRING VariableName,
     _In_ LPGUID VendorGuid,
     _In_reads_bytes_opt_(ValueLength) PVOID Value,
@@ -53,7 +53,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetSystemEnvironmentValueEx, (
     _In_ ULONG Attributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/EnumerateSystemEnvironmentValuesEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/EnumerateSystemEnvironmentValuesEx, (
     _In_ ULONG InformationClass,
     _Out_ PVOID Buffer,
     _Inout_ PULONG BufferLength
@@ -120,75 +120,75 @@ typedef struct _EFI_DRIVER_ENTRY_LIST
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NATIVE_API(NTSTATUS, /*Nt*/AddBootEntry, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AddBootEntry, (
     _In_ PBOOT_ENTRY BootEntry,
     _Out_opt_ PULONG Id
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/DeleteBootEntry, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeleteBootEntry, (
     _In_ ULONG Id
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ModifyBootEntry, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ModifyBootEntry, (
     _In_ PBOOT_ENTRY BootEntry
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/EnumerateBootEntries, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/EnumerateBootEntries, (
     _Out_writes_bytes_opt_(*BufferLength) PVOID Buffer,
     _Inout_ PULONG BufferLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryBootEntryOrder, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryBootEntryOrder, (
     _Out_writes_opt_(*Count) PULONG Ids,
     _Inout_ PULONG Count
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetBootEntryOrder, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetBootEntryOrder, (
     _In_reads_(Count) PULONG Ids,
     _In_ ULONG Count
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryBootOptions, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryBootOptions, (
     _Out_writes_bytes_opt_(*BootOptionsLength) PBOOT_OPTIONS BootOptions,
     _Inout_ PULONG BootOptionsLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetBootOptions, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetBootOptions, (
     _In_ PBOOT_OPTIONS BootOptions,
     _In_ ULONG FieldsToChange
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/TranslateFilePath, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/TranslateFilePath, (
     _In_ PFILE_PATH InputFilePath,
     _In_ ULONG OutputType,
     _Out_writes_bytes_opt_(*OutputFilePathLength) PFILE_PATH OutputFilePath,
     _Inout_opt_ PULONG OutputFilePathLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/AddDriverEntry, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AddDriverEntry, (
     _In_ PEFI_DRIVER_ENTRY DriverEntry,
     _Out_opt_ PULONG Id
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/DeleteDriverEntry, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeleteDriverEntry, (
     _In_ ULONG Id
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ModifyDriverEntry, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ModifyDriverEntry, (
     _In_ PEFI_DRIVER_ENTRY DriverEntry
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/EnumerateDriverEntries, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/EnumerateDriverEntries, (
     _Out_writes_bytes_opt_(*BufferLength) PVOID Buffer,
     _Inout_ PULONG BufferLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryDriverEntryOrder, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryDriverEntryOrder, (
     _Out_writes_opt_(*Count) PULONG Ids,
     _Inout_ PULONG Count
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetDriverEntryOrder, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetDriverEntryOrder, (
     _In_reads_(Count) PULONG Ids,
     _In_ ULONG Count
 ))
@@ -202,7 +202,7 @@ typedef enum _FILTER_BOOT_OPTION_OPERATION
 } FILTER_BOOT_OPTION_OPERATION;
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
-NATIVE_API(NTSTATUS, /*Nt*/FilterBootOption, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FilterBootOption, (
     _In_ FILTER_BOOT_OPTION_OPERATION FilterOperation,
     _In_ ULONG ObjectType,
     _In_ ULONG ElementType,
@@ -230,7 +230,7 @@ typedef struct _EVENT_BASIC_INFORMATION
     LONG EventState;
 } EVENT_BASIC_INFORMATION, *PEVENT_BASIC_INFORMATION;
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateEvent, (
     _Out_ PHANDLE EventHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -238,36 +238,36 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateEvent, (
     _In_ BOOLEAN InitialState
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenEvent, (
     _Out_ PHANDLE EventHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetEvent, (
     _In_ HANDLE EventHandle,
     _Out_opt_ PLONG PreviousState
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetEventBoostPriority, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetEventBoostPriority, (
     _In_ HANDLE EventHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ClearEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ClearEvent, (
     _In_ HANDLE EventHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ResetEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ResetEvent, (
     _In_ HANDLE EventHandle,
     _Out_opt_ PLONG PreviousState
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/PulseEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/PulseEvent, (
     _In_ HANDLE EventHandle,
     _Out_opt_ PLONG PreviousState
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryEvent, (
     _In_ HANDLE EventHandle,
     _In_ EVENT_INFORMATION_CLASS EventInformationClass,
     _Out_writes_bytes_(EventInformationLength) PVOID EventInformation,
@@ -279,39 +279,39 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryEvent, (
 
 #define EVENT_PAIR_ALL_ACCESS (STANDARD_RIGHTS_REQUIRED | SYNCHRONIZE)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateEventPair, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateEventPair, (
     _Out_ PHANDLE EventPairHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenEventPair, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenEventPair, (
     _Out_ PHANDLE EventPairHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetLowEventPair, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetLowEventPair, (
     _In_ HANDLE EventPairHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetHighEventPair, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetHighEventPair, (
     _In_ HANDLE EventPairHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/WaitLowEventPair, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WaitLowEventPair, (
     _In_ HANDLE EventPairHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/WaitHighEventPair, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WaitHighEventPair, (
     _In_ HANDLE EventPairHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetLowWaitHighEventPair, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetLowWaitHighEventPair, (
     _In_ HANDLE EventPairHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetHighWaitLowEventPair, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetHighWaitLowEventPair, (
     _In_ HANDLE EventPairHandle
 ))
 
@@ -335,25 +335,25 @@ typedef struct _MUTANT_OWNER_INFORMATION
     CLIENT_ID ClientId;
 } MUTANT_OWNER_INFORMATION, *PMUTANT_OWNER_INFORMATION;
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateMutant, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateMutant, (
     _Out_ PHANDLE MutantHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ BOOLEAN InitialOwner
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenMutant, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenMutant, (
     _Out_ PHANDLE MutantHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ReleaseMutant, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReleaseMutant, (
     _In_ HANDLE MutantHandle,
     _Out_opt_ PLONG PreviousCount
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryMutant, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryMutant, (
     _In_ HANDLE MutantHandle,
     _In_ MUTANT_INFORMATION_CLASS MutantInformationClass,
     _Out_writes_bytes_(MutantInformationLength) PVOID MutantInformation,
@@ -378,7 +378,7 @@ typedef struct _SEMAPHORE_BASIC_INFORMATION
     LONG MaximumCount;
 } SEMAPHORE_BASIC_INFORMATION, *PSEMAPHORE_BASIC_INFORMATION;
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateSemaphore, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateSemaphore, (
     _Out_ PHANDLE SemaphoreHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -386,19 +386,19 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateSemaphore, (
     _In_ LONG MaximumCount
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenSemaphore, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenSemaphore, (
     _Out_ PHANDLE SemaphoreHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ReleaseSemaphore, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReleaseSemaphore, (
     _In_ HANDLE SemaphoreHandle,
     _In_ LONG ReleaseCount,
     _Out_opt_ PLONG PreviousCount
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QuerySemaphore, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QuerySemaphore, (
     _In_ HANDLE SemaphoreHandle,
     _In_ SEMAPHORE_INFORMATION_CLASS SemaphoreInformationClass,
     _Out_writes_bytes_(SemaphoreInformationLength) PVOID SemaphoreInformation,
@@ -446,20 +446,20 @@ typedef struct _TIMER_SET_COALESCABLE_TIMER_INFO
 } TIMER_SET_COALESCABLE_TIMER_INFO, *PTIMER_SET_COALESCABLE_TIMER_INFO;
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateTimer, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateTimer, (
     _Out_ PHANDLE TimerHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ TIMER_TYPE TimerType
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenTimer, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenTimer, (
     _Out_ PHANDLE TimerHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetTimer, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetTimer, (
     _In_ HANDLE TimerHandle,
     _In_ PLARGE_INTEGER DueTime,
     _In_opt_ PTIMER_APC_ROUTINE TimerApcRoutine,
@@ -470,7 +470,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetTimer, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, /*Nt*/SetTimerEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetTimerEx, (
     _In_ HANDLE TimerHandle,
     _In_ TIMER_SET_INFORMATION_CLASS TimerSetInformationClass,
     _Inout_updates_bytes_opt_(TimerSetInformationLength) PVOID TimerSetInformation,
@@ -478,12 +478,12 @@ NATIVE_API(NTSTATUS, /*Nt*/SetTimerEx, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/CancelTimer, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CancelTimer, (
     _In_ HANDLE TimerHandle,
     _Out_opt_ PBOOLEAN CurrentState
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryTimer, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryTimer, (
     _In_ HANDLE TimerHandle,
     _In_ TIMER_INFORMATION_CLASS TimerInformationClass,
     _Out_writes_bytes_(TimerInformationLength) PVOID TimerInformation,
@@ -493,12 +493,12 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryTimer, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateIRTimer, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateIRTimer, (
     _Out_ PHANDLE TimerHandle,
     _In_ ACCESS_MASK DesiredAccess
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetIRTimer, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetIRTimer, (
     _In_ HANDLE TimerHandle,
     _In_opt_ PLARGE_INTEGER DueTime
 ))
@@ -516,7 +516,7 @@ typedef PVOID PT2_CANCEL_PARAMETERS;
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateTimer2, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateTimer2, (
     _Out_ PHANDLE TimerHandle,
     _In_opt_ PVOID Reserved1,
     _In_opt_ PVOID Reserved2,
@@ -524,14 +524,14 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateTimer2, (
     _In_ ACCESS_MASK DesiredAccess
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetTimer2, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetTimer2, (
     _In_ HANDLE TimerHandle,
     _In_ PLARGE_INTEGER DueTime,
     _In_opt_ PLARGE_INTEGER Period,
     _In_ PT2_SET_PARAMETERS Parameters
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/CancelTimer2, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CancelTimer2, (
     _In_ HANDLE TimerHandle,
     _In_ PT2_CANCEL_PARAMETERS Parameters
 ))
@@ -543,7 +543,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CancelTimer2, (
 #define PROFILE_CONTROL 0x0001
 #define PROFILE_ALL_ACCESS (STANDARD_RIGHTS_REQUIRED | PROFILE_CONTROL)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateProfile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateProfile, (
     _Out_ PHANDLE ProfileHandle,
     _In_opt_ HANDLE Process,
     _In_ PVOID ProfileBase,
@@ -556,7 +556,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateProfile, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, /*Nt*/CreateProfileEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateProfileEx, (
     _Out_ PHANDLE ProfileHandle,
     _In_opt_ HANDLE Process,
     _In_ PVOID ProfileBase,
@@ -570,20 +570,20 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateProfileEx, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/StartProfile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/StartProfile, (
     _In_ HANDLE ProfileHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/StopProfile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/StopProfile, (
     _In_ HANDLE ProfileHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryIntervalProfile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryIntervalProfile, (
     _In_ KPROFILE_SOURCE ProfileSource,
     _Out_ PULONG Interval
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetIntervalProfile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetIntervalProfile, (
     _In_ ULONG Interval,
     _In_ KPROFILE_SOURCE Source
 ))
@@ -595,27 +595,27 @@ NATIVE_API(NTSTATUS, /*Nt*/SetIntervalProfile, (
 #define KEYEDEVENT_ALL_ACCESS \
     (STANDARD_RIGHTS_REQUIRED | KEYEDEVENT_WAIT | KEYEDEVENT_WAKE)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateKeyedEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateKeyedEvent, (
     _Out_ PHANDLE KeyedEventHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ ULONG Flags
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenKeyedEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenKeyedEvent, (
     _Out_ PHANDLE KeyedEventHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ReleaseKeyedEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReleaseKeyedEvent, (
     _In_ HANDLE KeyedEventHandle,
     _In_ PVOID KeyValue,
     _In_ BOOLEAN Alertable,
     _In_opt_ PLARGE_INTEGER Timeout
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/WaitForKeyedEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WaitForKeyedEvent, (
     _In_ HANDLE KeyedEventHandle,
     _In_ PVOID KeyValue,
     _In_ BOOLEAN Alertable,
@@ -625,7 +625,7 @@ NATIVE_API(NTSTATUS, /*Nt*/WaitForKeyedEvent, (
 // UMS
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, /*Nt*/UmsThreadYield, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UmsThreadYield, (
     _In_ PVOID SchedulerParam
 ))
 #endif
@@ -690,7 +690,7 @@ typedef struct _WNF_DELIVERY_DESCRIPTOR
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateWnfStateName, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateWnfStateName, (
     _Out_ PWNF_STATE_NAME StateName,
     _In_ WNF_STATE_NAME_LIFETIME NameLifetime,
     _In_ WNF_DATA_SCOPE DataScope,
@@ -700,11 +700,11 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateWnfStateName, (
     _In_ PSECURITY_DESCRIPTOR SecurityDescriptor
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/DeleteWnfStateName, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeleteWnfStateName, (
     _In_ PCWNF_STATE_NAME StateName
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/UpdateWnfStateData, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UpdateWnfStateData, (
     _In_ PCWNF_STATE_NAME StateName,
     _In_reads_bytes_opt_(Length) const VOID *Buffer,
     _In_opt_ ULONG Length,
@@ -714,12 +714,12 @@ NATIVE_API(NTSTATUS, /*Nt*/UpdateWnfStateData, (
     _In_ LOGICAL CheckStamp
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/DeleteWnfStateData, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeleteWnfStateData, (
     _In_ PCWNF_STATE_NAME StateName,
     _In_opt_ const VOID *ExplicitScope
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryWnfStateData, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryWnfStateData, (
     _In_ PCWNF_STATE_NAME StateName,
     _In_opt_ PCWNF_TYPE_ID TypeId,
     _In_opt_ const VOID *ExplicitScope,
@@ -728,7 +728,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryWnfStateData, (
     _Inout_ PULONG BufferSize
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryWnfStateNameInformation, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryWnfStateNameInformation, (
     _In_ PCWNF_STATE_NAME StateName,
     _In_ WNF_STATE_NAME_INFORMATION NameInfoClass,
     _In_opt_ const VOID *ExplicitScope,
@@ -736,14 +736,14 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryWnfStateNameInformation, (
     _In_ ULONG InfoBufferSize
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SubscribeWnfStateChange, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SubscribeWnfStateChange, (
     _In_ PCWNF_STATE_NAME StateName,
     _In_opt_ WNF_CHANGE_STAMP ChangeStamp,
     _In_ ULONG EventMask,
     _Out_opt_ PULONG64 SubscriptionId
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/UnsubscribeWnfStateChange, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnsubscribeWnfStateChange, (
     _In_ PCWNF_STATE_NAME StateName
 ))
 
@@ -751,7 +751,7 @@ NATIVE_API(NTSTATUS, /*Nt*/UnsubscribeWnfStateChange, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
-NATIVE_API(NTSTATUS, /*Nt*/GetCompleteWnfStateSubscription, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetCompleteWnfStateSubscription, (
     _In_opt_ PWNF_STATE_NAME OldDescriptorStateName,
     _In_opt_ ULONG64 *OldSubscriptionId,
     _In_opt_ ULONG OldDescriptorEventMask,
@@ -760,7 +760,7 @@ NATIVE_API(NTSTATUS, /*Nt*/GetCompleteWnfStateSubscription, (
     _In_ ULONG DescriptorSize
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetWnfProcessNotificationEvent, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetWnfProcessNotificationEvent, (
     _In_ HANDLE NotificationEvent
 ))
 
@@ -844,7 +844,7 @@ typedef struct _WORKER_FACTORY_BASIC_INFORMATION
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateWorkerFactory, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateWorkerFactory, (
     _Out_ PHANDLE WorkerFactoryHandleReturn,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -857,7 +857,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateWorkerFactory, (
     _In_opt_ SIZE_T StackCommit
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryInformationWorkerFactory, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationWorkerFactory, (
     _In_ HANDLE WorkerFactoryHandle,
     _In_ WORKERFACTORYINFOCLASS WorkerFactoryInformationClass,
     _Out_writes_bytes_(WorkerFactoryInformationLength) PVOID WorkerFactoryInformation,
@@ -865,29 +865,29 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryInformationWorkerFactory, (
     _Out_opt_ PULONG ReturnLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetInformationWorkerFactory, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationWorkerFactory, (
     _In_ HANDLE WorkerFactoryHandle,
     _In_ WORKERFACTORYINFOCLASS WorkerFactoryInformationClass,
     _In_reads_bytes_(WorkerFactoryInformationLength) PVOID WorkerFactoryInformation,
     _In_ ULONG WorkerFactoryInformationLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ShutdownWorkerFactory, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ShutdownWorkerFactory, (
     _In_ HANDLE WorkerFactoryHandle,
     _Inout_ volatile LONG *PendingWorkerCount
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ReleaseWorkerFactoryWorker, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReleaseWorkerFactoryWorker, (
     _In_ HANDLE WorkerFactoryHandle
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/WorkerFactoryWorkerReady, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WorkerFactoryWorkerReady, (
     _In_ HANDLE WorkerFactoryHandle
 ))
 
 struct _FILE_IO_COMPLETION_INFORMATION;
 
-NATIVE_API(NTSTATUS, /*Nt*/WaitForWorkViaWorkerFactory, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WaitForWorkViaWorkerFactory, (
     _In_ HANDLE WorkerFactoryHandle,
     _Out_ struct _FILE_IO_COMPLETION_INFORMATION *MiniPacket
 ))
@@ -896,22 +896,22 @@ NATIVE_API(NTSTATUS, /*Nt*/WaitForWorkViaWorkerFactory, (
 
 // Time
 
-NATIVE_API(NTSTATUS, /*Nt*/QuerySystemTime, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QuerySystemTime, (
     _Out_ PLARGE_INTEGER SystemTime
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetSystemTime, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetSystemTime, (
     _In_opt_ PLARGE_INTEGER SystemTime,
     _Out_opt_ PLARGE_INTEGER PreviousTime
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryTimerResolution, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryTimerResolution, (
     _Out_ PULONG MaximumTime,
     _Out_ PULONG MinimumTime,
     _Out_ PULONG CurrentTime
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetTimerResolution, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetTimerResolution, (
     _In_ ULONG DesiredTime,
     _In_ BOOLEAN SetResolution,
     _Out_ PULONG ActualTime
@@ -919,24 +919,24 @@ NATIVE_API(NTSTATUS, /*Nt*/SetTimerResolution, (
 
 // Performance Counter
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryPerformanceCounter, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryPerformanceCounter, (
     _Out_ PLARGE_INTEGER PerformanceCounter,
     _Out_opt_ PLARGE_INTEGER PerformanceFrequency
 ))
 
 // LUIDs
 
-NATIVE_API(NTSTATUS, /*Nt*/AllocateLocallyUniqueId, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AllocateLocallyUniqueId, (
     _Out_ PLUID Luid
 ))
 
 // UUIDs
 
-NATIVE_API(NTSTATUS, /*Nt*/SetUuidSeed, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetUuidSeed, (
     _In_ PCHAR Seed
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/AllocateUuids, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AllocateUuids, (
     _Out_ PULARGE_INTEGER Time,
     _Out_ PULONG Range,
     _Out_ PULONG Sequence,
@@ -3122,7 +3122,7 @@ typedef struct _SYSTEM_SECURITY_MODEL_INFORMATION
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, /*Nt*/QuerySystemInformation, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QuerySystemInformation, (
     _In_ SYSTEM_INFORMATION_CLASS SystemInformationClass,
     _Out_writes_bytes_opt_(SystemInformationLength) PVOID SystemInformation,
     _In_ ULONG SystemInformationLength,
@@ -3130,7 +3130,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QuerySystemInformation, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, /*Nt*/QuerySystemInformationEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QuerySystemInformationEx, (
     _In_ SYSTEM_INFORMATION_CLASS SystemInformationClass,
     _In_reads_bytes_(InputBufferLength) PVOID InputBuffer,
     _In_ ULONG InputBufferLength,
@@ -3140,7 +3140,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QuerySystemInformationEx, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/SetSystemInformation, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetSystemInformation, (
     _In_ SYSTEM_INFORMATION_CLASS SystemInformationClass,
     _In_reads_bytes_opt_(SystemInformationLength) PVOID SystemInformation,
     _In_ ULONG SystemInformationLength
@@ -3299,7 +3299,7 @@ typedef struct _SYSDBG_LIVEDUMP_CONTROL
     SYSDBG_LIVEDUMP_CONTROL_ADDPAGES AddPagesControl;
 } SYSDBG_LIVEDUMP_CONTROL, *PSYSDBG_LIVEDUMP_CONTROL;
 
-NATIVE_API(NTSTATUS, /*Nt*/SystemDebugControl, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SystemDebugControl, (
     _In_ SYSDBG_COMMAND Command,
     _Inout_updates_bytes_opt_(InputBufferLength) PVOID InputBuffer,
     _In_ ULONG InputBufferLength,
@@ -3340,7 +3340,7 @@ typedef enum _HARDERROR_RESPONSE
 
 #define HARDERROR_OVERRIDE_ERRORMODE 0x10000000
 
-NATIVE_API(NTSTATUS, /*Nt*/RaiseHardError, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RaiseHardError, (
     _In_ NTSTATUS ErrorStatus,
     _In_ ULONG NumberOfParameters,
     _In_ ULONG UnicodeStringParameterMask,
@@ -3605,39 +3605,39 @@ FORCEINLINE ULONG NtGetTickCount()
 
 // Locale
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryDefaultLocale, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryDefaultLocale, (
     _In_ BOOLEAN UserProfile,
     _Out_ PLCID DefaultLocaleId
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetDefaultLocale, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetDefaultLocale, (
     _In_ BOOLEAN UserProfile,
     _In_ LCID DefaultLocaleId
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryInstallUILanguage, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInstallUILanguage, (
     _Out_ LANGID *InstallUILanguageId
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NATIVE_API(NTSTATUS, /*Nt*/FlushInstallUILanguage, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FlushInstallUILanguage, (
     _In_ LANGID InstallUILanguage,
     _In_ ULONG SetComittedFlag
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryDefaultUILanguage, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryDefaultUILanguage, (
     _Out_ LANGID *DefaultUILanguageId
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetDefaultUILanguage, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetDefaultUILanguage, (
     _In_ LANGID DefaultUILanguageId
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NATIVE_API(NTSTATUS, /*Nt*/IsUILanguageComitted, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/IsUILanguageComitted, (
     VOID
 ))
 #endif
@@ -3649,13 +3649,13 @@ NATIVE_API(NTSTATUS, /*Nt*/IsUILanguageComitted, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, /*Nt*/InitializeNlsFiles, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/InitializeNlsFiles, (
     _Out_ PVOID *BaseAddress,
     _Out_ PLCID DefaultLocaleId,
     _Out_ PLARGE_INTEGER DefaultCasingTableSize
 ))
 #else
-NATIVE_API(NTSTATUS, /*Nt*/InitializeNlsFiles, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/InitializeNlsFiles, (
     _Out_ PVOID *BaseAddress,
     _Out_ PLCID DefaultLocaleId,
     _Out_ PLARGE_INTEGER DefaultCasingTableSize,
@@ -3663,7 +3663,7 @@ NATIVE_API(NTSTATUS, /*Nt*/InitializeNlsFiles, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/GetNlsSectionPtr, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetNlsSectionPtr, (
     _In_ ULONG SectionType,
     _In_ ULONG SectionData,
     _In_ PVOID ContextData,
@@ -3673,19 +3673,19 @@ NATIVE_API(NTSTATUS, /*Nt*/GetNlsSectionPtr, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION < NTLIB_WIN_7)
 
-NATIVE_API(NTSTATUS, /*Nt*/AcquireCMFViewOwnership, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AcquireCMFViewOwnership, (
     _Out_ PULONGLONG TimeStamp,
     _Out_ PBOOLEAN tokenTaken,
     _In_ BOOLEAN replaceExisting
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ReleaseCMFViewOwnership, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReleaseCMFViewOwnership, (
     VOID
 ))
 
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/MapCMFModule, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/MapCMFModule, (
     _In_ ULONG What,
     _In_ ULONG Index,
     _Out_opt_ PULONG CacheIndexOut,
@@ -3694,7 +3694,7 @@ NATIVE_API(NTSTATUS, /*Nt*/MapCMFModule, (
     _Out_opt_ PVOID *BaseAddress
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/GetMUIRegistryInfo, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetMUIRegistryInfo, (
     _In_ ULONG Flags,
     _Inout_ PULONG DataSize,
     _Out_ PVOID Data
@@ -3706,7 +3706,7 @@ NATIVE_API(NTSTATUS, /*Nt*/GetMUIRegistryInfo, (
 
 // Global atoms
 
-NATIVE_API(NTSTATUS, /*Nt*/AddAtom, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AddAtom, (
     _In_reads_bytes_opt_(Length) PWSTR AtomName,
     _In_ ULONG Length,
     _Out_opt_ PRTL_ATOM Atom
@@ -3717,7 +3717,7 @@ NATIVE_API(NTSTATUS, /*Nt*/AddAtom, (
 #define ATOM_FLAG_GLOBAL 0x2
 
 // rev
-NATIVE_API(NTSTATUS, /*Nt*/AddAtomEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AddAtomEx, (
     _In_reads_bytes_opt_(Length) PWSTR AtomName,
     _In_ ULONG Length,
     _Out_opt_ PRTL_ATOM Atom,
@@ -3726,13 +3726,13 @@ NATIVE_API(NTSTATUS, /*Nt*/AddAtomEx, (
 
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/FindAtom, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FindAtom, (
     _In_reads_bytes_opt_(Length) PWSTR AtomName,
     _In_ ULONG Length,
     _Out_opt_ PRTL_ATOM Atom
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/DeleteAtom, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeleteAtom, (
     _In_ RTL_ATOM Atom
 ))
 
@@ -3756,7 +3756,7 @@ typedef struct _ATOM_TABLE_INFORMATION
     RTL_ATOM Atoms[1];
 } ATOM_TABLE_INFORMATION, *PATOM_TABLE_INFORMATION;
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryInformationAtom, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationAtom, (
     _In_ RTL_ATOM Atom,
     _In_ ATOM_INFORMATION_CLASS AtomInformationClass,
     _Out_writes_bytes_(AtomInformationLength) PVOID AtomInformation,
@@ -3845,7 +3845,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryInformationAtom, (
 
 // Licensing
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryLicenseValue, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryLicenseValue, (
     _In_ PUNICODE_STRING ValueName,
     _Out_opt_ PULONG Type,
     _Out_writes_bytes_to_opt_(DataSize, *ResultDataSize) PVOID Data,
@@ -3855,7 +3855,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryLicenseValue, (
 
 // Misc.
 
-NATIVE_API(NTSTATUS, /*Nt*/SetDefaultHardErrorPort, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetDefaultHardErrorPort, (
     _In_ HANDLE DefaultHardErrorPort
 ))
 
@@ -3866,11 +3866,11 @@ typedef enum _SHUTDOWN_ACTION
     ShutdownPowerOff
 } SHUTDOWN_ACTION;
 
-NATIVE_API(NTSTATUS, /*Nt*/ShutdownSystem, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ShutdownSystem, (
     _In_ SHUTDOWN_ACTION Action
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/DisplayString, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DisplayString, (
     _In_ PUNICODE_STRING String
 ))
 
@@ -3878,7 +3878,7 @@ NATIVE_API(NTSTATUS, /*Nt*/DisplayString, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NATIVE_API(NTSTATUS, /*Nt*/DrawText, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DrawText, (
     _In_ PUNICODE_STRING Text
 ))
 #endif

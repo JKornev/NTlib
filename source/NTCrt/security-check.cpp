@@ -1,6 +1,9 @@
 ﻿#include "security-check.h"
 #include "helper-asm.h"
 
+// ========================
+//  Security cookie
+
 #define STATUS_SECURITY_CHECK_FAILURE STATUS_STACK_BUFFER_OVERRUN
 
 #ifdef _WIN64
@@ -12,6 +15,9 @@
 DECLSPEC_SELECTANY uintptr_t __security_cookie = DEFAULT_SECURITY_COOKIE;
 DECLSPEC_SELECTANY uintptr_t __security_cookie_complement = ~(DEFAULT_SECURITY_COOKIE);
 
+// ========================
+//  GS failure vars
+
 static EXCEPTION_RECORD         s_exception_record;
 static CONTEXT                  s_exception_context;
 static const EXCEPTION_POINTERS s_exception_pointers = {
@@ -19,10 +25,17 @@ static const EXCEPTION_POINTERS s_exception_pointers = {
     &s_exception_context
 };
 
-//TODO: remove this shit
-//uintptr_t __GSHandlerCheck = 0;
+// ========================
+//  Internal declaration
 
-void report_gs_failure(uintptr_t code);
+#if defined (_M_AMD64)
+void NtCrtGSHandlerCheckCommon(
+    PVOID EstablisherFrame, 
+    PDISPATCHER_CONTEXT DispatcherContext, 
+    PGS_HANDLER_DATA GSHandlerData);
+#endif
+
+// ========================
 
 #if defined (_M_IX86)
 void __declspec(naked) __fastcall __security_check_cookie(uintptr_t cookie)
@@ -33,46 +46,91 @@ void __declspec(naked) __fastcall __security_check_cookie(uintptr_t cookie)
         rep ret // REP to avoid AMD branch prediction penalty
     failure :
         push ecx
-        call report_gs_failure
+        call NtCrtReportGSFailure
     }
 }
 
 #else
 
-void __fastcall __security_check_cookie(uintptr_t cookie)
+uintptr_t __GSHandlerCheck(
+    PVOID Unknown, 
+    PVOID EstablisherFrame,
+    PCONTEXT ContextRecord, 
+    PDISPATCHER_CONTEXT DispatcherContext)
 {
-    //TODO: implement me, possibly in ASM
-    /*  LEAF_ENTRY __security_check_cookie, _TEXT
-        cmp rcx, __security_cookie      ; check cookie value in frame
-        jne ReportFailure               ; if ne, cookie check failure
-        rol rcx, 16                     ; make sure high word is zero
-        test cx, -1
-        jne RestoreRcx
-        db 0f3h                         ; (encode REP for REP RET)
-        ret                             ; no overrun, use REP RET to avoid AMD
-                                        ; branch prediction flaw after Jcc
-;
-; The cookie check failed.
-;
-RestoreRcx:
-        ror rcx, 16
-ReportFailure:
-        jmp __report_gsfailure          ; overrun found
-        LEAF_END __security_check_cookie, _TEXT
-        end */
+    NtCrtGSHandlerCheckCommon(EstablisherFrame, DispatcherContext, (PGS_HANDLER_DATA)DispatcherContext->HandlerData);
+    return 1;
 }
 
-void __GSHandlerCheckCommon(
+EXCEPTION_DISPOSITION __GSHandlerCheck_SEH(
+    PEXCEPTION_RECORD ExceptionRecord,
+    PVOID EstablisherFrame,
+    PCONTEXT ContextRecord,
+    PDISPATCHER_CONTEXT DispatcherContext)
+{
+    PGS_HANDLER_DATA GSHandlerData;
+    ULONG GSUnwindInfo;
+    EXCEPTION_DISPOSITION Disposition;
+
+    //
+    // Retrieve a pointer to the start of that part of the handler data used
+    // to locate the local security cookie in the local frame.  That is found
+    // following the image-relative offset to the FuncInfo table used by
+    // __CxxFrameHandler3.
+    //
+
+    GSHandlerData = (PGS_HANDLER_DATA)((PULONG)DispatcherContext->HandlerData + 1);
+
+    //
+    // Perform the actual cookie check.
+    //
+
+    NtCrtGSHandlerCheckCommon(
+        EstablisherFrame,
+        DispatcherContext,
+        GSHandlerData
+    );
+
+    //
+    // If the cookie check succeeds, call the normal C++ EH handler if we're
+    // supposed to on this exception pass.  Find the EHANDLER/UHANDLER flags
+    // controlling that in the first ULONG of our part of the handler data.
+    //
+
+    GSUnwindInfo = *(PULONG)GSHandlerData;
+    if (IS_DISPATCHING(ExceptionRecord->ExceptionFlags)
+        ? (GSUnwindInfo & UNW_FLAG_EHANDLER)
+        : (GSUnwindInfo & UNW_FLAG_UHANDLER))
+    {
+        /*Disposition = __CxxFrameHandler3(
+            ExceptionRecord,
+            EstablisherFrame,
+            ContextRecord,
+            DispatcherContext
+            );*/
+        Disposition = ExceptionContinueSearch;
+    }
+    else
+    {
+        Disposition = ExceptionContinueSearch;
+    }
+
+    return Disposition;
+}
+
+#endif
+
+#if defined (_M_AMD64)
+static void NtCrtGSHandlerCheckCommon(
     PVOID EstablisherFrame, 
     PDISPATCHER_CONTEXT DispatcherContext, 
     PGS_HANDLER_DATA GSHandlerData)
 {
     //TODO: implement me
 }
-
 #endif
 
-static void report_gs_failure(uintptr_t cookie)
+void NtCrtReportGSFailure(uintptr_t cookie)
 {
     volatile uintptr_t cookies[2];
 

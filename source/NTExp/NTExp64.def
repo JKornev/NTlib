@@ -1,4 +1,4 @@
-; Auto-generated definitions file (October 18, 2019  10:08:44)
+; Auto-generated definitions file (December 02, 2019  01:02:31)
 LIBRARY ntdll.dll
 EXPORTS
 ; === NTCOMMON.H ===
@@ -7,6 +7,8 @@ EXPORTS
     DbgUserBreakPoint
     DbgBreakPoint
     DbgBreakPointWithStatus
+   DbgPrint
+   DbgPrintEx
    vDbgPrintEx
    vDbgPrintExWithPrefix
    DbgQueryDebugFilterState
@@ -1055,6 +1057,8 @@ EXPORTS
     RtlUpdateClonedCriticalSection
     RtlUpdateClonedSRWLock
    RtlCreateProcessReflection
+   RtlSetProcessIsCritical
+   RtlSetThreadIsCritical
    RtlValidProcessProtection
    RtlTestProtectedAccess
    RtlIsCurrentProcess
@@ -1185,6 +1189,9 @@ EXPORTS
    RtlSetCurrentTransaction
     RtlCopyLuid
     RtlCopyLuidAndAttributesArray
+   RtlUshortByteSwap
+   RtlUlongByteSwap
+   RtlUlonglongByteSwap
    RtlCreateQueryDebugBuffer
    RtlDestroyQueryDebugBuffer
    RtlCommitDebugInfo
@@ -1879,10 +1886,12 @@ EXPORTS
 ; === NTWOW64.H ===
 ; === NTXCAPI.H ===
    RtlDispatchException
+    RtlRaiseStatus
     RtlRaiseException
  NtContinue
  ZwContinue
  NtRaiseException
  ZwRaiseException
+    RtlAssert
 ; === SUBPROCESSTAG.H ===
 ; === WINSTA.H ===

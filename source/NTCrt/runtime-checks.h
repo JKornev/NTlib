@@ -1,5 +1,7 @@
 #pragma once
 
+#include <NTLib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -28,13 +30,10 @@ typedef struct _RTC_ALLOCA_NODE {
     __int32 guard2[3];
 } _RTC_ALLOCA_NODE;
 
-
-#if defined (_M_IX86)
-void __cdecl _RTC_CheckEsp();
-#endif
-
 void __fastcall _RTC_CheckStackVars(void *_Esp, _RTC_framedesc *_Fd);
 void __fastcall _RTC_CheckStackVars2(void *_Esp, _RTC_framedesc *_Fd, _RTC_ALLOCA_NODE *_AllocaList);
+
+void __cdecl _RTC_Failure(void* retaddr, int errnum);
 
 void __cdecl _RTC_Shutdown(void);
 void __cdecl _RTC_InitBase(void);

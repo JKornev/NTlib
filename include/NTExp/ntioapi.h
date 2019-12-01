@@ -1083,7 +1083,7 @@ typedef struct _FILE_FS_FULL_SIZE_INFORMATION_EX
 
 // System calls
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateFile, (
     _Out_ PHANDLE FileHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -1097,7 +1097,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateFile, (
     _In_ ULONG EaLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateNamedPipeFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateNamedPipeFile, (
     _Out_ PHANDLE FileHandle,
     _In_ ULONG DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -1114,7 +1114,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateNamedPipeFile, (
     _In_opt_ PLARGE_INTEGER DefaultTimeout
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateMailslotFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateMailslotFile, (
     _Out_ PHANDLE FileHandle,
     _In_ ULONG DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -1125,7 +1125,7 @@ NATIVE_API(NTSTATUS, /*Nt*/CreateMailslotFile, (
     _In_ PLARGE_INTEGER ReadTimeout
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenFile, (
     _Out_ PHANDLE FileHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -1134,11 +1134,11 @@ NATIVE_API(NTSTATUS, /*Nt*/OpenFile, (
     _In_ ULONG OpenOptions
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/DeleteFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeleteFile, (
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/FlushBuffersFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FlushBuffersFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock
 ))
@@ -1148,7 +1148,7 @@ NATIVE_API(NTSTATUS, /*Nt*/FlushBuffersFile, (
 #define FLUSH_FLAGS_FILE_DATA_SYNC_ONLY 0x00000004 // REDSTONE1
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
-NATIVE_API(NTSTATUS, /*Nt*/FlushBuffersFileEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FlushBuffersFileEx, (
     _In_ HANDLE FileHandle,
     _In_ ULONG Flags,
     _In_reads_bytes_(ParametersSize) PVOID Parameters,
@@ -1157,7 +1157,7 @@ NATIVE_API(NTSTATUS, /*Nt*/FlushBuffersFileEx, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryInformationFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _Out_writes_bytes_(Length) PVOID FileInformation,
@@ -1166,7 +1166,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryInformationFile, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS12)
-NATIVE_API(NTSTATUS, /*Nt*/QueryInformationByName, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationByName, (
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _Out_writes_bytes_(Length) PVOID FileInformation,
@@ -1175,7 +1175,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryInformationByName, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/SetInformationFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _In_reads_bytes_(Length) PVOID FileInformation,
@@ -1183,7 +1183,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetInformationFile, (
     _In_ FILE_INFORMATION_CLASS FileInformationClass
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryDirectoryFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryDirectoryFile, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1197,7 +1197,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryDirectoryFile, (
     _In_ BOOLEAN RestartScan
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryEaFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryEaFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _Out_writes_bytes_(Length) PVOID Buffer,
@@ -1209,14 +1209,14 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryEaFile, (
     _In_ BOOLEAN RestartScan
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetEaFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetEaFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _In_reads_bytes_(Length) PVOID Buffer,
     _In_ ULONG Length
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryQuotaInformationFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryQuotaInformationFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _Out_writes_bytes_(Length) PVOID Buffer,
@@ -1228,14 +1228,14 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryQuotaInformationFile, (
     _In_ BOOLEAN RestartScan
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetQuotaInformationFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetQuotaInformationFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _In_reads_bytes_(Length) PVOID Buffer,
     _In_ ULONG Length
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryVolumeInformationFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryVolumeInformationFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _Out_writes_bytes_(Length) PVOID FsInformation,
@@ -1243,7 +1243,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryVolumeInformationFile, (
     _In_ FSINFOCLASS FsInformationClass
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetVolumeInformationFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetVolumeInformationFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _In_reads_bytes_(Length) PVOID FsInformation,
@@ -1251,13 +1251,13 @@ NATIVE_API(NTSTATUS, /*Nt*/SetVolumeInformationFile, (
     _In_ FSINFOCLASS FsInformationClass
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/CancelIoFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CancelIoFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API(NTSTATUS, /*Nt*/CancelIoFileEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CancelIoFileEx, (
     _In_ HANDLE FileHandle,
     _In_opt_ PIO_STATUS_BLOCK IoRequestToCancel,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock
@@ -1265,14 +1265,14 @@ NATIVE_API(NTSTATUS, /*Nt*/CancelIoFileEx, (
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API(NTSTATUS, /*Nt*/CancelSynchronousIoFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CancelSynchronousIoFile, (
     _In_ HANDLE ThreadHandle,
     _In_opt_ PIO_STATUS_BLOCK IoRequestToCancel,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/DeviceIoControlFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DeviceIoControlFile, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1285,7 +1285,7 @@ NATIVE_API(NTSTATUS, /*Nt*/DeviceIoControlFile, (
     _In_ ULONG OutputBufferLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/FsControlFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FsControlFile, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1298,7 +1298,7 @@ NATIVE_API(NTSTATUS, /*Nt*/FsControlFile, (
     _In_ ULONG OutputBufferLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ReadFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReadFile, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1310,7 +1310,7 @@ NATIVE_API(NTSTATUS, /*Nt*/ReadFile, (
     _In_opt_ PULONG Key
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/WriteFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WriteFile, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1322,7 +1322,7 @@ NATIVE_API(NTSTATUS, /*Nt*/WriteFile, (
     _In_opt_ PULONG Key
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/ReadFileScatter, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReadFileScatter, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1334,7 +1334,7 @@ NATIVE_API(NTSTATUS, /*Nt*/ReadFileScatter, (
     _In_opt_ PULONG Key
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/WriteFileGather, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WriteFileGather, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1346,7 +1346,7 @@ NATIVE_API(NTSTATUS, /*Nt*/WriteFileGather, (
     _In_opt_ PULONG Key
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/LockFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/LockFile, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1359,7 +1359,7 @@ NATIVE_API(NTSTATUS, /*Nt*/LockFile, (
     _In_ BOOLEAN ExclusiveLock
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/UnlockFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnlockFile, (
     _In_ HANDLE FileHandle,
     _Out_ PIO_STATUS_BLOCK IoStatusBlock,
     _In_ PLARGE_INTEGER ByteOffset,
@@ -1367,17 +1367,17 @@ NATIVE_API(NTSTATUS, /*Nt*/UnlockFile, (
     _In_ ULONG Key
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryAttributesFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryAttributesFile, (
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _Out_ PFILE_BASIC_INFORMATION FileInformation
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryFullAttributesFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryFullAttributesFile, (
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _Out_ PFILE_NETWORK_OPEN_INFORMATION FileInformation
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeDirectoryFile, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/NotifyChangeDirectoryFile, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1397,7 +1397,7 @@ typedef enum _DIRECTORY_NOTIFY_INFORMATION_CLASS
 } DIRECTORY_NOTIFY_INFORMATION_CLASS, *PDIRECTORY_NOTIFY_INFORMATION_CLASS;
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS13)
-NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeDirectoryFileEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/NotifyChangeDirectoryFileEx, (
     _In_ HANDLE FileHandle,
     _In_opt_ HANDLE Event,
     _In_opt_ PIO_APC_ROUTINE ApcRoutine,
@@ -1411,11 +1411,11 @@ NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeDirectoryFileEx, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/LoadDriver, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/LoadDriver, (
     _In_ PUNICODE_STRING DriverServiceName
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/UnloadDriver, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnloadDriver, (
     _In_ PUNICODE_STRING DriverServiceName
 ))
 
@@ -1435,20 +1435,20 @@ typedef struct _IO_COMPLETION_BASIC_INFORMATION
     LONG Depth;
 } IO_COMPLETION_BASIC_INFORMATION, *PIO_COMPLETION_BASIC_INFORMATION;
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateIoCompletion, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateIoCompletion, (
     _Out_ PHANDLE IoCompletionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_opt_ ULONG Count
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/OpenIoCompletion, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenIoCompletion, (
     _Out_ PHANDLE IoCompletionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/QueryIoCompletion, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryIoCompletion, (
     _In_ HANDLE IoCompletionHandle,
     _In_ IO_COMPLETION_INFORMATION_CLASS IoCompletionInformationClass,
     _Out_writes_bytes_(IoCompletionInformationLength) PVOID IoCompletionInformation,
@@ -1456,7 +1456,7 @@ NATIVE_API(NTSTATUS, /*Nt*/QueryIoCompletion, (
     _Out_opt_ PULONG ReturnLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetIoCompletion, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetIoCompletion, (
     _In_ HANDLE IoCompletionHandle,
     _In_opt_ PVOID KeyContext,
     _In_opt_ PVOID ApcContext,
@@ -1465,7 +1465,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetIoCompletion, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, /*Nt*/SetIoCompletionEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetIoCompletionEx, (
     _In_ HANDLE IoCompletionHandle,
     _In_ HANDLE IoCompletionPacketHandle,
     _In_opt_ PVOID KeyContext,
@@ -1475,7 +1475,7 @@ NATIVE_API(NTSTATUS, /*Nt*/SetIoCompletionEx, (
 ))
 #endif
 
-NATIVE_API(NTSTATUS, /*Nt*/RemoveIoCompletion, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RemoveIoCompletion, (
     _In_ HANDLE IoCompletionHandle,
     _Out_ PVOID *KeyContext,
     _Out_ PVOID *ApcContext,
@@ -1484,7 +1484,7 @@ NATIVE_API(NTSTATUS, /*Nt*/RemoveIoCompletion, (
 ))
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API(NTSTATUS, /*Nt*/RemoveIoCompletionEx, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RemoveIoCompletionEx, (
     _In_ HANDLE IoCompletionHandle,
     _Out_writes_to_(Count, *NumEntriesRemoved) PFILE_IO_COMPLETION_INFORMATION IoCompletionInformation,
     _In_ ULONG Count,
@@ -1498,13 +1498,13 @@ NATIVE_API(NTSTATUS, /*Nt*/RemoveIoCompletionEx, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
-NATIVE_API(NTSTATUS, /*Nt*/CreateWaitCompletionPacket, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateWaitCompletionPacket, (
     _Out_ PHANDLE WaitCompletionPacketHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/AssociateWaitCompletionPacket, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AssociateWaitCompletionPacket, (
     _In_ HANDLE WaitCompletionPacketHandle,
     _In_ HANDLE IoCompletionHandle,
     _In_ HANDLE TargetObjectHandle,
@@ -1515,7 +1515,7 @@ NATIVE_API(NTSTATUS, /*Nt*/AssociateWaitCompletionPacket, (
     _Out_opt_ PBOOLEAN AlreadySignaled
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/CancelWaitCompletionPacket, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CancelWaitCompletionPacket, (
     _In_ HANDLE WaitCompletionPacketHandle,
     _In_ BOOLEAN RemoveSignaledPacket
 ))
@@ -1550,7 +1550,7 @@ typedef enum _IO_SESSION_STATE
 } IO_SESSION_STATE;
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, /*Nt*/NotifyChangeSession, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/NotifyChangeSession, (
     _In_ HANDLE SessionHandle,
     _In_ ULONG ChangeSequenceNumber,
     _In_ PLARGE_INTEGER ChangeTimeStamp,

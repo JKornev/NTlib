@@ -130,7 +130,7 @@ typedef struct _SYSTEM_POWER_INFORMATION
     UCHAR CoolingMode;
 } SYSTEM_POWER_INFORMATION, *PSYSTEM_POWER_INFORMATION;
 
-NATIVE_API(NTSTATUS, /*Nt*/PowerInformation, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/PowerInformation, (
     _In_ POWER_INFORMATION_LEVEL InformationLevel,
     _In_reads_bytes_opt_(InputBufferLength) PVOID InputBuffer,
     _In_ ULONG InputBufferLength,
@@ -138,34 +138,34 @@ NATIVE_API(NTSTATUS, /*Nt*/PowerInformation, (
     _In_ ULONG OutputBufferLength
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetThreadExecutionState, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetThreadExecutionState, (
     _In_ EXECUTION_STATE NewFlags, // ES_* flags
     _Out_ EXECUTION_STATE *PreviousFlags
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/RequestWakeupLatency, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RequestWakeupLatency, (
     _In_ LATENCY_TIME latency
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/InitiatePowerAction, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/InitiatePowerAction, (
     _In_ POWER_ACTION SystemAction,
     _In_ SYSTEM_POWER_STATE LightestSystemState,
     _In_ ULONG Flags, // POWER_ACTION_* flags
     _In_ BOOLEAN Asynchronous
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/SetSystemPowerState, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetSystemPowerState, (
     _In_ POWER_ACTION SystemAction,
     _In_ SYSTEM_POWER_STATE LightestSystemState,
     _In_ ULONG Flags // POWER_ACTION_* flags
 ))
 
-NATIVE_API(NTSTATUS, /*Nt*/GetDevicePowerState, (
+NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetDevicePowerState, (
     _In_ HANDLE Device,
     _Out_ PDEVICE_POWER_STATE State
 ))
 
-NATIVE_API(BOOLEAN, /*Nt*/IsSystemResumeAutomatic, (
+NATIVE_API(BOOLEAN, NTCALL, /*Nt*/IsSystemResumeAutomatic, (
     VOID
 ))
 

@@ -1,13 +1,5 @@
 #include "runtime-checks.h"
 
-#if defined (_M_IX86)
-
-void   __cdecl _RTC_CheckEsp()
-{
-    //TODO: isn't implemented yet
-}
-
-#endif
 
 void __fastcall _RTC_CheckStackVars(void *_Esp, _RTC_framedesc *_Fd)
 {
@@ -27,4 +19,10 @@ void __cdecl _RTC_Shutdown(void)
 void __cdecl _RTC_InitBase(void)
 {
     //TODO: isn't implemented yet
+}
+
+void __cdecl _RTC_Failure(void* retaddr, int errnum)
+{
+    ::RtlRaiseStatus(STATUS_STACK_BUFFER_OVERRUN);
+    ::ZwTerminateProcess(NtlPsGetCurrentProcess(), 0xBADBAD + errnum);
 }

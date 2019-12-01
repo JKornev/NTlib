@@ -15,10 +15,12 @@ c_common_header_template = "ntexp.h"
 c_project_name = "ntexp"
 c_include_order_source = "phnt.h"
 
-c_regex_syscall = re.compile(r"^NTSYSCALLAPI\s+(.*)\s+NTAPI\s+Nt(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
-c_regex_sysapi  = re.compile(r"^NTSYSAPI\s+(.*)\s+NTAPI\s+(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
+c_regex_syscall = re.compile(r"^(?:NTSYSCALLAPI|NTSYSAPI)\s+(.*)\s+NTAPI\s+Nt(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
+c_regex_sysapi  = re.compile(r"^(?:NTSYSCALLAPI|NTSYSAPI)\s+(?:DECLSPEC_NORETURN\s)*(.*)\s+(NTAPI|STDAPIVCALLTYPE|FASTCALL)\s+(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
 c_regex_include = re.compile(r"#include\s+<(.*)>")
 c_ignore_includes = ["pshpack4.h", "poppack.h"]
+
+c_callconv_transformation = {"FASTCALL":"__fastcall", "STDAPIVCALLTYPE":"__cdecl", "NTAPI":"__stdcall"}
 
 def main():
     headers = get_files_with_ext(c_headers_source_dir, ".h")
@@ -109,6 +111,8 @@ def transform_header(source):
     output = re.sub("PHNT_REDSTONE4",   "NTLIB_WIN_10_RS4",  output)
     output = re.sub("PHNT_REDSTONE 5",   "NTLIB_WIN_10_RS5",  output)
     output = re.sub("PHNT_19H1",        "NTLIB_WIN_10_19H1", output)
+    output = re.sub("PHNT_19H2",        "NTLIB_WIN_10_19H2", output)
+    output = re.sub("PHNT_20H1",        "NTLIB_WIN_10_20H1", output)
     output = re.sub("PHNT_VERSION",     "NTLIB_WIN_VERSION", output)
     return output
     
@@ -130,12 +134,13 @@ def make_syscall_macro(groups):
     if retval == "VOID":
         noreturn = True
 
-    return build_sysapi_str("NATIVE", retval, fnname, "Nt", args, noreturn)
+    return build_sysapi_str("NATIVE", retval, fnname, "Nt", args, noreturn, "NTCALL")
 
 def make_sysapi_macro(groups):
     retval = groups[0].strip()
-    fnname = groups[1].strip()
-    args   = groups[2].strip()
+    conv   = groups[1].strip()
+    fnname = groups[2].strip()
+    args   = groups[3].strip()
 
     assert(len(retval) < 32)
     assert(len(fnname) < 64)
@@ -146,7 +151,12 @@ def make_sysapi_macro(groups):
     if retval == "VOID":
         noreturn = True
 
-    return build_sysapi_str("NTDLL", retval, fnname, None, args, noreturn)
+    return build_sysapi_str("NTDLL", retval, fnname, None, args, noreturn, transform_callconv(conv))
+
+def transform_callconv(conv):
+    if conv in c_callconv_transformation:
+        conv = c_callconv_transformation[conv]
+    return conv
 
 def remake_include(groups):
     header = groups[0]
@@ -155,9 +165,9 @@ def remake_include(groups):
 
     return "#include \"" + header + "\""
 
-def build_sysapi_str(prefix, retval, fnname, comment, args, noreturn):
+def build_sysapi_str(prefix, retval, fnname, comment, args, noreturn, conv):
     macro = prefix + ("_API_VOID" if noreturn else "_API") 
-    macro += "(" + ("" if noreturn else retval + ", ") + ("/*" + comment + "*/" if comment else "") + fnname + ", (\n"
+    macro += "(" + ("" if noreturn else retval + ", ") + conv + ", " + ("/*" + comment + "*/" if comment else "") + fnname + ", (\n"
     macro += "    " + args + "\n"
     macro += "))"
     return macro

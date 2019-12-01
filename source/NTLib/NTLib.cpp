@@ -1,5 +1,10 @@
 #include "NTLib.h"
 
+HANDLE NtlPsGetCurrentProcess()
+{
+    return (HANDLE)-1;
+}
+
 NTSTATUS NtlPsCreateProcess(
     _Out_    PHANDLE Handle,
     _In_     LPWSTR Path,
