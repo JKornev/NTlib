@@ -17,6 +17,7 @@ typedef struct _RTC_framedesc {
     _RTC_vardesc *variables;
 } _RTC_framedesc;
 
+#pragma pack(push, 1)
 typedef struct _RTC_ALLOCA_NODE {
     __int32 guard1;
     struct _RTC_ALLOCA_NODE *next;
@@ -29,9 +30,11 @@ typedef struct _RTC_ALLOCA_NODE {
 #endif
     __int32 guard2[3];
 } _RTC_ALLOCA_NODE;
+#pragma pack(pop)
 
 void __fastcall _RTC_CheckStackVars(void *_Esp, _RTC_framedesc *_Fd);
 void __fastcall _RTC_CheckStackVars2(void *_Esp, _RTC_framedesc *_Fd, _RTC_ALLOCA_NODE *_AllocaList);
+void __fastcall _RTC_AllocaHelper(_RTC_ALLOCA_NODE *_PAllocaBase, size_t _CbSize, _RTC_ALLOCA_NODE **_PAllocaInfoList);
 
 void __cdecl _RTC_Failure(void* retaddr, int errnum);
 

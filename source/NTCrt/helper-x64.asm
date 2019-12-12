@@ -1,39 +1,44 @@
 .code
 
-capture_context64 proc
-	ret
-capture_context64 endp
+PAGE_SIZE equ 1000h
 
 extern NtCrtReportGSFailure:proc
 extern __security_cookie:qword
+extern _RTC_Failure:proc
 
 ; ======================
-;  From CRT source
-
+;  _security_check_cookie
 __security_check_cookie proc
-        cmp rcx, __security_cookie      ; check cookie value in frame
-        jne ReportFailure               ; if ne, cookie check failure
-        rol rcx, 16                     ; make sure high word is zero
-        test cx, -1
-        jne RestoreRcx
-        db 0f3h                         ; (encode REP for REP RET)
-        ret                             ; no overrun, use REP RET to avoid AMD
-                                        ; branch prediction flaw after Jcc
-; The cookie check failed.
+    cmp rcx, __security_cookie
+    jne ReportFailure
+    rol rcx, 16
+    test cx, -1
+    jne RestoreRcx
+    db 0f3h                     ; (encode REP for REP RET)
+    ret                         ; no overrun, use REP RET to avoid AMD
+                                ; branch prediction flaw after Jcc
 RestoreRcx:
-        ror rcx, 16
+    ror rcx, 16
 ReportFailure:
-        jmp NtCrtReportGSFailure        ; overrun found
+    jmp NtCrtReportGSFailure
 __security_check_cookie endp
 
+; ======================
+;  _chkstk
+public _RTC_CheckEsp
+_RTC_CheckEsp:
+    jne _RTC_CheckEsp_failed
+	ret
 
-_PAGESIZE_      equ     1000h
-
+_RTC_CheckEsp_failed:
+    ret
+    
+; ======================
+;  _chkstk
 public  _alloca_probe
 
 __chkstk proc
 _alloca_probe    =  __chkstk
-
 ; Save r10, r11
 	sub         rsp, 10h  
 	mov         qword ptr [rsp], r10  
@@ -52,34 +57,22 @@ _alloca_probe    =  __chkstk
 ; Access each page on stack for initialization purpose
 	and         r10w, 0F000h  
 __chkstk_loop:
-	lea         r11,[r11-_PAGESIZE_]  
+	lea         r11, [r11 - PAGE_SIZE]  
 	mov         byte ptr [r11],0  
-	cmp         r10,r11  
+	cmp         r10, r11  
 	jne         __chkstk_loop
 
 __chkstk_return:
-	mov         r10,qword ptr [rsp]  
-	mov         r11,qword ptr [rsp+8]  
-	add         rsp,10h  
+	mov         r10, qword ptr [rsp]  
+	mov         r11, qword ptr [rsp+8]  
+	add         rsp, 10h  
 	ret 
 __chkstk endp
 
-
-extern _RTC_Failure:proc
-
-capture_context86 PROC
-; TODO:
+; ======================
+;  capture_context64
+capture_context64 proc
 	ret
-capture_context86 ENDP
-
-public _RTC_CheckEsp
-_RTC_CheckEsp:
-    jne _RTC_CheckEsp_failed
-	ret
-
-_RTC_CheckEsp_failed:
-
-    ret
-
+capture_context64 endp
 
 end
