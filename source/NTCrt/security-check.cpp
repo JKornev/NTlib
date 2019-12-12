@@ -155,6 +155,6 @@ void NtCrtReportGSFailure(uintptr_t cookie)
     s_exception_record.NumberParameters = 1;
     s_exception_record.ExceptionInformation[0] = FAST_FAIL_STACK_COOKIE_CHECK_FAILURE;
 
-    RtlRaiseException(&s_exception_record);
-    RtlExitUserProcess(STATUS_FAIL_FAST_EXCEPTION);
+    ::RtlRaiseException(&s_exception_record);
+    ::RtlExitUserProcess(STATUS_FAIL_FAST_EXCEPTION);
 }
