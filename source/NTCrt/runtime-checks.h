@@ -6,6 +6,15 @@
 extern "C" {
 #endif
 
+typedef enum _RTC_ErrorNumber {
+    _RTC_CHKSTK = 0,
+    _RTC_CVRT_LOSS_INFO,
+    _RTC_CORRUPT_STACK,
+    _RTC_UNINIT_LOCAL_USE,
+    _RTC_CORRUPTED_ALLOCA,
+    _RTC_ILLEGAL
+} _RTC_ErrorNumber;
+
 typedef struct _RTC_vardesc {
     int addr;
     int size;
@@ -40,6 +49,12 @@ void __cdecl _RTC_Failure(void* retaddr, int errnum);
 
 void __cdecl _RTC_Shutdown(void);
 void __cdecl _RTC_InitBase(void);
+
+typedef int(__cdecl *_RTC_error_fn)(int, const char *, int, const char *, const char *, ...);
+typedef int(__cdecl *_RTC_error_fnW)(int, const wchar_t *, int, const wchar_t *, const wchar_t *, ...);
+
+_RTC_error_fn __cdecl _CRT_RTC_INIT(void *_Res0, void **_Res1, int _Res2, int _Res3, int _Res4);
+_RTC_error_fnW __cdecl _CRT_RTC_INITW(void *_Res0, void **_Res1, int _Res2, int _Res3, int _Res4);
 
 #ifdef __cplusplus
 };

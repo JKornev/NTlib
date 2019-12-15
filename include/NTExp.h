@@ -30,11 +30,11 @@ extern "C" {
     type NTDEF(conv) Zw##name params { return (type)0; } \
     type NTDEF(conv) Nt##name params { return (type)0; }
   #define NATIVE_API_VOID(conv, name, params) \
-    VOID NTDEF(conv) name params{ return; }
+    void NTDEF(conv) name params{ return; }
   #define NTDLL_API(type, conv, name, params) \
     type NTDEF(conv) name params { return (type)0; }
   #define NTDLL_API_VOID(conv, name, params) \
-    VOID NTDEF(conv) name params { return; }
+    void NTDEF(conv) name params { return; }
   #define EXPORT_API(name) \
     void __cdecl ntexport_##name() {}
 #else
@@ -42,11 +42,11 @@ extern "C" {
     type NTDEF(conv) Zw##name params; \
     type NTDEF(conv) Nt##name params;
   #define NATIVE_API_VOID(conv, name, params) \
-    VOID NTDEF(conv) name params;
+    void NTDEF(conv) name params;
   #define NTDLL_API(type, conv, name, params) \
     type NTDEF(conv) name params;
   #define NTDLL_API_VOID(conv, name, params) \
-    VOID NTDEF(conv) name params;
+    void NTDEF(conv) name params;
   #define EXPORT_API(name)
 #endif
 

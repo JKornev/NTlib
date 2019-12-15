@@ -11,7 +11,7 @@ void __fastcall _RTC_CheckStackVars(void *_Esp, _RTC_framedesc *_Fd)
         guard2 = (int*)((char*)_Esp + _Fd->variables[i].addr + _Fd->variables[i].size);
 
         if ((*guard1 != 0xCCCCCCCC) || (*guard2 != 0xCCCCCCCC))
-            _RTC_Failure(_ReturnAddress(), 1);
+            _RTC_Failure(_ReturnAddress(), _RTC_ErrorNumber::_RTC_CORRUPT_STACK);
     }
 }
 
@@ -32,7 +32,7 @@ void __fastcall _RTC_CheckStackVars2(void *_Esp, _RTC_framedesc *_Fd, _RTC_ALLOC
             (current->guard2[2] != 0xCCCCCCCC) ||
             (*guard != 0xCCCCCCCC)
         )
-            _RTC_Failure(_ReturnAddress(), 2);
+        _RTC_Failure(_ReturnAddress(), _RTC_ErrorNumber::_RTC_CORRUPT_STACK);
     }
 }
 
@@ -50,13 +50,13 @@ void __fastcall _RTC_AllocaHelper(_RTC_ALLOCA_NODE *_PAllocaBase, size_t _CbSize
 
 
 void __cdecl _RTC_Shutdown(void)
-{
-    // Stub
+{ // Stub
+    NTLIB_DBG_BREAK;
 }
 
 void __cdecl _RTC_InitBase(void)
-{
-    // Stub
+{ // Stub
+    NTLIB_DBG_BREAK;
 }
 
 void __cdecl _RTC_Failure(void* retaddr, int errnum)
@@ -65,4 +65,16 @@ void __cdecl _RTC_Failure(void* retaddr, int errnum)
     static int s_rtc_errnum = errnum;
     ::RtlRaiseStatus(STATUS_STACK_BUFFER_OVERRUN);
     ::ZwTerminateProcess(NtlPsGetCurrentProcess(), 0xBADBAD + s_rtc_errnum);
+}
+
+_RTC_error_fn __cdecl _CRT_RTC_INIT(void *_Res0, void **_Res1, int _Res2, int _Res3, int _Res4)
+{
+    NTLIB_DBG_BREAK;
+    return 0;
+}
+
+_RTC_error_fnW __cdecl _CRT_RTC_INITW(void *_Res0, void **_Res1, int _Res2, int _Res3, int _Res4)
+{
+    NTLIB_DBG_BREAK;
+    return 0;
 }

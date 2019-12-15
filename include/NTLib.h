@@ -2,6 +2,20 @@
 
 #include "NTExp.h"
 
+// ==========================
+//   Debug routines
+
+#ifdef _DEBUG
+# define _NTLIB_DEBUG_BREAK_ROUTINE __debugbreak()
+#else
+# define _NTLIB_DEBUG_BREAK_ROUTINE
+#endif
+
+#define NTLIB_DBG_BREAK _NTLIB_DEBUG_BREAK_ROUTINE
+
+// ==========================
+//   Process routines
+
 HANDLE NtlPsGetCurrentProcess();
 
 NTSTATUS NtlPsCreateProcess(
