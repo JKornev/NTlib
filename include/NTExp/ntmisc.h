@@ -38,30 +38,39 @@ typedef enum _VDMSERVICECLASS
     VdmQueryVdmProcess
 } VDMSERVICECLASS, *PVDMSERVICECLASS;
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/VdmControl, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtVdmControl(
     _In_ VDMSERVICECLASS Service,
     _Inout_ PVOID ServiceData
-))
+    );
 
 // WMI/ETW
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/TraceEvent, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtTraceEvent(
     _In_ HANDLE TraceHandle,
     _In_ ULONG Flags,
     _In_ ULONG FieldSize,
     _In_ PVOID Fields
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/TraceControl, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtTraceControl(
     _In_ ULONG FunctionCode,
     _In_reads_bytes_opt_(InBufferLen) PVOID InBuffer,
     _In_ ULONG InBufferLen,
     _Out_writes_bytes_opt_(OutBufferLen) PVOID OutBuffer,
     _In_ ULONG OutBufferLen,
     _Out_ PULONG ReturnLength
-))
+    );
 #endif
 
 #endif

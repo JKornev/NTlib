@@ -205,114 +205,156 @@ typedef struct _LDR_DATA_TABLE_ENTRY
 #define LDR_IS_IMAGEMAPPING(DllHandle) (((ULONG_PTR)(DllHandle)) & (ULONG_PTR)2)
 #define LDR_IS_RESOURCE(DllHandle) (LDR_IS_IMAGEMAPPING(DllHandle) || LDR_IS_DATAFILE(DllHandle))
 
-NTDLL_API(NTSTATUS, __stdcall, LdrLoadDll, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrLoadDll(
     _In_opt_ PWSTR DllPath,
     _In_opt_ PULONG DllCharacteristics,
     _In_ PUNICODE_STRING DllName,
     _Out_ PVOID *DllHandle
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrUnloadDll, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrUnloadDll(
     _In_ PVOID DllHandle
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrGetDllHandle, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetDllHandle(
     _In_opt_ PWSTR DllPath,
     _In_opt_ PULONG DllCharacteristics,
     _In_ PUNICODE_STRING DllName,
     _Out_ PVOID *DllHandle
-))
+    );
 
 #define LDR_GET_DLL_HANDLE_EX_UNCHANGED_REFCOUNT 0x00000001
 #define LDR_GET_DLL_HANDLE_EX_PIN 0x00000002
 
-NTDLL_API(NTSTATUS, __stdcall, LdrGetDllHandleEx, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetDllHandleEx(
     _In_ ULONG Flags,
     _In_opt_ PWSTR DllPath,
     _In_opt_ PULONG DllCharacteristics,
     _In_ PUNICODE_STRING DllName,
     _Out_opt_ PVOID *DllHandle
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrGetDllHandleByMapping, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetDllHandleByMapping(
     _In_ PVOID BaseAddress,
     _Out_ PVOID *DllHandle
-))
+    );
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrGetDllHandleByName, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetDllHandleByName(
     _In_opt_ PUNICODE_STRING BaseDllName,
     _In_opt_ PUNICODE_STRING FullDllName,
     _Out_ PVOID *DllHandle
-))
+    );
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrGetDllFullName, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetDllFullName(
     _In_ PVOID DllHandle,
     _Out_ PUNICODE_STRING FullDllName
-))
+    );
 
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrGetDllDirectory, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetDllDirectory(
     _Out_ PUNICODE_STRING DllDirectory
-))
+    );
 
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrSetDllDirectory, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrSetDllDirectory(
     _In_ PUNICODE_STRING DllDirectory
-))
+    );
 #endif
 
 #define LDR_ADDREF_DLL_PIN 0x00000001
 
-NTDLL_API(NTSTATUS, __stdcall, LdrAddRefDll, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrAddRefDll(
     _In_ ULONG Flags,
     _In_ PVOID DllHandle
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrGetProcedureAddress, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetProcedureAddress(
     _In_ PVOID DllHandle,
     _In_opt_ PANSI_STRING ProcedureName,
     _In_opt_ ULONG ProcedureNumber,
     _Out_ PVOID *ProcedureAddress
-))
+    );
 
 // rev
 #define LDR_GET_PROCEDURE_ADDRESS_DONT_RECORD_FORWARDER 0x00000001
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, __stdcall, LdrGetProcedureAddressEx, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetProcedureAddressEx(
     _In_ PVOID DllHandle,
     _In_opt_ PANSI_STRING ProcedureName,
     _In_opt_ ULONG ProcedureNumber,
     _Out_ PVOID *ProcedureAddress,
     _In_ ULONG Flags
-))
+    );
 #endif
 
-NTDLL_API(NTSTATUS, __stdcall, LdrGetKnownDllSectionHandle, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetKnownDllSectionHandle(
     _In_ PCWSTR DllName,
     _In_ BOOLEAN KnownDlls32,
     _Out_ PHANDLE Section
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrGetProcedureAddressForCaller, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetProcedureAddressForCaller(
     _In_ PVOID DllHandle,
     _In_opt_ PANSI_STRING ProcedureName,
     _In_opt_ ULONG ProcedureNumber,
     _Out_ PVOID *ProcedureAddress,
     _In_ ULONG Flags,
     _In_ PVOID *Callback
-))
+    );
 #endif
 
 #define LDR_LOCK_LOADER_LOCK_FLAG_RAISE_ON_ERRORS 0x00000001
@@ -322,60 +364,81 @@ NTDLL_API(NTSTATUS, __stdcall, LdrGetProcedureAddressForCaller, (
 #define LDR_LOCK_LOADER_LOCK_DISPOSITION_LOCK_ACQUIRED 1
 #define LDR_LOCK_LOADER_LOCK_DISPOSITION_LOCK_NOT_ACQUIRED 2
 
-NTDLL_API(NTSTATUS, __stdcall, LdrLockLoaderLock, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrLockLoaderLock(
     _In_ ULONG Flags,
     _Out_opt_ ULONG *Disposition,
     _Out_ PVOID *Cookie
-))
+    );
 
 #define LDR_UNLOCK_LOADER_LOCK_FLAG_RAISE_ON_ERRORS 0x00000001
 
-NTDLL_API(NTSTATUS, __stdcall, LdrUnlockLoaderLock, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrUnlockLoaderLock(
     _In_ ULONG Flags,
     _Inout_ PVOID Cookie
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrRelocateImage, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrRelocateImage(
     _In_ PVOID NewBase,
     _In_ PSTR LoaderName,
     _In_ NTSTATUS Success,
     _In_ NTSTATUS Conflict,
     _In_ NTSTATUS Invalid
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrRelocateImageWithBias, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrRelocateImageWithBias(
     _In_ PVOID NewBase,
     _In_ LONGLONG Bias,
     _In_ PSTR LoaderName,
     _In_ NTSTATUS Success,
     _In_ NTSTATUS Conflict,
     _In_ NTSTATUS Invalid
-))
+    );
 
-NTDLL_API(PIMAGE_BASE_RELOCATION, __stdcall, LdrProcessRelocationBlock, (
+NTSYSAPI
+PIMAGE_BASE_RELOCATION
+NTAPI
+LdrProcessRelocationBlock(
     _In_ ULONG_PTR VA,
     _In_ ULONG SizeOfBlock,
     _In_ PUSHORT NextOffset,
     _In_ LONG_PTR Diff
-))
+    );
 
-NTDLL_API(BOOLEAN, __stdcall, LdrVerifyMappedImageMatchesChecksum, (
+NTSYSAPI
+BOOLEAN
+NTAPI
+LdrVerifyMappedImageMatchesChecksum(
     _In_ PVOID BaseAddress,
     _In_ SIZE_T NumberOfBytes,
     _In_ ULONG FileLength
-))
+    );
 
 typedef VOID (NTAPI *PLDR_IMPORT_MODULE_CALLBACK)(
     _In_ PVOID Parameter,
     _In_ PSTR ModuleName
     );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrVerifyImageMatchesChecksum, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrVerifyImageMatchesChecksum(
     _In_ HANDLE ImageFileHandle,
     _In_opt_ PLDR_IMPORT_MODULE_CALLBACK ImportCallbackRoutine,
     _In_ PVOID ImportCallbackParameter,
     _Out_opt_ PUSHORT ImageCharacteristics
-))
+    );
 
 // private
 typedef struct _LDR_IMPORT_CALLBACK_INFO
@@ -406,19 +469,25 @@ typedef struct _LDR_VERIFY_IMAGE_INFO
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, __stdcall, LdrVerifyImageMatchesChecksumEx, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrVerifyImageMatchesChecksumEx(
     _In_ HANDLE ImageFileHandle,
     _Inout_ PLDR_VERIFY_IMAGE_INFO VerifyInfo
-))
+    );
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 // private
-NTDLL_API(NTSTATUS, __stdcall, LdrQueryModuleServiceTags, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrQueryModuleServiceTags(
     _In_ PVOID DllHandle,
     _Out_writes_(*BufferSize) PULONG ServiceTagBuffer,
     _Inout_ PULONG BufferSize
-))
+    );
 #endif
 
 // begin_msdn:"DLL Load Notification"
@@ -458,25 +527,34 @@ typedef VOID (NTAPI *PLDR_DLL_NOTIFICATION_FUNCTION)(
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NTDLL_API(NTSTATUS, __stdcall, LdrRegisterDllNotification, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrRegisterDllNotification(
     _In_ ULONG Flags,
     _In_ PLDR_DLL_NOTIFICATION_FUNCTION NotificationFunction,
     _In_ PVOID Context,
     _Out_ PVOID *Cookie
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrUnregisterDllNotification, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrUnregisterDllNotification(
     _In_ PVOID Cookie
-))
+    );
 
 #endif
 
 // end_msdn
 
 // rev
-NTDLL_API(PUNICODE_STRING, __stdcall, LdrStandardizeSystemPath, (
+NTSYSAPI
+PUNICODE_STRING
+NTAPI
+LdrStandardizeSystemPath(
     _In_ PUNICODE_STRING SystemPath
-))
+    );
 
 // private
 typedef struct _PS_MITIGATION_OPTIONS_MAP
@@ -517,9 +595,12 @@ typedef struct _PS_SYSTEM_DLL_INIT_BLOCK
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 // rev
-NTDLL_API(PPS_SYSTEM_DLL_INIT_BLOCK, __stdcall, LdrSystemDllInitBlock, (
+NTSYSAPI
+PPS_SYSTEM_DLL_INIT_BLOCK
+NTAPI
+LdrSystemDllInitBlock(
     VOID
-))
+    );
 #endif
 
 // Load as data table
@@ -527,41 +608,56 @@ NTDLL_API(PPS_SYSTEM_DLL_INIT_BLOCK, __stdcall, LdrSystemDllInitBlock, (
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
 // private
-NTDLL_API(NTSTATUS, __stdcall, LdrAddLoadAsDataTable, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrAddLoadAsDataTable(
     _In_ PVOID Module,
     _In_ PWSTR FilePath,
     _In_ SIZE_T Size,
     _In_ HANDLE Handle
-))
+    );
 
 // private
-NTDLL_API(NTSTATUS, __stdcall, LdrRemoveLoadAsDataTable, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrRemoveLoadAsDataTable(
     _In_ PVOID InitModule,
     _Out_opt_ PVOID *BaseModule,
     _Out_opt_ PSIZE_T Size,
     _In_ ULONG Flags
-))
+    );
 
 // private
-NTDLL_API(NTSTATUS, __stdcall, LdrGetFileNameFromLoadAsDataTable, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrGetFileNameFromLoadAsDataTable(
     _In_ PVOID Module,
     _Out_ PVOID *pFileNamePrt
-))
+    );
 
 #endif
 
-NTDLL_API(NTSTATUS, __stdcall, LdrDisableThreadCalloutsForDll, (
+NTSYSAPI
+NTSTATUS 
+NTAPI 
+LdrDisableThreadCalloutsForDll(
     _In_ PVOID DllImageBase
-))
+    );
     
 // Resources
 
-NTDLL_API(NTSTATUS, __stdcall, LdrAccessResource, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrAccessResource(
     _In_ PVOID DllHandle,
     _In_ PIMAGE_RESOURCE_DATA_ENTRY ResourceDataEntry,
     _Out_opt_ PVOID *ResourceBuffer,
     _Out_opt_ ULONG *ResourceLength
-))
+    );
 
 typedef struct _LDR_RESOURCE_INFO
 {
@@ -575,19 +671,25 @@ typedef struct _LDR_RESOURCE_INFO
 #define RESOURCE_LANGUAGE_LEVEL 2
 #define RESOURCE_DATA_LEVEL 3
 
-NTDLL_API(NTSTATUS, __stdcall, LdrFindResource_U, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrFindResource_U(
     _In_ PVOID DllHandle,
     _In_ PLDR_RESOURCE_INFO ResourceInfo,
     _In_ ULONG Level,
     _Out_ PIMAGE_RESOURCE_DATA_ENTRY *ResourceDataEntry
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrFindResourceDirectory_U, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrFindResourceDirectory_U(
     _In_ PVOID DllHandle,
     _In_ PLDR_RESOURCE_INFO ResourceInfo,
     _In_ ULONG Level,
     _Out_ PIMAGE_RESOURCE_DIRECTORY *ResourceDirectory
-))
+    );
 
 // private 
 typedef struct _LDR_ENUM_RESOURCE_ENTRY
@@ -610,18 +712,24 @@ typedef struct _LDR_ENUM_RESOURCE_ENTRY
 #define NAME_FROM_RESOURCE_ENTRY(RootDirectory, Entry) \
     ((Entry)->NameIsString ? (ULONG_PTR)PTR_ADD_OFFSET((RootDirectory), (Entry)->NameOffset) : (Entry)->Id)
 
-NTDLL_API(NTSTATUS, __stdcall, LdrEnumResources, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrEnumResources(
     _In_ PVOID DllHandle,
     _In_ PLDR_RESOURCE_INFO ResourceInfo,
     _In_ ULONG Level,
     _Inout_ ULONG *ResourceCount,
     _Out_writes_to_opt_(*ResourceCount, *ResourceCount) PLDR_ENUM_RESOURCE_ENTRY Resources
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrFindEntryForAddress, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrFindEntryForAddress(
     _In_ PVOID DllHandle,
     _Out_ PLDR_DATA_TABLE_ENTRY *Entry
-))
+    );
 
 #endif // (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
@@ -659,11 +767,14 @@ typedef struct _RTL_PROCESS_MODULE_INFORMATION_EX
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NTDLL_API(NTSTATUS, __stdcall, LdrQueryProcessModuleInformation, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrQueryProcessModuleInformation(
     _In_opt_ PRTL_PROCESS_MODULES ModuleInformation,
     _In_opt_ ULONG Size,
     _Out_ PULONG ReturnedSize
-))
+    );
 
 typedef VOID (NTAPI *PLDR_ENUM_CALLBACK)(
     _In_ PLDR_DATA_TABLE_ENTRY ModuleInformation, 
@@ -671,37 +782,52 @@ typedef VOID (NTAPI *PLDR_ENUM_CALLBACK)(
     _Out_ BOOLEAN *Stop
     );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrEnumerateLoadedModules, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrEnumerateLoadedModules(
     _In_ BOOLEAN ReservedFlag,
     _In_ PLDR_ENUM_CALLBACK EnumProc,
     _In_ PVOID Context
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrOpenImageFileOptionsKey, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrOpenImageFileOptionsKey(
     _In_ PUNICODE_STRING SubKey,
     _In_ BOOLEAN Wow64,
     _Out_ PHANDLE NewKeyHandle
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrQueryImageFileKeyOption, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrQueryImageFileKeyOption(
     _In_ HANDLE KeyHandle,
     _In_ PCWSTR ValueName,
     _In_ ULONG Type,
     _Out_ PVOID Buffer,
     _In_ ULONG BufferSize,
     _Out_opt_ PULONG ReturnedLength
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrQueryImageFileExecutionOptions, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrQueryImageFileExecutionOptions(
     _In_ PUNICODE_STRING SubKey,
     _In_ PCWSTR ValueName,
     _In_ ULONG ValueSize,
     _Out_ PVOID Buffer,
     _In_ ULONG BufferSize,
     _Out_opt_ PULONG ReturnedLength
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, LdrQueryImageFileExecutionOptionsEx, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrQueryImageFileExecutionOptionsEx(
     _In_ PUNICODE_STRING SubKey,
     _In_ PCWSTR ValueName,
     _In_ ULONG Type,
@@ -709,7 +835,7 @@ NTDLL_API(NTSTATUS, __stdcall, LdrQueryImageFileExecutionOptionsEx, (
     _In_ ULONG BufferSize,
     _Out_opt_ PULONG ReturnedLength,
     _In_ BOOLEAN Wow64
-))
+    );
 
 // private
 typedef struct _DELAYLOAD_PROC_DESCRIPTOR
@@ -748,52 +874,76 @@ typedef PVOID (NTAPI *PDELAYLOAD_FAILURE_SYSTEM_ROUTINE)(
     );
 
 // rev
-NTDLL_API(PVOID, __stdcall, LdrResolveDelayLoadedAPI, (
+NTSYSAPI
+PVOID
+NTAPI
+LdrResolveDelayLoadedAPI(
     _In_ PVOID ParentModuleBase,
     _In_ PCIMAGE_DELAYLOAD_DESCRIPTOR DelayloadDescriptor,
     _In_opt_ PDELAYLOAD_FAILURE_DLL_CALLBACK FailureDllHook,
     _In_opt_ PDELAYLOAD_FAILURE_SYSTEM_ROUTINE FailureSystemHook, // kernel32.DelayLoadFailureHook
     _Out_ PIMAGE_THUNK_DATA ThunkAddress,
     _Reserved_ ULONG Flags
-))
+    );
 
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrResolveDelayLoadsFromDll, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrResolveDelayLoadsFromDll(
     _In_ PVOID ParentBase,
     _In_ PCSTR TargetDllName,
     _Reserved_ ULONG Flags
-))
+    );
 
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrSetDefaultDllDirectories, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrSetDefaultDllDirectories(
     _In_ ULONG DirectoryFlags
-))
+    );
 
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrShutdownProcess, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrShutdownProcess(
     VOID
-))
+    );
 
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrShutdownThread, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrShutdownThread(
     VOID
-))
+    );
 
 // rev
-NTDLL_API(NTSTATUS, __stdcall, LdrSetImplicitPathOptions, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+LdrSetImplicitPathOptions(
     _In_ ULONG ImplicitPathOptions
-))
+    );
 
 // rev
-NTDLL_API(BOOLEAN, __stdcall, LdrControlFlowGuardEnforced, (
+NTSYSAPI
+BOOLEAN
+NTAPI
+LdrControlFlowGuardEnforced(
     VOID
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_19H1)
 // rev
-NTDLL_API(BOOLEAN, __stdcall, LdrIsModuleSxsRedirected, (
+NTSYSAPI
+BOOLEAN
+NTAPI
+LdrIsModuleSxsRedirected(
     _In_ PVOID DllHandle
-))
+    );
 #endif
 
 #endif // (NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)

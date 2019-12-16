@@ -176,25 +176,34 @@ typedef struct _REMOTE_PORT_VIEW64
 
 // Port creation
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreatePort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreatePort(
     _Out_ PHANDLE PortHandle,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ ULONG MaxConnectionInfoLength,
     _In_ ULONG MaxMessageLength,
     _In_opt_ ULONG MaxPoolUsage
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateWaitablePort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateWaitablePort(
     _Out_ PHANDLE PortHandle,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ ULONG MaxConnectionInfoLength,
     _In_ ULONG MaxMessageLength,
     _In_opt_ ULONG MaxPoolUsage
-))
+    );
 
 // Port connection (client)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ConnectPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtConnectPort(
     _Out_ PHANDLE PortHandle,
     _In_ PUNICODE_STRING PortName,
     _In_ PSECURITY_QUALITY_OF_SERVICE SecurityQos,
@@ -203,9 +212,12 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ConnectPort, (
     _Out_opt_ PULONG MaxMessageLength,
     _Inout_updates_bytes_to_opt_(*ConnectionInformationLength, *ConnectionInformationLength) PVOID ConnectionInformation,
     _Inout_opt_ PULONG ConnectionInformationLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SecureConnectPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSecureConnectPort(
     _Out_ PHANDLE PortHandle,
     _In_ PUNICODE_STRING PortName,
     _In_ PSECURITY_QUALITY_OF_SERVICE SecurityQos,
@@ -215,88 +227,124 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SecureConnectPort, (
     _Out_opt_ PULONG MaxMessageLength,
     _Inout_updates_bytes_to_opt_(*ConnectionInformationLength, *ConnectionInformationLength) PVOID ConnectionInformation,
     _Inout_opt_ PULONG ConnectionInformationLength
-))
+    );
 
 // Port connection (server)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ListenPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtListenPort(
     _In_ HANDLE PortHandle,
     _Out_ PPORT_MESSAGE ConnectionRequest
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AcceptConnectPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAcceptConnectPort(
     _Out_ PHANDLE PortHandle,
     _In_opt_ PVOID PortContext,
     _In_ PPORT_MESSAGE ConnectionRequest,
     _In_ BOOLEAN AcceptConnection,
     _Inout_opt_ PPORT_VIEW ServerView,
     _Out_opt_ PREMOTE_PORT_VIEW ClientView
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CompleteConnectPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCompleteConnectPort(
     _In_ HANDLE PortHandle
-))
+    );
 
 // General
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RequestPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRequestPort(
     _In_ HANDLE PortHandle,
     _In_reads_bytes_(RequestMessage->u1.s1.TotalLength) PPORT_MESSAGE RequestMessage
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RequestWaitReplyPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRequestWaitReplyPort(
     _In_ HANDLE PortHandle,
     _In_reads_bytes_(RequestMessage->u1.s1.TotalLength) PPORT_MESSAGE RequestMessage,
     _Out_ PPORT_MESSAGE ReplyMessage
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReplyPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtReplyPort(
     _In_ HANDLE PortHandle,
     _In_reads_bytes_(ReplyMessage->u1.s1.TotalLength) PPORT_MESSAGE ReplyMessage
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReplyWaitReplyPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtReplyWaitReplyPort(
     _In_ HANDLE PortHandle,
     _Inout_ PPORT_MESSAGE ReplyMessage
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReplyWaitReceivePort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtReplyWaitReceivePort(
     _In_ HANDLE PortHandle,
     _Out_opt_ PVOID *PortContext,
     _In_reads_bytes_opt_(ReplyMessage->u1.s1.TotalLength) PPORT_MESSAGE ReplyMessage,
     _Out_ PPORT_MESSAGE ReceiveMessage
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReplyWaitReceivePortEx, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtReplyWaitReceivePortEx(
     _In_ HANDLE PortHandle,
     _Out_opt_ PVOID *PortContext,
     _In_reads_bytes_opt_(ReplyMessage->u1.s1.TotalLength) PPORT_MESSAGE ReplyMessage,
     _Out_ PPORT_MESSAGE ReceiveMessage,
     _In_opt_ PLARGE_INTEGER Timeout
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ImpersonateClientOfPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtImpersonateClientOfPort(
     _In_ HANDLE PortHandle,
     _In_ PPORT_MESSAGE Message
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReadRequestData, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtReadRequestData(
     _In_ HANDLE PortHandle,
     _In_ PPORT_MESSAGE Message,
     _In_ ULONG DataEntryIndex,
     _Out_writes_bytes_to_(BufferSize, *NumberOfBytesRead) PVOID Buffer,
     _In_ SIZE_T BufferSize,
     _Out_opt_ PSIZE_T NumberOfBytesRead
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WriteRequestData, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtWriteRequestData(
     _In_ HANDLE PortHandle,
     _In_ PPORT_MESSAGE Message,
     _In_ ULONG DataEntryIndex,
     _In_reads_bytes_(BufferSize) PVOID Buffer,
     _In_ SIZE_T BufferSize,
     _Out_opt_ PSIZE_T NumberOfBytesWritten
-))
+    );
 
 typedef enum _PORT_INFORMATION_CLASS
 {
@@ -304,13 +352,16 @@ typedef enum _PORT_INFORMATION_CLASS
     PortDumpInformation
 } PORT_INFORMATION_CLASS;
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryInformationPort(
     _In_ HANDLE PortHandle,
     _In_ PORT_INFORMATION_CLASS PortInformationClass,
     _Out_writes_bytes_to_(Length, *ReturnLength) PVOID PortInformation,
     _In_ ULONG Length,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
 // Asynchronous Local Inter-process Communication
 
@@ -559,98 +610,140 @@ typedef struct _ALPC_MESSAGE_HANDLE_INFORMATION
 
 // System calls
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcCreatePort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcCreatePort(
     _Out_ PHANDLE PortHandle,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_opt_ PALPC_PORT_ATTRIBUTES PortAttributes
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcDisconnectPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcDisconnectPort(
     _In_ HANDLE PortHandle,
     _In_ ULONG Flags
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcQueryInformation, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcQueryInformation(
     _In_opt_ HANDLE PortHandle,
     _In_ ALPC_PORT_INFORMATION_CLASS PortInformationClass,
     _Inout_updates_bytes_to_(Length, *ReturnLength) PVOID PortInformation,
     _In_ ULONG Length,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcSetInformation, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcSetInformation(
     _In_ HANDLE PortHandle,
     _In_ ALPC_PORT_INFORMATION_CLASS PortInformationClass,
     _In_reads_bytes_opt_(Length) PVOID PortInformation,
     _In_ ULONG Length
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcCreatePortSection, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcCreatePortSection(
     _In_ HANDLE PortHandle,
     _In_ ULONG Flags,
     _In_opt_ HANDLE SectionHandle,
     _In_ SIZE_T SectionSize,
     _Out_ PALPC_HANDLE AlpcSectionHandle,
     _Out_ PSIZE_T ActualSectionSize
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcDeletePortSection, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcDeletePortSection(
     _In_ HANDLE PortHandle,
     _Reserved_ ULONG Flags,
     _In_ ALPC_HANDLE SectionHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcCreateResourceReserve, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcCreateResourceReserve(
     _In_ HANDLE PortHandle,
     _Reserved_ ULONG Flags,
     _In_ SIZE_T MessageSize,
     _Out_ PALPC_HANDLE ResourceId
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcDeleteResourceReserve, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcDeleteResourceReserve(
     _In_ HANDLE PortHandle,
     _Reserved_ ULONG Flags,
     _In_ ALPC_HANDLE ResourceId
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcCreateSectionView, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcCreateSectionView(
     _In_ HANDLE PortHandle,
     _Reserved_ ULONG Flags,
     _Inout_ PALPC_DATA_VIEW_ATTR ViewAttributes
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcDeleteSectionView, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcDeleteSectionView(
     _In_ HANDLE PortHandle,
     _Reserved_ ULONG Flags,
     _In_ PVOID ViewBase
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcCreateSecurityContext, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcCreateSecurityContext(
     _In_ HANDLE PortHandle,
     _Reserved_ ULONG Flags,
     _Inout_ PALPC_SECURITY_ATTR SecurityAttribute
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcDeleteSecurityContext, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcDeleteSecurityContext(
     _In_ HANDLE PortHandle,
     _Reserved_ ULONG Flags,
     _In_ ALPC_HANDLE ContextHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcRevokeSecurityContext, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcRevokeSecurityContext(
     _In_ HANDLE PortHandle,
     _Reserved_ ULONG Flags,
     _In_ ALPC_HANDLE ContextHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcQueryInformationMessage, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcQueryInformationMessage(
     _In_ HANDLE PortHandle,
     _In_ PPORT_MESSAGE PortMessage,
     _In_ ALPC_MESSAGE_INFORMATION_CLASS MessageInformationClass,
     _Out_writes_bytes_to_opt_(Length, *ReturnLength) PVOID MessageInformation,
     _In_ ULONG Length,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
 #define ALPC_MSGFLG_REPLY_MESSAGE 0x1
 #define ALPC_MSGFLG_LPC_MODE 0x2 // ?
@@ -660,7 +753,10 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcQueryInformationMessage, (
 #define ALPC_MSGFLG_WAIT_ALERTABLE 0x200000
 #define ALPC_MSGFLG_WOW64_CALL 0x80000000 // dbg
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcConnectPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcConnectPort(
     _Out_ PHANDLE PortHandle,
     _In_ PUNICODE_STRING PortName,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -672,10 +768,13 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcConnectPort, (
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES OutMessageAttributes,
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES InMessageAttributes,
     _In_opt_ PLARGE_INTEGER Timeout
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcConnectPortEx, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcConnectPortEx(
     _Out_ PHANDLE PortHandle,
     _In_ POBJECT_ATTRIBUTES ConnectionPortObjectAttributes,
     _In_opt_ POBJECT_ATTRIBUTES ClientPortObjectAttributes,
@@ -687,10 +786,13 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcConnectPortEx, (
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES OutMessageAttributes,
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES InMessageAttributes,
     _In_opt_ PLARGE_INTEGER Timeout
-))
+    );
 #endif
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcAcceptConnectPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcAcceptConnectPort(
     _Out_ PHANDLE PortHandle,
     _In_ HANDLE ConnectionPortHandle,
     _In_ ULONG Flags,
@@ -700,9 +802,12 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcAcceptConnectPort, (
     _In_reads_bytes_(ConnectionRequest->u1.s1.TotalLength) PPORT_MESSAGE ConnectionRequest,
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES ConnectionMessageAttributes,
     _In_ BOOLEAN AcceptConnection
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcSendWaitReceivePort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcSendWaitReceivePort(
     _In_ HANDLE PortHandle,
     _In_ ULONG Flags,
     _In_reads_bytes_opt_(SendMessage->u1.s1.TotalLength) PPORT_MESSAGE SendMessage,
@@ -711,132 +816,192 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcSendWaitReceivePort, (
     _Inout_opt_ PSIZE_T BufferLength,
     _Inout_opt_ PALPC_MESSAGE_ATTRIBUTES ReceiveMessageAttributes,
     _In_opt_ PLARGE_INTEGER Timeout
-))
+    );
 
 #define ALPC_CANCELFLG_TRY_CANCEL 0x1 // dbg
 #define ALPC_CANCELFLG_NO_CONTEXT_CHECK 0x8
 #define ALPC_CANCELFLGP_FLUSH 0x10000 // dbg
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcCancelMessage, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcCancelMessage(
     _In_ HANDLE PortHandle,
     _In_ ULONG Flags,
     _In_ PALPC_CONTEXT_ATTR MessageContext
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcImpersonateClientOfPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcImpersonateClientOfPort(
     _In_ HANDLE PortHandle,
     _In_ PPORT_MESSAGE Message,
     _In_ PVOID Flags
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcImpersonateClientContainerOfPort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcImpersonateClientContainerOfPort(
     _In_ HANDLE PortHandle,
     _In_ PPORT_MESSAGE Message,
     _In_ ULONG Flags
-))
+    );
 #endif
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcOpenSenderProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcOpenSenderProcess(
     _Out_ PHANDLE ProcessHandle,
     _In_ HANDLE PortHandle,
     _In_ PPORT_MESSAGE PortMessage,
     _In_ ULONG Flags,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlpcOpenSenderThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlpcOpenSenderThread(
     _Out_ PHANDLE ThreadHandle,
     _In_ HANDLE PortHandle,
     _In_ PPORT_MESSAGE PortMessage,
     _In_ ULONG Flags,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
-))
+    );
 
 // Support functions
 
-NTDLL_API(ULONG, __stdcall, AlpcMaxAllowedMessageLength, (
+NTSYSAPI
+ULONG
+NTAPI
+AlpcMaxAllowedMessageLength(
     VOID
-))
+    );
 
-NTDLL_API(ULONG, __stdcall, AlpcGetHeaderSize, (
+NTSYSAPI
+ULONG
+NTAPI
+AlpcGetHeaderSize(
     _In_ ULONG Flags
-))
+    );
 
 #define ALPC_ATTRFLG_ALLOCATEDATTR 0x20000000
 #define ALPC_ATTRFLG_VALIDATTR 0x40000000
 #define ALPC_ATTRFLG_KEEPRUNNINGATTR 0x60000000
 
-NTDLL_API(NTSTATUS, __stdcall, AlpcInitializeMessageAttribute, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+AlpcInitializeMessageAttribute(
     _In_ ULONG AttributeFlags,
     _Out_opt_ PALPC_MESSAGE_ATTRIBUTES Buffer,
     _In_ ULONG BufferSize,
     _Out_ PULONG RequiredBufferSize
-))
+    );
 
-NTDLL_API(PVOID, __stdcall, AlpcGetMessageAttribute, (
+NTSYSAPI
+PVOID
+NTAPI
+AlpcGetMessageAttribute(
     _In_ PALPC_MESSAGE_ATTRIBUTES Buffer,
     _In_ ULONG AttributeFlag
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, AlpcRegisterCompletionList, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+AlpcRegisterCompletionList(
     _In_ HANDLE PortHandle,
     _Out_ PALPC_COMPLETION_LIST_HEADER Buffer,
     _In_ ULONG Size,
     _In_ ULONG ConcurrencyCount,
     _In_ ULONG AttributeFlags
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, AlpcUnregisterCompletionList, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+AlpcUnregisterCompletionList(
     _In_ HANDLE PortHandle
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, __stdcall, AlpcRundownCompletionList, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+AlpcRundownCompletionList(
     _In_ HANDLE PortHandle
-))
+    );
 #endif
 
-NTDLL_API(NTSTATUS, __stdcall, AlpcAdjustCompletionListConcurrencyCount, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+AlpcAdjustCompletionListConcurrencyCount(
     _In_ HANDLE PortHandle,
     _In_ ULONG ConcurrencyCount
-))
+    );
 
-NTDLL_API(BOOLEAN, __stdcall, AlpcRegisterCompletionListWorkerThread, (
+NTSYSAPI
+BOOLEAN
+NTAPI
+AlpcRegisterCompletionListWorkerThread(
     _Inout_ PVOID CompletionList
-))
+    );
 
-NTDLL_API(BOOLEAN, __stdcall, AlpcUnregisterCompletionListWorkerThread, (
+NTSYSAPI
+BOOLEAN
+NTAPI
+AlpcUnregisterCompletionListWorkerThread(
     _Inout_ PVOID CompletionList
-))
+    );
 
-NTDLL_API_VOID(__stdcall, AlpcGetCompletionListLastMessageInformation, (
+NTSYSAPI
+VOID
+NTAPI
+AlpcGetCompletionListLastMessageInformation(
     _In_ PVOID CompletionList,
     _Out_ PULONG LastMessageId,
     _Out_ PULONG LastCallbackId
-))
+    );
 
-NTDLL_API(ULONG, __stdcall, AlpcGetOutstandingCompletionListMessageCount, (
+NTSYSAPI
+ULONG
+NTAPI
+AlpcGetOutstandingCompletionListMessageCount(
     _In_ PVOID CompletionList
-))
+    );
 
-NTDLL_API(PPORT_MESSAGE, __stdcall, AlpcGetMessageFromCompletionList, (
+NTSYSAPI
+PPORT_MESSAGE
+NTAPI
+AlpcGetMessageFromCompletionList(
     _In_ PVOID CompletionList,
     _Out_opt_ PALPC_MESSAGE_ATTRIBUTES *MessageAttributes
-))
+    );
 
-NTDLL_API_VOID(__stdcall, AlpcFreeCompletionListMessage, (
+NTSYSAPI
+VOID
+NTAPI
+AlpcFreeCompletionListMessage(
     _Inout_ PVOID CompletionList,
     _In_ PPORT_MESSAGE Message
-))
+    );
 
-NTDLL_API(PALPC_MESSAGE_ATTRIBUTES, __stdcall, AlpcGetCompletionListMessageAttributes, (
+NTSYSAPI
+PALPC_MESSAGE_ATTRIBUTES
+NTAPI
+AlpcGetCompletionListMessageAttributes(
     _In_ PVOID CompletionList,
     _In_ PPORT_MESSAGE Message
-))
+    );
 
 #endif
 

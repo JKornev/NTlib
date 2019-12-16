@@ -14,62 +14,89 @@
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateTransactionManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateTransactionManager(
     _Out_ PHANDLE TmHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_opt_ PUNICODE_STRING LogFileName,
     _In_opt_ ULONG CreateOptions,
     _In_opt_ ULONG CommitStrength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenTransactionManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenTransactionManager(
     _Out_ PHANDLE TmHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_opt_ PUNICODE_STRING LogFileName,
     _In_opt_ LPGUID TmIdentity,
     _In_opt_ ULONG OpenOptions
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RenameTransactionManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRenameTransactionManager(
     _In_ PUNICODE_STRING LogFileName,
     _In_ LPGUID ExistingTransactionManagerGuid
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RollforwardTransactionManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRollforwardTransactionManager(
     _In_ HANDLE TransactionManagerHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RecoverTransactionManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRecoverTransactionManager(
     _In_ HANDLE TransactionManagerHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationTransactionManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryInformationTransactionManager(
     _In_ HANDLE TransactionManagerHandle,
     _In_ TRANSACTIONMANAGER_INFORMATION_CLASS TransactionManagerInformationClass,
     _Out_writes_bytes_(TransactionManagerInformationLength) PVOID TransactionManagerInformation,
     _In_ ULONG TransactionManagerInformationLength,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationTransactionManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetInformationTransactionManager(
     _In_opt_ HANDLE TmHandle,
     _In_ TRANSACTIONMANAGER_INFORMATION_CLASS TransactionManagerInformationClass,
     _In_reads_bytes_(TransactionManagerInformationLength) PVOID TransactionManagerInformation,
     _In_ ULONG TransactionManagerInformationLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/EnumerateTransactionObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtEnumerateTransactionObject(
     _In_opt_ HANDLE RootObjectHandle,
     _In_ KTMOBJECT_TYPE QueryType,
     _Inout_updates_bytes_(ObjectCursorLength) PKTMOBJECT_CURSOR ObjectCursor,
     _In_ ULONG ObjectCursorLength,
     _Out_ PULONG ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateTransaction, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateTransaction(
     _Out_ PHANDLE TransactionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -80,42 +107,60 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateTransaction, (
     _In_opt_ ULONG IsolationFlags,
     _In_opt_ PLARGE_INTEGER Timeout,
     _In_opt_ PUNICODE_STRING Description
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenTransaction, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenTransaction(
     _Out_ PHANDLE TransactionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ LPGUID Uow,
     _In_opt_ HANDLE TmHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationTransaction, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryInformationTransaction(
     _In_ HANDLE TransactionHandle,
     _In_ TRANSACTION_INFORMATION_CLASS TransactionInformationClass,
     _Out_writes_bytes_(TransactionInformationLength) PVOID TransactionInformation,
     _In_ ULONG TransactionInformationLength,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationTransaction, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetInformationTransaction(
     _In_ HANDLE TransactionHandle,
     _In_ TRANSACTION_INFORMATION_CLASS TransactionInformationClass,
     _In_reads_bytes_(TransactionInformationLength) PVOID TransactionInformation,
     _In_ ULONG TransactionInformationLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CommitTransaction, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCommitTransaction(
     _In_ HANDLE TransactionHandle,
     _In_ BOOLEAN Wait
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RollbackTransaction, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRollbackTransaction(
     _In_ HANDLE TransactionHandle,
     _In_ BOOLEAN Wait
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateEnlistment(
     _Out_ PHANDLE EnlistmentHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ HANDLE ResourceManagerHandle,
@@ -124,87 +169,132 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateEnlistment, (
     _In_opt_ ULONG CreateOptions,
     _In_ NOTIFICATION_MASK NotificationMask,
     _In_opt_ PVOID EnlistmentKey
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenEnlistment(
     _Out_ PHANDLE EnlistmentHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ HANDLE ResourceManagerHandle,
     _In_ LPGUID EnlistmentGuid,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryInformationEnlistment(
     _In_ HANDLE EnlistmentHandle,
     _In_ ENLISTMENT_INFORMATION_CLASS EnlistmentInformationClass,
     _Out_writes_bytes_(EnlistmentInformationLength) PVOID EnlistmentInformation,
     _In_ ULONG EnlistmentInformationLength,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetInformationEnlistment(
     _In_opt_ HANDLE EnlistmentHandle,
     _In_ ENLISTMENT_INFORMATION_CLASS EnlistmentInformationClass,
     _In_reads_bytes_(EnlistmentInformationLength) PVOID EnlistmentInformation,
     _In_ ULONG EnlistmentInformationLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RecoverEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRecoverEnlistment(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PVOID EnlistmentKey
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/PrePrepareEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtPrePrepareEnlistment(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/PrepareEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtPrepareEnlistment(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CommitEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCommitEnlistment(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RollbackEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRollbackEnlistment(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/PrePrepareComplete, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtPrePrepareComplete(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/PrepareComplete, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtPrepareComplete(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CommitComplete, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCommitComplete(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReadOnlyEnlistment, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtReadOnlyEnlistment(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RollbackComplete, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRollbackComplete(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SinglePhaseReject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSinglePhaseReject(
     _In_ HANDLE EnlistmentHandle,
     _In_opt_ PLARGE_INTEGER TmVirtualClock
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateResourceManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateResourceManager(
     _Out_ PHANDLE ResourceManagerHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ HANDLE TmHandle,
@@ -212,21 +302,30 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateResourceManager, (
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_opt_ ULONG CreateOptions,
     _In_opt_ PUNICODE_STRING Description
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenResourceManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenResourceManager(
     _Out_ PHANDLE ResourceManagerHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ HANDLE TmHandle,
     _In_opt_ LPGUID ResourceManagerGuid,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RecoverResourceManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRecoverResourceManager(
     _In_ HANDLE ResourceManagerHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetNotificationResourceManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtGetNotificationResourceManager(
     _In_ HANDLE ResourceManagerHandle,
     _Out_ PTRANSACTION_NOTIFICATION TransactionNotification,
     _In_ ULONG NotificationLength,
@@ -234,54 +333,75 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetNotificationResourceManager, (
     _Out_opt_ PULONG ReturnLength,
     _In_ ULONG Asynchronous,
     _In_opt_ ULONG_PTR AsynchronousContext
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationResourceManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryInformationResourceManager(
     _In_ HANDLE ResourceManagerHandle,
     _In_ RESOURCEMANAGER_INFORMATION_CLASS ResourceManagerInformationClass,
     _Out_writes_bytes_(ResourceManagerInformationLength) PVOID ResourceManagerInformation,
     _In_ ULONG ResourceManagerInformationLength,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationResourceManager, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetInformationResourceManager(
     _In_ HANDLE ResourceManagerHandle,
     _In_ RESOURCEMANAGER_INFORMATION_CLASS ResourceManagerInformationClass,
     _In_reads_bytes_(ResourceManagerInformationLength) PVOID ResourceManagerInformation,
     _In_ ULONG ResourceManagerInformationLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RegisterProtocolAddressInformation, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRegisterProtocolAddressInformation(
     _In_ HANDLE ResourceManager,
     _In_ PCRM_PROTOCOL_ID ProtocolId,
     _In_ ULONG ProtocolInformationSize,
     _In_ PVOID ProtocolInformation,
     _In_opt_ ULONG CreateOptions
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/PropagationComplete, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtPropagationComplete(
     _In_ HANDLE ResourceManagerHandle,
     _In_ ULONG RequestCookie,
     _In_ ULONG BufferLength,
     _In_ PVOID Buffer
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/PropagationFailed, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtPropagationFailed(
     _In_ HANDLE ResourceManagerHandle,
     _In_ ULONG RequestCookie,
     _In_ NTSTATUS PropStatus
-))
+    );
 
 // private
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FreezeTransactions, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtFreezeTransactions(
     _In_ PLARGE_INTEGER FreezeTimeout,
     _In_ PLARGE_INTEGER ThawTimeout
-))
+    );
 
 // private
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ThawTransactions, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtThawTransactions(
     VOID
-))
+    );
 #endif
 
 #endif

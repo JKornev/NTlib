@@ -111,42 +111,60 @@ typedef enum _PLUGPLAY_CONTROL_CLASS
 } PLUGPLAY_CONTROL_CLASS, *PPLUGPLAY_CONTROL_CLASS;
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION < NTLIB_WIN_8)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetPlugPlayEvent, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtGetPlugPlayEvent(
     _In_ HANDLE EventHandle,
     _In_opt_ PVOID Context,
     _Out_writes_bytes_(EventBufferSize) PPLUGPLAY_EVENT_BLOCK EventBlock,
     _In_ ULONG EventBufferSize
-))
+    );
 #endif
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/PlugPlayControl, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtPlugPlayControl(
     _In_ PLUGPLAY_CONTROL_CLASS PnPControlClass,
     _Inout_updates_bytes_(PnPControlDataLength) PVOID PnPControlData,
     _In_ ULONG PnPControlDataLength
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SerializeBoot, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSerializeBoot(
     VOID
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/EnableLastKnownGood, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtEnableLastKnownGood(
     VOID
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DisableLastKnownGood, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtDisableLastKnownGood(
     VOID
-))
+    );
 
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReplacePartitionUnit, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtReplacePartitionUnit(
     _In_ PUNICODE_STRING TargetInstancePath,
     _In_ PUNICODE_STRING SpareInstancePath,
     _In_ ULONG Flags
-))
+    );
 #endif
 
 #endif

@@ -14,17 +14,26 @@
 
 // Debugging
 
-NTDLL_API_VOID(__stdcall, DbgUserBreakPoint, (
+NTSYSAPI
+VOID
+NTAPI
+DbgUserBreakPoint(
     VOID
-))
+    );
 
-NTDLL_API_VOID(__stdcall, DbgBreakPoint, (
+NTSYSAPI
+VOID
+NTAPI
+DbgBreakPoint(
     VOID
-))
+    );
 
-NTDLL_API_VOID(__stdcall, DbgBreakPointWithStatus, (
+NTSYSAPI
+VOID
+NTAPI
+DbgBreakPointWithStatus(
     _In_ ULONG Status
-))
+    );
 
 #define DBG_STATUS_CONTROL_C 1
 #define DBG_STATUS_SYSRQ 2
@@ -34,49 +43,70 @@ NTDLL_API_VOID(__stdcall, DbgBreakPointWithStatus, (
 #define DBG_STATUS_DEBUG_CONTROL 6
 #define DBG_STATUS_WORKER 7
 
-NTDLL_API(ULONG, __cdecl, DbgPrint, (
+NTSYSAPI
+ULONG
+STDAPIVCALLTYPE
+DbgPrint(
     _In_z_ _Printf_format_string_ PSTR Format,
     ...
-))
+    );
 
-NTDLL_API(ULONG, __cdecl, DbgPrintEx, (
+NTSYSAPI
+ULONG
+STDAPIVCALLTYPE
+DbgPrintEx(
     _In_ ULONG ComponentId,
     _In_ ULONG Level,
     _In_z_ _Printf_format_string_ PSTR Format,
     ...
-))
+    );
 
-NTDLL_API(ULONG, __stdcall, vDbgPrintEx, (
+NTSYSAPI
+ULONG
+NTAPI
+vDbgPrintEx(
     _In_ ULONG ComponentId,
     _In_ ULONG Level,
     _In_z_ PCH Format,
     _In_ va_list arglist
-))
+    );
 
-NTDLL_API(ULONG, __stdcall, vDbgPrintExWithPrefix, (
+NTSYSAPI
+ULONG
+NTAPI
+vDbgPrintExWithPrefix(
     _In_z_ PCH Prefix,
     _In_ ULONG ComponentId,
     _In_ ULONG Level,
     _In_z_ PCH Format,
     _In_ va_list arglist
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, DbgQueryDebugFilterState, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+DbgQueryDebugFilterState(
     _In_ ULONG ComponentId,
     _In_ ULONG Level
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, DbgSetDebugFilterState, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+DbgSetDebugFilterState(
     _In_ ULONG ComponentId,
     _In_ ULONG Level,
     _In_ BOOLEAN State
-))
+    );
 
-NTDLL_API(ULONG, __stdcall, DbgPrompt, (
+NTSYSAPI
+ULONG
+NTAPI
+DbgPrompt(
     _In_ PCH Prompt,
     _Out_writes_bytes_(Length) PCH Response,
     _In_ ULONG Length
-))
+    );
 
 // Definitions
 
@@ -189,88 +219,136 @@ typedef enum _DEBUGOBJECTINFOCLASS
 
 // System calls
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateDebugObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateDebugObject(
     _Out_ PHANDLE DebugObjectHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ ULONG Flags
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DebugActiveProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtDebugActiveProcess(
     _In_ HANDLE ProcessHandle,
     _In_ HANDLE DebugObjectHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/DebugContinue, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtDebugContinue(
     _In_ HANDLE DebugObjectHandle,
     _In_ PCLIENT_ID ClientId,
     _In_ NTSTATUS ContinueStatus
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RemoveProcessDebug, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRemoveProcessDebug(
     _In_ HANDLE ProcessHandle,
     _In_ HANDLE DebugObjectHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationDebugObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetInformationDebugObject(
     _In_ HANDLE DebugObjectHandle,
     _In_ DEBUGOBJECTINFOCLASS DebugObjectInformationClass,
     _In_ PVOID DebugInformation,
     _In_ ULONG DebugInformationLength,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WaitForDebugEvent, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtWaitForDebugEvent(
     _In_ HANDLE DebugObjectHandle,
     _In_ BOOLEAN Alertable,
     _In_opt_ PLARGE_INTEGER Timeout,
     _Out_ PVOID WaitStateChange
-))
+    );
 
 // Debugging UI
 
-NTDLL_API(NTSTATUS, __stdcall, DbgUiConnectToDbg, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+DbgUiConnectToDbg(
     VOID
-))
+    );
 
-NTDLL_API(HANDLE, __stdcall, DbgUiGetThreadDebugObject, (
+NTSYSAPI
+HANDLE
+NTAPI
+DbgUiGetThreadDebugObject(
     VOID
-))
+    );
 
-NTDLL_API_VOID(__stdcall, DbgUiSetThreadDebugObject, (
+NTSYSAPI
+VOID
+NTAPI
+DbgUiSetThreadDebugObject(
     _In_ HANDLE DebugObject
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, DbgUiWaitStateChange, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+DbgUiWaitStateChange(
     _Out_ PDBGUI_WAIT_STATE_CHANGE StateChange,
     _In_opt_ PLARGE_INTEGER Timeout
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, DbgUiContinue, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+DbgUiContinue(
     _In_ PCLIENT_ID AppClientId,
     _In_ NTSTATUS ContinueStatus
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, DbgUiStopDebugging, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+DbgUiStopDebugging(
     _In_ HANDLE Process
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, DbgUiDebugActiveProcess, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+DbgUiDebugActiveProcess(
     _In_ HANDLE Process
-))
+    );
 
-NTDLL_API_VOID(__stdcall, DbgUiRemoteBreakin, (
+NTSYSAPI
+VOID
+NTAPI
+DbgUiRemoteBreakin(
     _In_ PVOID Context
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, DbgUiIssueRemoteBreakin, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+DbgUiIssueRemoteBreakin(
     _In_ HANDLE Process
-))
+    );
 
-NTDLL_API(NTSTATUS, __stdcall, DbgUiConvertStateChangeStructure, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+DbgUiConvertStateChangeStructure(
     _In_ PDBGUI_WAIT_STATE_CHANGE StateChange,
     _Out_ LPDEBUG_EVENT DebugEvent
-))
+    );
 
 struct _EVENT_FILTER_DESCRIPTOR;
 
@@ -286,11 +364,14 @@ typedef VOID (NTAPI *PENABLECALLBACK)(
 
 typedef ULONGLONG REGHANDLE, *PREGHANDLE;
 
-NTDLL_API(NTSTATUS, __stdcall, EtwEventRegister, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+EtwEventRegister(
     _In_ LPCGUID ProviderId,
     _In_opt_ PENABLECALLBACK EnableCallback,
     _In_opt_ PVOID CallbackContext,
     _Out_ PREGHANDLE RegHandle
-))
+    );
 
 #endif

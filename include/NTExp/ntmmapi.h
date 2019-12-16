@@ -442,54 +442,72 @@ typedef enum _SECTION_INHERIT
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AllocateVirtualMemory, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAllocateVirtualMemory(
     _In_ HANDLE ProcessHandle,
     _Inout_ _At_(*BaseAddress, _Readable_bytes_(*RegionSize) _Writable_bytes_(*RegionSize) _Post_readable_byte_size_(*RegionSize)) PVOID *BaseAddress,
     _In_ ULONG_PTR ZeroBits,
     _Inout_ PSIZE_T RegionSize,
     _In_ ULONG AllocationType,
     _In_ ULONG Protect
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FreeVirtualMemory, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtFreeVirtualMemory(
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID *BaseAddress,
     _Inout_ PSIZE_T RegionSize,
     _In_ ULONG FreeType
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ReadVirtualMemory, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtReadVirtualMemory(
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
     _Out_writes_bytes_(BufferSize) PVOID Buffer,
     _In_ SIZE_T BufferSize,
     _Out_opt_ PSIZE_T NumberOfBytesRead
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WriteVirtualMemory, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtWriteVirtualMemory(
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
     _In_reads_bytes_(BufferSize) PVOID Buffer,
     _In_ SIZE_T BufferSize,
     _Out_opt_ PSIZE_T NumberOfBytesWritten
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ProtectVirtualMemory, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtProtectVirtualMemory(
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID *BaseAddress,
     _Inout_ PSIZE_T RegionSize,
     _In_ ULONG NewProtect,
     _Out_ PULONG OldProtect
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryVirtualMemory, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryVirtualMemory(
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
     _In_ MEMORY_INFORMATION_CLASS MemoryInformationClass,
     _Out_writes_bytes_(MemoryInformationLength) PVOID MemoryInformation,
     _In_ SIZE_T MemoryInformationLength,
     _Out_opt_ PSIZE_T ReturnLength
-))
+    );
 
 #endif
 
@@ -526,30 +544,39 @@ typedef struct _CFG_CALL_TARGET_LIST_INFORMATION
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationVirtualMemory, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetInformationVirtualMemory(
     _In_ HANDLE ProcessHandle,
     _In_ VIRTUAL_MEMORY_INFORMATION_CLASS VmInformationClass,
     _In_ ULONG_PTR NumberOfEntries,
     _In_reads_ (NumberOfEntries) PMEMORY_RANGE_ENTRY VirtualAddresses,
     _In_reads_bytes_ (VmInformationLength) PVOID VmInformation,
     _In_ ULONG VmInformationLength
-))
+    );
 
 #endif
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/LockVirtualMemory, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtLockVirtualMemory(
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID *BaseAddress,
     _Inout_ PSIZE_T RegionSize,
     _In_ ULONG MapType
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnlockVirtualMemory, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtUnlockVirtualMemory(
     _In_ HANDLE ProcessHandle,
     _Inout_ PVOID *BaseAddress,
     _Inout_ PSIZE_T RegionSize,
     _In_ ULONG MapType
-))
+    );
 
 #endif
 
@@ -557,7 +584,10 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnlockVirtualMemory, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateSection, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateSection(
     _Out_ PHANDLE SectionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -565,10 +595,13 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateSection, (
     _In_ ULONG SectionPageProtection,
     _In_ ULONG AllocationAttributes,
     _In_opt_ HANDLE FileHandle
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_RS15)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateSectionEx, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateSectionEx(
     _Out_ PHANDLE SectionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -578,16 +611,22 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateSectionEx, (
     _In_opt_ HANDLE FileHandle,
     _In_ PMEM_EXTENDED_PARAMETER ExtendedParameters,
     _In_ ULONG ExtendedParameterCount
-))
+    );
 #endif
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenSection, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenSection(
     _Out_ PHANDLE SectionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/MapViewOfSection, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtMapViewOfSection(
     _In_ HANDLE SectionHandle,
     _In_ HANDLE ProcessHandle,
     _Inout_ _At_(*BaseAddress, _Readable_bytes_(*ViewSize) _Writable_bytes_(*ViewSize) _Post_readable_byte_size_(*ViewSize)) PVOID *BaseAddress,
@@ -598,38 +637,53 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/MapViewOfSection, (
     _In_ SECTION_INHERIT InheritDisposition,
     _In_ ULONG AllocationType,
     _In_ ULONG Win32Protect
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnmapViewOfSection, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtUnmapViewOfSection(
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/UnmapViewOfSectionEx, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtUnmapViewOfSectionEx(
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
     _In_ ULONG Flags
-))
+    );
 #endif
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ExtendSection, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtExtendSection(
     _In_ HANDLE SectionHandle,
     _Inout_ PLARGE_INTEGER NewSectionSize
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QuerySection, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQuerySection(
     _In_ HANDLE SectionHandle,
     _In_ SECTION_INFORMATION_CLASS SectionInformationClass,
     _Out_writes_bytes_(SectionInformationLength) PVOID SectionInformation,
     _In_ SIZE_T SectionInformationLength,
     _Out_opt_ PSIZE_T ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AreMappedFilesTheSame, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAreMappedFilesTheSame(
     _In_ PVOID File1MappedAsAnImage,
     _In_ PVOID File2MappedAsFile
-))
+    );
 
 #endif
 
@@ -743,24 +797,33 @@ typedef struct _MEMORY_PARTITION_MEMORY_EVENTS_INFORMATION
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreatePartition, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreatePartition(
     _Out_ PHANDLE PartitionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ ULONG PreferredNode
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenPartition, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenPartition(
     _Out_ PHANDLE PartitionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ManagePartition, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtManagePartition(
     _In_ MEMORY_PARTITION_INFORMATION_CLASS PartitionInformationClass,
     _In_ PVOID PartitionInformation,
     _In_ ULONG PartitionInformationLength
-))
+    );
 
 #endif
 
@@ -770,29 +833,41 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ManagePartition, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/MapUserPhysicalPages, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtMapUserPhysicalPages(
     _In_ PVOID VirtualAddress,
     _In_ ULONG_PTR NumberOfPages,
     _In_reads_opt_(NumberOfPages) PULONG_PTR UserPfnArray
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/MapUserPhysicalPagesScatter, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtMapUserPhysicalPagesScatter(
     _In_reads_(NumberOfPages) PVOID *VirtualAddresses,
     _In_ ULONG_PTR NumberOfPages,
     _In_reads_opt_(NumberOfPages) PULONG_PTR UserPfnArray
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AllocateUserPhysicalPages, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAllocateUserPhysicalPages(
     _In_ HANDLE ProcessHandle,
     _Inout_ PULONG_PTR NumberOfPages,
     _Out_writes_(*NumberOfPages) PULONG_PTR UserPfnArray
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FreeUserPhysicalPages, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtFreeUserPhysicalPages(
     _In_ HANDLE ProcessHandle,
     _Inout_ PULONG_PTR NumberOfPages,
     _In_reads_(*NumberOfPages) PULONG_PTR UserPfnArray
-))
+    );
 
 #endif
 
@@ -801,11 +876,14 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FreeUserPhysicalPages, (
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenSession, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenSession(
     _Out_ PHANDLE SessionHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
-))
+    );
 #endif
 
 #endif
@@ -814,7 +892,10 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenSession, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetWriteWatch, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtGetWriteWatch(
     _In_ HANDLE ProcessHandle,
     _In_ ULONG Flags,
     _In_ PVOID BaseAddress,
@@ -822,30 +903,42 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetWriteWatch, (
     _Out_writes_(*EntriesInUserAddressArray) PVOID *UserAddressArray,
     _Inout_ PULONG_PTR EntriesInUserAddressArray,
     _Out_ PULONG Granularity
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ResetWriteWatch, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtResetWriteWatch(
     _In_ HANDLE ProcessHandle,
     _In_ PVOID BaseAddress,
     _In_ SIZE_T RegionSize
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreatePagingFile, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreatePagingFile(
     _In_ PUNICODE_STRING PageFileName,
     _In_ PLARGE_INTEGER MinimumSize,
     _In_ PLARGE_INTEGER MaximumSize,
     _In_ ULONG Priority
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FlushInstructionCache, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtFlushInstructionCache(
     _In_ HANDLE ProcessHandle,
     _In_opt_ PVOID BaseAddress,
     _In_ SIZE_T Length
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/FlushWriteBuffer, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtFlushWriteBuffer(
     VOID
-))
+    );
 
 #endif
 

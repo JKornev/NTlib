@@ -35,195 +35,285 @@ typedef VOID (NTAPI *PTP_ALPC_CALLBACK_EX)(
 
 // private
 _Check_return_
-NTDLL_API(NTSTATUS, __stdcall, TpAllocPool, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpAllocPool(
     _Out_ PTP_POOL *PoolReturn,
     _Reserved_ PVOID Reserved
-))
+    );
 
 // winbase:CloseThreadpool
-NTDLL_API_VOID(__stdcall, TpReleasePool, (
+NTSYSAPI
+VOID
+NTAPI
+TpReleasePool(
     _Inout_ PTP_POOL Pool
-))
+    );
 
 // winbase:SetThreadpoolThreadMaximum
-NTDLL_API_VOID(__stdcall, TpSetPoolMaxThreads, (
+NTSYSAPI
+VOID
+NTAPI
+TpSetPoolMaxThreads(
     _Inout_ PTP_POOL Pool,
     _In_ LONG MaxThreads
-))
+    );
 
 // private
-NTDLL_API(NTSTATUS, __stdcall, TpSetPoolMinThreads, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpSetPoolMinThreads(
     _Inout_ PTP_POOL Pool,
     _In_ LONG MinThreads
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, __stdcall, TpQueryPoolStackInformation, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpQueryPoolStackInformation(
     _In_ PTP_POOL Pool,
     _Out_ PTP_POOL_STACK_INFORMATION PoolStackInformation
-))
+    );
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, __stdcall, TpSetPoolStackInformation, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpSetPoolStackInformation(
     _Inout_ PTP_POOL Pool,
     _In_ PTP_POOL_STACK_INFORMATION PoolStackInformation
-))
+    );
 #endif
 
 // private
 _Check_return_
-NTDLL_API(NTSTATUS, __stdcall, TpAllocCleanupGroup, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpAllocCleanupGroup(
     _Out_ PTP_CLEANUP_GROUP *CleanupGroupReturn
-))
+    );
 
 // winbase:CloseThreadpoolCleanupGroup
-NTDLL_API_VOID(__stdcall, TpReleaseCleanupGroup, (
+NTSYSAPI
+VOID
+NTAPI
+TpReleaseCleanupGroup(
     _Inout_ PTP_CLEANUP_GROUP CleanupGroup
-))
+    );
 
 // winbase:CloseThreadpoolCleanupGroupMembers
-NTDLL_API_VOID(__stdcall, TpReleaseCleanupGroupMembers, (
+NTSYSAPI
+VOID
+NTAPI
+TpReleaseCleanupGroupMembers(
     _Inout_ PTP_CLEANUP_GROUP CleanupGroup,
     _In_ LOGICAL CancelPendingCallbacks,
     _Inout_opt_ PVOID CleanupParameter
-))
+    );
 
 // winbase:SetEventWhenCallbackReturns
-NTDLL_API_VOID(__stdcall, TpCallbackSetEventOnCompletion, (
+NTSYSAPI
+VOID
+NTAPI
+TpCallbackSetEventOnCompletion(
     _Inout_ PTP_CALLBACK_INSTANCE Instance,
     _In_ HANDLE Event
-))
+    );
 
 // winbase:ReleaseSemaphoreWhenCallbackReturns
-NTDLL_API_VOID(__stdcall, TpCallbackReleaseSemaphoreOnCompletion, (
+NTSYSAPI
+VOID
+NTAPI
+TpCallbackReleaseSemaphoreOnCompletion(
     _Inout_ PTP_CALLBACK_INSTANCE Instance,
     _In_ HANDLE Semaphore,
     _In_ LONG ReleaseCount
-))
+    );
 
 // winbase:ReleaseMutexWhenCallbackReturns
-NTDLL_API_VOID(__stdcall, TpCallbackReleaseMutexOnCompletion, (
+NTSYSAPI
+VOID
+NTAPI
+TpCallbackReleaseMutexOnCompletion(
     _Inout_ PTP_CALLBACK_INSTANCE Instance,
     _In_ HANDLE Mutex
-))
+    );
 
 // winbase:LeaveCriticalSectionWhenCallbackReturns
-NTDLL_API_VOID(__stdcall, TpCallbackLeaveCriticalSectionOnCompletion, (
+NTSYSAPI
+VOID
+NTAPI
+TpCallbackLeaveCriticalSectionOnCompletion(
     _Inout_ PTP_CALLBACK_INSTANCE Instance,
     _Inout_ PRTL_CRITICAL_SECTION CriticalSection
-))
+    );
 
 // winbase:FreeLibraryWhenCallbackReturns
-NTDLL_API_VOID(__stdcall, TpCallbackUnloadDllOnCompletion, (
+NTSYSAPI
+VOID
+NTAPI
+TpCallbackUnloadDllOnCompletion(
     _Inout_ PTP_CALLBACK_INSTANCE Instance,
     _In_ PVOID DllHandle
-))
+    );
 
 // winbase:CallbackMayRunLong
-NTDLL_API(NTSTATUS, __stdcall, TpCallbackMayRunLong, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpCallbackMayRunLong(
     _Inout_ PTP_CALLBACK_INSTANCE Instance
-))
+    );
 
 // winbase:DisassociateCurrentThreadFromCallback
-NTDLL_API_VOID(__stdcall, TpDisassociateCallback, (
+NTSYSAPI
+VOID
+NTAPI
+TpDisassociateCallback(
     _Inout_ PTP_CALLBACK_INSTANCE Instance
-))
+    );
 
 // winbase:TrySubmitThreadpoolCallback
 _Check_return_
-NTDLL_API(NTSTATUS, __stdcall, TpSimpleTryPost, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpSimpleTryPost(
     _In_ PTP_SIMPLE_CALLBACK Callback,
     _Inout_opt_ PVOID Context,
     _In_opt_ PTP_CALLBACK_ENVIRON CallbackEnviron
-))
+    );
 
 // private
 _Check_return_
-NTDLL_API(NTSTATUS, __stdcall, TpAllocWork, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpAllocWork(
     _Out_ PTP_WORK *WorkReturn,
     _In_ PTP_WORK_CALLBACK Callback,
     _Inout_opt_ PVOID Context,
     _In_opt_ PTP_CALLBACK_ENVIRON CallbackEnviron
-))
+    );
 
 // winbase:CloseThreadpoolWork
-NTDLL_API_VOID(__stdcall, TpReleaseWork, (
+NTSYSAPI
+VOID
+NTAPI
+TpReleaseWork(
     _Inout_ PTP_WORK Work
-))
+    );
 
 // winbase:SubmitThreadpoolWork
-NTDLL_API_VOID(__stdcall, TpPostWork, (
+NTSYSAPI
+VOID
+NTAPI
+TpPostWork(
     _Inout_ PTP_WORK Work
-))
+    );
 
 // winbase:WaitForThreadpoolWorkCallbacks
-NTDLL_API_VOID(__stdcall, TpWaitForWork, (
+NTSYSAPI
+VOID
+NTAPI
+TpWaitForWork(
     _Inout_ PTP_WORK Work,
     _In_ LOGICAL CancelPendingCallbacks
-))
+    );
 
 // private
 _Check_return_
-NTDLL_API(NTSTATUS, __stdcall, TpAllocTimer, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpAllocTimer(
     _Out_ PTP_TIMER *Timer,
     _In_ PTP_TIMER_CALLBACK Callback,
     _Inout_opt_ PVOID Context,
     _In_opt_ PTP_CALLBACK_ENVIRON CallbackEnviron
-))
+    );
 
 // winbase:CloseThreadpoolTimer
-NTDLL_API_VOID(__stdcall, TpReleaseTimer, (
+NTSYSAPI
+VOID
+NTAPI
+TpReleaseTimer(
     _Inout_ PTP_TIMER Timer
-))
+    );
 
 // winbase:SetThreadpoolTimer
-NTDLL_API_VOID(__stdcall, TpSetTimer, (
+NTSYSAPI
+VOID
+NTAPI
+TpSetTimer(
     _Inout_ PTP_TIMER Timer,
     _In_opt_ PLARGE_INTEGER DueTime,
     _In_ LONG Period,
     _In_opt_ LONG WindowLength
-))
+    );
 
 // winbase:IsThreadpoolTimerSet
-NTDLL_API(LOGICAL, __stdcall, TpIsTimerSet, (
+NTSYSAPI
+LOGICAL
+NTAPI
+TpIsTimerSet(
     _In_ PTP_TIMER Timer
-))
+    );
 
 // winbase:WaitForThreadpoolTimerCallbacks
-NTDLL_API_VOID(__stdcall, TpWaitForTimer, (
+NTSYSAPI
+VOID
+NTAPI
+TpWaitForTimer(
     _Inout_ PTP_TIMER Timer,
     _In_ LOGICAL CancelPendingCallbacks
-))
+    );
 
 // private
 _Check_return_
-NTDLL_API(NTSTATUS, __stdcall, TpAllocWait, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpAllocWait(
     _Out_ PTP_WAIT *WaitReturn,
     _In_ PTP_WAIT_CALLBACK Callback,
     _Inout_opt_ PVOID Context,
     _In_opt_ PTP_CALLBACK_ENVIRON CallbackEnviron
-))
+    );
 
 // winbase:CloseThreadpoolWait
-NTDLL_API_VOID(__stdcall, TpReleaseWait, (
+NTSYSAPI
+VOID
+NTAPI
+TpReleaseWait(
     _Inout_ PTP_WAIT Wait
-))
+    );
 
 // winbase:SetThreadpoolWait
-NTDLL_API_VOID(__stdcall, TpSetWait, (
+NTSYSAPI
+VOID
+NTAPI
+TpSetWait(
     _Inout_ PTP_WAIT Wait,
     _In_opt_ HANDLE Handle,
     _In_opt_ PLARGE_INTEGER Timeout
-))
+    );
 
 // winbase:WaitForThreadpoolWaitCallbacks
-NTDLL_API_VOID(__stdcall, TpWaitForWait, (
+NTSYSAPI
+VOID
+NTAPI
+TpWaitForWait(
     _Inout_ PTP_WAIT Wait,
     _In_ LOGICAL CancelPendingCallbacks
-))
+    );
 
 // private
 typedef VOID (NTAPI *PTP_IO_CALLBACK)(
@@ -236,64 +326,91 @@ typedef VOID (NTAPI *PTP_IO_CALLBACK)(
 
 // private
 _Check_return_
-NTDLL_API(NTSTATUS, __stdcall, TpAllocIoCompletion, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpAllocIoCompletion(
     _Out_ PTP_IO *IoReturn,
     _In_ HANDLE File,
     _In_ PTP_IO_CALLBACK Callback,
     _Inout_opt_ PVOID Context,
     _In_opt_ PTP_CALLBACK_ENVIRON CallbackEnviron
-))
+    );
 
 // winbase:CloseThreadpoolIo
-NTDLL_API_VOID(__stdcall, TpReleaseIoCompletion, (
+NTSYSAPI
+VOID
+NTAPI
+TpReleaseIoCompletion(
     _Inout_ PTP_IO Io
-))
+    );
 
 // winbase:StartThreadpoolIo
-NTDLL_API_VOID(__stdcall, TpStartAsyncIoOperation, (
+NTSYSAPI
+VOID
+NTAPI
+TpStartAsyncIoOperation(
     _Inout_ PTP_IO Io
-))
+    );
 
 // winbase:CancelThreadpoolIo
-NTDLL_API_VOID(__stdcall, TpCancelAsyncIoOperation, (
+NTSYSAPI
+VOID
+NTAPI
+TpCancelAsyncIoOperation(
     _Inout_ PTP_IO Io
-))
+    );
 
 // winbase:WaitForThreadpoolIoCallbacks
-NTDLL_API_VOID(__stdcall, TpWaitForIoCompletion, (
+NTSYSAPI
+VOID
+NTAPI
+TpWaitForIoCompletion(
     _Inout_ PTP_IO Io,
     _In_ LOGICAL CancelPendingCallbacks
-))
+    );
 
 // private
-NTDLL_API(NTSTATUS, __stdcall, TpAllocAlpcCompletion, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpAllocAlpcCompletion(
     _Out_ PTP_ALPC *AlpcReturn,
     _In_ HANDLE AlpcPort,
     _In_ PTP_ALPC_CALLBACK Callback,
     _Inout_opt_ PVOID Context,
     _In_opt_ PTP_CALLBACK_ENVIRON CallbackEnviron
-))
+    );
 
 #if (NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 // rev
-NTDLL_API(NTSTATUS, __stdcall, TpAllocAlpcCompletionEx, (
+NTSYSAPI
+NTSTATUS
+NTAPI
+TpAllocAlpcCompletionEx(
     _Out_ PTP_ALPC *AlpcReturn,
     _In_ HANDLE AlpcPort,
     _In_ PTP_ALPC_CALLBACK_EX Callback,
     _Inout_opt_ PVOID Context,
     _In_opt_ PTP_CALLBACK_ENVIRON CallbackEnviron
-))
+    );
 #endif
 
 // private
-NTDLL_API_VOID(__stdcall, TpReleaseAlpcCompletion, (
+NTSYSAPI
+VOID
+NTAPI
+TpReleaseAlpcCompletion(
     _Inout_ PTP_ALPC Alpc
-))
+    );
 
 // private
-NTDLL_API_VOID(__stdcall, TpWaitForAlpcCompletion, (
+NTSYSAPI
+VOID
+NTAPI
+TpWaitForAlpcCompletion(
     _Inout_ PTP_ALPC Alpc
-))
+    );
 
 // private
 typedef enum _TP_TRACE_TYPE
@@ -304,14 +421,20 @@ typedef enum _TP_TRACE_TYPE
 } TP_TRACE_TYPE;
 
 // private
-NTDLL_API_VOID(__stdcall, TpCaptureCaller, (
+NTSYSAPI
+VOID
+NTAPI
+TpCaptureCaller(
     _In_ TP_TRACE_TYPE Type
-))
+    );
 
 // private
-NTDLL_API_VOID(__stdcall, TpCheckTerminateWorker, (
+NTSYSAPI
+VOID
+NTAPI
+TpCheckTerminateWorker(
     _In_ HANDLE Thread
-))
+    );
 
 #endif
 

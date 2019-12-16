@@ -17,36 +17,10 @@ extern "C" {
   #error NTLIB: Error, unknown architecture
 #endif
 
-#define NTCALL __stdcall
-
 #ifdef NTLIB_COMPILATION
-  #define NTDEF(conv) __declspec(dllexport) conv
-#else
-  #define NTDEF(conv) __declspec(dllimport) conv
-#endif
-
-#ifdef NTLIB_COMPILATION
-  #define NATIVE_API(type, conv, name, params) \
-    type NTDEF(conv) Zw##name params { return (type)0; } \
-    type NTDEF(conv) Nt##name params { return (type)0; }
-  #define NATIVE_API_VOID(conv, name, params) \
-    VOID NTDEF(conv) name params{ return; }
-  #define NTDLL_API(type, conv, name, params) \
-    type NTDEF(conv) name params { return (type)0; }
-  #define NTDLL_API_VOID(conv, name, params) \
-    VOID NTDEF(conv) name params { return; }
   #define EXPORT_API(name) \
     void __cdecl ntexport_##name() {}
 #else
-  #define NATIVE_API(type, conv, name, params) \
-    type NTDEF(conv) Zw##name params; \
-    type NTDEF(conv) Nt##name params;
-  #define NATIVE_API_VOID(conv, name, params) \
-    VOID NTDEF(conv) name params;
-  #define NTDLL_API(type, conv, name, params) \
-    type NTDEF(conv) name params;
-  #define NTDLL_API_VOID(conv, name, params) \
-    VOID NTDEF(conv) name params;
   #define EXPORT_API(name)
 #endif
 
@@ -116,16 +90,8 @@ extern "C" {
 #undef NTLIB_WIN_MAX
 #undef NTLIB_WIN_VERSION 
 
-#undef NTCALL
-#undef NTDEF
-
-#undef NATIVE_API
-#undef NTDLL_API_VOID
-
-#undef NTDLL_API
-#undef NTDLL_API_VOID
-
-#undef EXPORT_API
+#undef NTLIB_KERNEL_MODE
+#undef NTLIB_USER_MODE
 
 #pragma pack(pop)
 

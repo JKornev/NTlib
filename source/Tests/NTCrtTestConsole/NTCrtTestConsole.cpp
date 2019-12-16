@@ -8,7 +8,7 @@
 - Enable SAFE-SEH for Win32->Release
 */
 
-#define NTLIB_ASSERT(x) if (!(x)) DbgBreakPoint()
+#pragma comment(lib, "ntdll.lib")
 
 // 
 // test_runtimechecks()

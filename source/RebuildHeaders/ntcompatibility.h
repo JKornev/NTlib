@@ -2,6 +2,10 @@
 
 #include <Windows.h>
 
+#ifndef FASTCALL
+#define FASTCALL __fastcall
+#endif
+
 #define MEM_EXTENDED_PARAMETER_TYPE_BITS 8
 
 typedef struct MEM_EXTENDED_PARAMETER {

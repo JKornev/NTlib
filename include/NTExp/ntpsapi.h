@@ -1086,7 +1086,10 @@ typedef enum _THREAD_WORKLOAD_CLASS
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateProcess(
     _Out_ PHANDLE ProcessHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -1095,7 +1098,7 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateProcess, (
     _In_opt_ HANDLE SectionHandle,
     _In_opt_ HANDLE DebugPort,
     _In_opt_ HANDLE ExceptionPort
-))
+    );
 
 #define PROCESS_CREATE_FLAGS_BREAKAWAY 0x00000001
 #define PROCESS_CREATE_FLAGS_NO_DEBUG_INHERIT 0x00000002
@@ -1103,7 +1106,10 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateProcess, (
 #define PROCESS_CREATE_FLAGS_OVERRIDE_ADDRESS_SPACE 0x00000008
 #define PROCESS_CREATE_FLAGS_LARGE_PAGES 0x00000010
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateProcessEx, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateProcessEx(
     _Out_ PHANDLE ProcessHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -1113,27 +1119,39 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateProcessEx, (
     _In_opt_ HANDLE DebugPort,
     _In_opt_ HANDLE ExceptionPort,
     _In_ ULONG JobMemberLevel
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenProcess(
     _Out_ PHANDLE ProcessHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_opt_ PCLIENT_ID ClientId
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/TerminateProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtTerminateProcess(
     _In_opt_ HANDLE ProcessHandle,
     _In_ NTSTATUS ExitStatus
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SuspendProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSuspendProcess(
     _In_ HANDLE ProcessHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ResumeProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtResumeProcess(
     _In_ HANDLE ProcessHandle
-))
+    );
 
 #define NtCurrentProcess() ((HANDLE)(LONG_PTR)-1)
 #define ZwCurrentProcess() NtCurrentProcess()
@@ -1153,45 +1171,60 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ResumeProcess, (
 #define NtCurrentProcessId() (NtCurrentTeb()->ClientId.UniqueProcess)
 #define NtCurrentThreadId() (NtCurrentTeb()->ClientId.UniqueThread)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryInformationProcess(
     _In_ HANDLE ProcessHandle,
     _In_ PROCESSINFOCLASS ProcessInformationClass,
     _Out_writes_bytes_(ProcessInformationLength) PVOID ProcessInformation,
     _In_ ULONG ProcessInformationLength,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetNextProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtGetNextProcess(
     _In_ HANDLE ProcessHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ ULONG HandleAttributes,
     _In_ ULONG Flags,
     _Out_ PHANDLE NewProcessHandle
-))
+    );
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_XP)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetNextThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtGetNextThread(
     _In_ HANDLE ProcessHandle,
     _In_ HANDLE ThreadHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ ULONG HandleAttributes,
     _In_ ULONG Flags,
     _Out_ PHANDLE NewThreadHandle
-))
+    );
 #endif
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetInformationProcess(
     _In_ HANDLE ProcessHandle,
     _In_ PROCESSINFOCLASS ProcessInformationClass,
     _In_reads_bytes_(ProcessInformationLength) PVOID ProcessInformation,
     _In_ ULONG ProcessInformationLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryPortInformationProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryPortInformationProcess(
     VOID
-))
+    );
 
 #endif
 
@@ -1199,7 +1232,10 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryPortInformationProcess, (
 
 #if (defined(PHNT_COMPILE) || NTLIB_CPU_MODE != NTLIB_KERNEL_MODE)
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateThread(
     _Out_ PHANDLE ThreadHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -1208,90 +1244,135 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateThread, (
     _In_ PCONTEXT ThreadContext,
     _In_ PINITIAL_TEB InitialTeb,
     _In_ BOOLEAN CreateSuspended
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenThread(
     _Out_ PHANDLE ThreadHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_opt_ PCLIENT_ID ClientId
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/TerminateThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtTerminateThread(
     _In_opt_ HANDLE ThreadHandle,
     _In_ NTSTATUS ExitStatus
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SuspendThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSuspendThread(
     _In_ HANDLE ThreadHandle,
     _Out_opt_ PULONG PreviousSuspendCount
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ResumeThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtResumeThread(
     _In_ HANDLE ThreadHandle,
     _Out_opt_ PULONG PreviousSuspendCount
-))
+    );
 
-NATIVE_API(ULONG, NTCALL, /*Nt*/GetCurrentProcessorNumber, (
+NTSYSCALLAPI
+ULONG
+NTAPI
+NtGetCurrentProcessorNumber(
     VOID
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/GetContextThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtGetContextThread(
     _In_ HANDLE ThreadHandle,
     _Inout_ PCONTEXT ThreadContext
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetContextThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetContextThread(
     _In_ HANDLE ThreadHandle,
     _In_ PCONTEXT ThreadContext
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryInformationThread(
     _In_ HANDLE ThreadHandle,
     _In_ THREADINFOCLASS ThreadInformationClass,
     _Out_writes_bytes_(ThreadInformationLength) PVOID ThreadInformation,
     _In_ ULONG ThreadInformationLength,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetInformationThread(
     _In_ HANDLE ThreadHandle,
     _In_ THREADINFOCLASS ThreadInformationClass,
     _In_reads_bytes_(ThreadInformationLength) PVOID ThreadInformation,
     _In_ ULONG ThreadInformationLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlertThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlertThread(
     _In_ HANDLE ThreadHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlertResumeThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlertResumeThread(
     _In_ HANDLE ThreadHandle,
     _Out_opt_ PULONG PreviousSuspendCount
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/TestAlert, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtTestAlert(
     VOID
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/ImpersonateThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtImpersonateThread(
     _In_ HANDLE ServerThreadHandle,
     _In_ HANDLE ClientThreadHandle,
     _In_ PSECURITY_QUALITY_OF_SERVICE SecurityQos
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RegisterThreadTerminatePort, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRegisterThreadTerminatePort(
     _In_ HANDLE PortHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetLdtEntries, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetLdtEntries(
     _In_ ULONG Selector0,
     _In_ ULONG Entry0Low,
     _In_ ULONG Entry0Hi,
     _In_ ULONG Selector1,
     _In_ ULONG Entry1Low,
     _In_ ULONG Entry1Hi
-))
+    );
 
 typedef VOID (*PPS_APC_ROUTINE)(
     _In_opt_ PVOID ApcArgument1,
@@ -1299,40 +1380,52 @@ typedef VOID (*PPS_APC_ROUTINE)(
     _In_opt_ PVOID ApcArgument3
     );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueueApcThread, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueueApcThread(
     _In_ HANDLE ThreadHandle,
     _In_ PPS_APC_ROUTINE ApcRoutine,
     _In_opt_ PVOID ApcArgument1,
     _In_opt_ PVOID ApcArgument2,
     _In_opt_ PVOID ApcArgument3
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
 
 #define APC_FORCE_THREAD_SIGNAL ((HANDLE)1) // UserApcReserveHandle
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueueApcThreadEx, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueueApcThreadEx(
     _In_ HANDLE ThreadHandle,
     _In_opt_ HANDLE UserApcReserveHandle,
     _In_ PPS_APC_ROUTINE ApcRoutine,
     _In_opt_ PVOID ApcArgument1,
     _In_opt_ PVOID ApcArgument2,
     _In_opt_ PVOID ApcArgument3
-))
+    );
 #endif
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_8)
 
 // rev
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AlertThreadByThreadId, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAlertThreadByThreadId(
     _In_ HANDLE ThreadId
-))
+    );
 
 // rev
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/WaitForAlertByThreadId, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtWaitForAlertByThreadId(
     _In_ PVOID Address,
     _In_opt_ PLARGE_INTEGER Timeout
-))
+    );
 
 #endif
 
@@ -1652,7 +1745,10 @@ typedef struct _PS_CREATE_INFO
 // end_rev
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateUserProcess, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateUserProcess(
     _Out_ PHANDLE ProcessHandle,
     _Out_ PHANDLE ThreadHandle,
     _In_ ACCESS_MASK ProcessDesiredAccess,
@@ -1664,7 +1760,7 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateUserProcess, (
     _In_opt_ PVOID ProcessParameters, // PRTL_USER_PROCESS_PARAMETERS
     _Inout_ PPS_CREATE_INFO CreateInfo,
     _In_opt_ PPS_ATTRIBUTE_LIST AttributeList
-))
+    );
 #endif
 
 // begin_rev
@@ -1677,7 +1773,10 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateUserProcess, (
 // end_rev
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_VISTA)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateThreadEx, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateThreadEx(
     _Out_ PHANDLE ThreadHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes,
@@ -1689,7 +1788,7 @@ NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateThreadEx, (
     _In_ SIZE_T StackSize,
     _In_ SIZE_T MaximumStackSize,
     _In_opt_ PPS_ATTRIBUTE_LIST AttributeList
-))
+    );
 #endif
 
 #endif
@@ -1852,58 +1951,85 @@ typedef struct _JOBOBJECT_ENERGY_TRACKING_STATE
     ULONG DesiredState;
 } JOBOBJECT_ENERGY_TRACKING_STATE, *PJOBOBJECT_ENERGY_TRACKING_STATE;
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateJobObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateJobObject(
     _Out_ PHANDLE JobHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_opt_ POBJECT_ATTRIBUTES ObjectAttributes
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/OpenJobObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtOpenJobObject(
     _Out_ PHANDLE JobHandle,
     _In_ ACCESS_MASK DesiredAccess,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AssignProcessToJobObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAssignProcessToJobObject(
     _In_ HANDLE JobHandle,
     _In_ HANDLE ProcessHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/TerminateJobObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtTerminateJobObject(
     _In_ HANDLE JobHandle,
     _In_ NTSTATUS ExitStatus
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/IsProcessInJob, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtIsProcessInJob(
     _In_ HANDLE ProcessHandle,
     _In_opt_ HANDLE JobHandle
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/QueryInformationJobObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtQueryInformationJobObject(
     _In_opt_ HANDLE JobHandle,
     _In_ JOBOBJECTINFOCLASS JobObjectInformationClass,
     _Out_writes_bytes_(JobObjectInformationLength) PVOID JobObjectInformation,
     _In_ ULONG JobObjectInformationLength,
     _Out_opt_ PULONG ReturnLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/SetInformationJobObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtSetInformationJobObject(
     _In_ HANDLE JobHandle,
     _In_ JOBOBJECTINFOCLASS JobObjectInformationClass,
     _In_reads_bytes_(JobObjectInformationLength) PVOID JobObjectInformation,
     _In_ ULONG JobObjectInformationLength
-))
+    );
 
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/CreateJobSet, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtCreateJobSet(
     _In_ ULONG NumJob,
     _In_reads_(NumJob) PJOB_SET_ARRAY UserJobSet,
     _In_ ULONG Flags
-))
+    );
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_10_TH1)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/RevertContainerImpersonation, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtRevertContainerImpersonation(
     VOID
-))
+    );
 #endif
 
 #endif
@@ -1921,11 +2047,14 @@ typedef enum _MEMORY_RESERVE_TYPE
 } MEMORY_RESERVE_TYPE;
 
 #if (defined(PHNT_COMPILE) || NTLIB_WIN_VERSION >= NTLIB_WIN_7)
-NATIVE_API(NTSTATUS, NTCALL, /*Nt*/AllocateReserveObject, (
+NTSYSCALLAPI
+NTSTATUS
+NTAPI
+NtAllocateReserveObject(
     _Out_ PHANDLE MemoryReserveHandle,
     _In_ POBJECT_ATTRIBUTES ObjectAttributes,
     _In_ MEMORY_RESERVE_TYPE Type
-))
+    );
 #endif
 
 #endif

@@ -9,14 +9,12 @@ import os
 c_headers_source_dir   = sys.argv[1]
 c_headers_output_dir   = sys.argv[2]
 c_common_templates_dir = sys.argv[3]
-c_ignore_files  = ["phnt.h", "phnt_ntdef.h", "phnt_windows.h", "ntzwapi.h"]
+c_ignore_files  = ["phnt.h", "phnt_ntdef.h", "phnt_windows.h"]
 c_include_files = ["ntcompatibility.h", "ntstatus.h", "ntcommon.h", "ntruntime.h"]
 c_common_header_template = "ntexp.h"
 c_project_name = "ntexp"
 c_include_order_source = "phnt.h"
 
-c_regex_syscall = re.compile(r"^(?:NTSYSCALLAPI|NTSYSAPI)\s+(.*)\s+NTAPI\s+Nt(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
-c_regex_sysapi  = re.compile(r"^(?:NTSYSCALLAPI|NTSYSAPI)\s+(?:DECLSPEC_NORETURN\s)*(.*)\s+(NTAPI|STDAPIVCALLTYPE|FASTCALL)\s+(\w+)\s*\(\s*((.*\s*)*?)(\);)", re.MULTILINE)
 c_regex_include = re.compile(r"#include\s+<(.*)>")
 c_ignore_includes = ["pshpack4.h", "poppack.h"]
 
@@ -87,12 +85,8 @@ def copy_includes():
     print("Done")
 
 def transform_header(source):
-    # Syscalls to macro
-    output = c_regex_syscall.sub(lambda s: make_syscall_macro(s.groups()), source)
-    # Native API to macro
-    output = c_regex_sysapi.sub(lambda s: make_sysapi_macro(s.groups()), output)
     # Includes normalization
-    output = c_regex_include.sub(lambda s: remake_include(s.groups()), output)
+    output = c_regex_include.sub(lambda s: remake_include(s.groups()), source)
     # Macro renaming
     output = re.sub("PHNT_MODE_KERNEL", "NTLIB_KERNEL_MODE", output)
     output = re.sub("PHNT_MODE_USER",   "NTLIB_USER_MODE",   output)
@@ -109,50 +103,13 @@ def transform_header(source):
     output = re.sub("PHNT_REDSTONE2",   "NTLIB_WIN_10_RS2",  output)
     output = re.sub("PHNT_REDSTONE3",   "NTLIB_WIN_10_RS3",  output)
     output = re.sub("PHNT_REDSTONE4",   "NTLIB_WIN_10_RS4",  output)
-    output = re.sub("PHNT_REDSTONE 5",   "NTLIB_WIN_10_RS5",  output)
+    output = re.sub("PHNT_REDSTONE5",   "NTLIB_WIN_10_RS5",  output)
     output = re.sub("PHNT_19H1",        "NTLIB_WIN_10_19H1", output)
     output = re.sub("PHNT_19H2",        "NTLIB_WIN_10_19H2", output)
     output = re.sub("PHNT_20H1",        "NTLIB_WIN_10_20H1", output)
     output = re.sub("PHNT_VERSION",     "NTLIB_WIN_VERSION", output)
     return output
     
-def make_syscall_macro(groups):
-    retval = groups[0].strip()
-    fnname = groups[1].strip()
-    args   = groups[2].strip()
-
-    assert(len(retval) < 32)
-    assert(len(fnname) < 64)
-    assert(len(args) < 1024)
-
-    allowed  = ["NTSTATUS", "BOOLEAN", "ULONG", "PVOID", "VOID"]
-    noreturn = False
-
-    if (not retval in allowed):
-        raise Exception("Unknown syscall: " + retval + " " + fnname + "(...)")
-    
-    if retval == "VOID":
-        noreturn = True
-
-    return build_sysapi_str("NATIVE", retval, fnname, "Nt", args, noreturn, "NTCALL")
-
-def make_sysapi_macro(groups):
-    retval = groups[0].strip()
-    conv   = groups[1].strip()
-    fnname = groups[2].strip()
-    args   = groups[3].strip()
-
-    assert(len(retval) < 32)
-    assert(len(fnname) < 64)
-    assert(len(args) < 1024)
-
-    noreturn = False
-
-    if retval == "VOID":
-        noreturn = True
-
-    return build_sysapi_str("NTDLL", retval, fnname, None, args, noreturn, transform_callconv(conv))
-
 def transform_callconv(conv):
     if conv in c_callconv_transformation:
         conv = c_callconv_transformation[conv]
@@ -164,13 +121,6 @@ def remake_include(groups):
         return "#include <" + header + ">"
 
     return "#include \"" + header + "\""
-
-def build_sysapi_str(prefix, retval, fnname, comment, args, noreturn, conv):
-    macro = prefix + ("_API_VOID" if noreturn else "_API") 
-    macro += "(" + ("" if noreturn else retval + ", ") + conv + ", " + ("/*" + comment + "*/" if comment else "") + fnname + ", (\n"
-    macro += "    " + args + "\n"
-    macro += "))"
-    return macro
 
 def get_files_with_ext(dir, ext):
     files = []
